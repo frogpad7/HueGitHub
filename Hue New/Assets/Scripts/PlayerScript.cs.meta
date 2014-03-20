@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: f20385d20876fa449beb6936a5230afb
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - ball: {fileID: 5000000, guid: 8993ae2a63adc8c47b7530ed46361c8d, type: 2}
+  - grenade: {fileID: 5000000, guid: 7ad408eb039fe644d9504c13e39184d3, type: 2}
+  - freeze: {fileID: 5000000, guid: a334c72f87e3e534c93ae589930540e8, type: 2}
+  - paintWall: {fileID: 5000000, guid: 3950477847a8e774dae5d894974797f8, type: 2}
+  - dash: {instanceID: 0}
+  - bubble: {fileID: 5000000, guid: 57683f72917289e46ae65ffe0ba29e88, type: 2}
+  - bubbleSH: {instanceID: 0}
+  - glove: {fileID: 5000000, guid: f8ce613fb12d2cf41b59c85926e73d55, type: 2}
+  - abilityPos: {fileID: 400000, guid: 9a649b8b0d3b7a3428be4717d5c8fbd1, type: 2}
+  - groundCheck: {fileID: 400004, guid: 9a649b8b0d3b7a3428be4717d5c8fbd1, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

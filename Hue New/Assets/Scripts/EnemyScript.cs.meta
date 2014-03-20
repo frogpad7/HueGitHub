@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 30c10707dd4749346ab319e2d7586f62
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - frozenPlatform: {fileID: 21300000, guid: 92e10d24c72399d4181737bae134670b, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
