@@ -1,19 +1,23 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
-
+Project("{97382B99-B7F0-E144-F826-03544B3462F1}") = "Hue New", "Assembly-CSharp.csproj", "{A52CEF23-B668-F3E0-4FE5-7AD9823F1A3E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-
+		{A52CEF23-B668-F3E0-4FE5-7AD9823F1A3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A52CEF23-B668-F3E0-4FE5-7AD9823F1A3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A52CEF23-B668-F3E0-4FE5-7AD9823F1A3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A52CEF23-B668-F3E0-4FE5-7AD9823F1A3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-																GlobalSection(MonoDevelopProperties) = preSolution
+																		GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
