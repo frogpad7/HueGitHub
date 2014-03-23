@@ -7,6 +7,12 @@ public class AudioScript : MonoBehaviour {
 	public AudioSource redTrack;
 	public AudioSource blueTrack;
 	public AudioSource yellowTrack;
+	public AudioSource walking;
+	public AudioClip death;
+	public AudioClip jump;
+	public AudioClip land;
+	public AudioClip gun;
+	public AudioClip paint;
 	AudioSource current;
 	AudioSource wait;
 	// Use this for initialization
@@ -21,8 +27,8 @@ public class AudioScript : MonoBehaviour {
 		//AudioSource.PlayClipAtPoint (clip, transform.position);
 
 		//increase
-		if (current.volume != 1)
-			current.volume += 0.01f;
+		//if (current.volume != 1)
+			//current.volume += 0.01f;
 
 		//decrease
 		if (wait.volume != 0) {
@@ -60,5 +66,15 @@ public class AudioScript : MonoBehaviour {
 		if (color == 6) {
 			
 		}
+	}
+
+	public void PlayWalk(){
+		if (!walking.isPlaying)
+			walking.Play ();
+	}
+
+	public void StopWalk(){
+		if (walking.isPlaying)
+			walking.Stop ();
 	}
 }

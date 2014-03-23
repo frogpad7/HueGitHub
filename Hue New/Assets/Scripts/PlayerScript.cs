@@ -13,12 +13,12 @@ public class PlayerScript : MonoBehaviour
 	//controls bubble ability when in air & not in jump control
 	bool flying = false;
 
+	GameObject audio;
 	Animator anim;
 	int color = 0;
 	float cooldown = 0;
 	float bubbleTime = 0;
-
-	//public Rigidbody2D backdrop;
+	
 	public Rigidbody2D ball;
 	public Rigidbody2D grenade;
 	public Rigidbody2D freeze;
@@ -36,7 +36,10 @@ public class PlayerScript : MonoBehaviour
 	public LayerMask whatIsGround;
 
 	// Use this for initialization
-	void Start () { anim = GetComponent<Animator>(); }
+	void Start () { 
+		anim = GetComponent<Animator>(); 
+		audio = GameObject.FindWithTag ("Audio");
+	}
 		
 	void OnCollisionEnter2D(Collision2D col)
 	{
@@ -44,10 +47,15 @@ public class PlayerScript : MonoBehaviour
 		{
 			alive = false;
 			GameObject.FindWithTag("MainCamera").GetComponent<CameraFollow>().enabled = false;
-
-			//GetComponent<Transform>().DetachChildren();
+			this.rigidbody2D.isKinematic = true;
 			this.GetComponent<PlayerScript>().enabled = false;
+			//animate death
+			AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().death,transform.position);
 			StartCoroutine("PlayerRestart");
+		}
+		if (col.gameObject.tag == "Floor") 
+		{
+			//make landing sound		
 		}
 	}
 
@@ -66,7 +74,7 @@ public class PlayerScript : MonoBehaviour
 		//change audio track based on the color
 		if (c != color) 
 		{
-			GameObject.FindWithTag("Audio").GetComponent<AudioScript>().ChangeTrack(c);
+			audio.GetComponent<AudioScript>().ChangeTrack(c);
 			if(bubbleShield)
 			{
 				Destroy(bubbleShield.gameObject);
@@ -83,14 +91,13 @@ public class PlayerScript : MonoBehaviour
 			StartCoroutine("PlayerSceneChange");
 		}
 		if (col.gameObject.tag == "Goal") 	Debug.Log ("Goal Reached");
-		//backdrop.transform.position = new Vector3(0,0,-10);
 	}
 	
 	IEnumerator PlayerRestart()
 	{
 		//animate death
-		AutoFade.LoadLevel ("ColorRoom", 3, 1, Color.black);
-		yield return new WaitForSeconds(1);
+		AutoFade.LoadLevel ("ColorRoom", 7, 1, Color.black);
+		yield return new WaitForSeconds(7);
 		Destroy (gameObject);
 	}
 	
@@ -120,6 +127,11 @@ public class PlayerScript : MonoBehaviour
 			s *= -1;
 		anim.SetFloat("Speed", s);
 
+		if (grounded && s>0)
+			audio.GetComponent<AudioScript> ().PlayWalk ();
+		else
+			audio.GetComponent<AudioScript> ().StopWalk ();
+
 		//make sure the bubble doesn't go running away
 		if (bubbleShield) bubbleShield.transform.position = rigidbody2D.transform.position;
 
@@ -133,8 +145,6 @@ public class PlayerScript : MonoBehaviour
 			//moves player and the object held
 			rigidbody2D.velocity = new Vector2(move * maxSpeed, rigidbody2D.velocity.y);
 		}	
-
-		//backdrop.rigidbody2D.velocity = new Vector2 (move * maxSpeed, rigidbody2D.velocity.y);
 
 		//flips player if they change direction
 		if (move > 0 && !facingRight) Flip ();
@@ -164,6 +174,7 @@ public class PlayerScript : MonoBehaviour
 		//jumping from the ground, and reset the double jump flag
 		if (grounded && Input.GetKeyDown(KeyCode.Space)) 
 		{
+			AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().jump,transform.position);
 			rigidbody2D.velocity= new Vector2(rigidbody2D.velocity.x,0f);
 			rigidbody2D.AddForce (new Vector2 (0, 3500f));
 			isDoubleJumping = false;
@@ -227,6 +238,7 @@ public class PlayerScript : MonoBehaviour
 
 	void ability_Orange()
 	{
+		AudioSource.PlayClipAtPoint (audio.GetComponent<AudioScript> ().gun, transform.position);
 		if (Input.GetKey (KeyCode.DownArrow) && !grounded) 
 		{
 				Vector3 firePos = transform.position + new Vector3 (0, -2, 0);
@@ -257,6 +269,7 @@ public class PlayerScript : MonoBehaviour
 
 	void ability_Yellow()
 	{
+		AudioSource.PlayClipAtPoint (audio.GetComponent<AudioScript> ().paint, transform.position);
 		if(Input.GetKey(KeyCode.DownArrow))
 		{
 			Vector3 firePos;
@@ -326,7 +339,7 @@ public class PlayerScript : MonoBehaviour
 			fireObj.isKinematic = true;
 			transform.position += new Vector3 (0, -15, 0);
 		} 
-		else if (Input.GetKey (KeyCode.LeftArrow))
+		else
 		{
 			//raycast logic
 			Vector2 fwd = transform.TransformDirection (new Vector2 (0, 2));
@@ -367,14 +380,14 @@ public class PlayerScript : MonoBehaviour
 			fireObj.velocity = new Vector2(0,15);
 			cooldown = Time.time + 1;
 		}
-		else if(facingRight && Input.GetKey(KeyCode.RightArrow))
+		else if(facingRight)
 		{
 			Vector3 firePos = transform.position + new Vector3(2,0,0);
 			Rigidbody2D fireObj = Instantiate(glove, firePos, Quaternion.Euler(new Vector3(0,0,0))) as Rigidbody2D;
 			fireObj.velocity = new Vector2(15,0);
 			cooldown = Time.time + 1;
 		}	
-		else if (Input.GetKey(KeyCode.LeftArrow))
+		else
 		{
 			Vector3 firePos = transform.position + new Vector3(-2,0,0);
 			Rigidbody2D fireObj = Instantiate (glove, firePos, Quaternion.Euler (new Vector3(0,0,180f))) as Rigidbody2D;
@@ -408,9 +421,5 @@ public class PlayerScript : MonoBehaviour
 		Vector3 playScale = transform.localScale;
 		playScale.x *= -1;
 		transform.localScale = playScale;
-
-		//Vector3 backScale = GameObject.FindWithTag ("Backdrop").GetComponent<Transform> ().transform.localScale;
-		//backScale.x *= -1;
-		//GameObject.FindWithTag ("Backdrop").GetComponent<Transform> ().transform.localScale = backScale;
 	}
 }
