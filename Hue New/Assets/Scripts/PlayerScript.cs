@@ -43,7 +43,7 @@ public class PlayerScript : MonoBehaviour
 		
 	void OnCollisionEnter2D(Collision2D col)
 	{
-		if (col.gameObject.tag == "Enemy" && col.gameObject.rigidbody2D.isKinematic == false)
+		if (col.gameObject.tag == "Enemy" && col.gameObject.rigidbody2D.isKinematic == false && alive)
 		{
 			alive = false;
 			GameObject.FindWithTag("MainCamera").GetComponent<CameraFollow>().enabled = false;
@@ -103,7 +103,7 @@ public class PlayerScript : MonoBehaviour
 	
 	IEnumerator PlayerSceneChange()
 	{
-		AutoFade.LoadLevel ("Physics", 3, 1, Color.black);
+		AutoFade.LoadLevel ("Level1", 3, 1, Color.black);
 		yield return new WaitForSeconds(3);
 		transform.position = new Vector3(0,0,0);
 	}
