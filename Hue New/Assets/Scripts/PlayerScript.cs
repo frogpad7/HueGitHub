@@ -115,6 +115,7 @@ public class PlayerScript : MonoBehaviour
 		grounded = Physics2D.OverlapCircle(groundCheck.position, groundRad, whatIsGround);
 		rBlocked = Physics2D.OverlapCircle(rightCheck.position, groundRad, whatIsGround);
 
+		anim.SetBool ("Grounded", grounded);
 		//make sure we can't triple jump
 		if (grounded && isDoubleJumping)  isDoubleJumping = false;
 
