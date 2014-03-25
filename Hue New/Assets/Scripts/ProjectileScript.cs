@@ -9,53 +9,43 @@ public class ProjectileScript : MonoBehaviour
 	public Sprite green;
 	public Sprite blue;
 	public Sprite purple;
-
+	
 	private Transform camera;
 	private float lifetime = 0;
 	private bool grenadeExploding;
+	
 	// Use this for initialization
 	void Start() 
 	{
 		grenadeExploding = false;
 		camera = GameObject.FindGameObjectWithTag("MainCamera").transform;
-
-		if (gameObject.tag == "Grenade") 		{ Debug.Log ("Grenade create"); lifetime = Time.time + 3; }
-		else if (gameObject.tag == "Orange") 	{ Debug.Log ("Orange create"); lifetime = Time.time + 10; }
-		else if (gameObject.tag == "Yellow") 	{ Debug.Log ("Platform create"); lifetime = Time.time + 6; }
-		else if (gameObject.tag == "Green") 	{ Debug.Log ("Dash create"); lifetime = Time.time + 2; }
-		else if (gameObject.tag == "Blue") 		{ Debug.Log ("Bubble create"); lifetime = Time.time + 1; }
-		else if (gameObject.tag == "Purple") 	{ Debug.Log ("Glove create"); lifetime = Time.time + 1; }
+		
+		if 		(gameObject.tag == "Grenade")	{ Debug.Log ("Grenade create"); 	lifetime = Time.time + 3; }
+		else if (gameObject.tag == "Orange") 	{ Debug.Log ("Orange create"); 		lifetime = Time.time + 10; }
+		else if (gameObject.tag == "Yellow") 	{ Debug.Log ("Platform create"); 	lifetime = Time.time + 6; }
+		else if (gameObject.tag == "Green") 	{ Debug.Log ("Dash create"); 		lifetime = Time.time + 2; }
+		else if (gameObject.tag == "Blue") 		{ Debug.Log ("Bubble create"); 		lifetime = Time.time + 1; }
+		else if (gameObject.tag == "Purple") 	{ Debug.Log ("Glove create"); 		lifetime = Time.time + 1; }
 		else lifetime = Time.time + 10;
 	}
-
+	
 	void OnCollisionEnter2D(Collision2D col)
 	{
+		//if (col.gameObject.tag == "Player" && gameObject.tag == "Purple") { Debug.Log ("hit player"); Destroy(gameObject); }
 		if (gameObject.tag == "Projectile"||
 		    gameObject.tag == "Blue"||gameObject.tag == "Purple") { /*do nothing*/}
-
-		else if (gameObject.tag == "Orange") 
+		
+		else if (gameObject.tag == "Orange" && col.gameObject.tag == "Enemy") 
 		{
-			Debug.Log ("Orange particle hit something");
-			//if (impacted object is water) freeze it 
-			if(col.gameObject.tag == "Enemy")
-			{
-				this.rigidbody2D.isKinematic = true;
-				Debug.Log("Orange: Hit emeny");
-				//this.transform.position = col.gameObject.transform.position;
-				//Destroy (gameObject);
-			}
-			else if(col.gameObject.tag != "Player")
-			{
-				this.rigidbody2D.isKinematic = true;
-			}
+			this.rigidbody2D.isKinematic = true;
 		}
-
+		
 		/*if (col.gameObject.tag == "Player")
 		{
 			//player shot himself condition
 			Debug.Log ("player hit own bullet");
 		} */
-
+		
 		//make grenades go boom
 		if (gameObject.tag == "Grenade")
 		{
@@ -67,9 +57,9 @@ public class ProjectileScript : MonoBehaviour
 			}
 			//GameObject.FindWithTag("Backdrop").GetComponent<SplatterScript>().Splat (red,transform.position);
 		}
-
+		
 	}
-
+	
 	// Update is called once per frame
 	void Update () 
 	{
@@ -78,7 +68,7 @@ public class ProjectileScript : MonoBehaviour
 			Debug.Log ("grenade out of range!");
 			Destroy (gameObject);
 		}
-
+		
 		//weapon lifetime is up
 		if (lifetime > Time.time && grenadeExploding) 
 		{
@@ -116,7 +106,7 @@ public class ProjectileScript : MonoBehaviour
 			{
 				lifetime = Time.time + (float)0.5;
 				grenadeExploding = true;
-
+				
 				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (red, transform.position);
 			} 
 			else if (gameObject.tag == "Orange")
@@ -129,7 +119,7 @@ public class ProjectileScript : MonoBehaviour
 				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (blue, transform.position);
 			else if (gameObject.tag == "Purple")
 				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (purple, transform.position);
-
+			
 			if(!grenadeExploding) 
 			{
 				Debug.Log ("Player Weapon Dissipated"); 

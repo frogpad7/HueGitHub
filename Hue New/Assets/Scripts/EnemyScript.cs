@@ -3,145 +3,144 @@ using System.Collections;
 
 public class EnemyScript : MonoBehaviour 
 {
+
+	enum directions {LEFT=0, RIGHT=1, UP=2, DOWN=3};
+	
+	//status and attributes
+	public Vector3 initialPosition;
+	public int moveRange = 10; //0-stationary else-directional
+	private int direction;
+	private float cooldown = 0;
 	public float speed = 1;
 	private float lifetime = 0;
 
-	Vector3 initialPosition;
+	bool facingRight = false;
+	
+	//enemy type flags
 	public bool follow = false;
 	public bool walker = false;
 	public bool shooter = false;
-	bool facingRight = false;
+	public bool frozen = false;
 	//public bool jumper = false;
-	public int moveRange = 10;//0-stationary else-directional
-	enum directions {LEFT=0, RIGHT=1, UP=2, DOWN=3};
-	int direction;
-	private SpriteRenderer myRenderer;
+	
+	//freeze & groundPound related
+	public Rigidbody2D freeze;
 	public Sprite frozenPlatform;
+	private SpriteRenderer myRenderer;
 
 	Animator anim;
 
-	// Use this for initialization
 	void Start () 
 	{
-		if(gameObject.tag == "Enemy")
-			anim = GetComponent<Animator> ();
+		if(gameObject.tag == "Enemy") anim = GetComponent<Animator> ();
 		initialPosition = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
 		direction = (int)directions.LEFT;
 		myRenderer = gameObject.GetComponent<SpriteRenderer>();
+		
+		if (walker) 	{ rigidbody2D.gravityScale=1; Debug.Log ("walker created"); }
+		else			{ rigidbody2D.gravityScale=0; Debug.Log ("flyer created"); }
 	}
-
+	// Update is called once per frame
+	void Update () 
+	{
+		if (!frozen) enemy_AI();
+		if (lifetime <= Time.time && frozen) Destroy(gameObject, 10);
+	}
+	
 	void OnCollisionEnter2D(Collision2D col)
 	{
+
+		if (frozen) return;
+		
+		if 		(col.gameObject.tag == "Stage") 	changeDirection();
+		else if (col.gameObject.tag == "Yellow") 	changeDirection();
+		else if (col.gameObject.tag == "Orange") 	freezeEnemy(col);
+		
 		if (col.gameObject.tag == "Projectile" || col.gameObject.tag == "Red" ||col.gameObject.tag == "Grenade"||
-			col.gameObject.tag == "Blue" || col.gameObject.tag == "Purple") 
+		    col.gameObject.tag == "Blue" || col.gameObject.tag == "Purple") 
 		{
-			//if grenade, explode
-			//if glove, destroy enemy
-			//if paint, stun
-			//if freeze, make block
-			//if bubble, stun
-			//Collider2D boom = Physics2D.OverlapCircle(gameObject.transform.position,10f);
 			if (col.gameObject.tag != "Grenade") Destroy (col.gameObject);
 			Destroy (gameObject);
 		} 
-		else if (col.gameObject.tag == "Orange") 
-		{
-            this.rigidbody2D.isKinematic = true;
-            speed = 0;
-            lifetime = Time.time + 5;
-			myRenderer.sprite = frozenPlatform;
-			Destroy(col.gameObject);
-		}
-		else if (col.gameObject.tag == "Green")
-		{
-			//lifetime = Time.time + 5;
-			//this.rigidbody2D.isKinematic = true;
-			//speed = 0;
-		}
-		else if (col.gameObject.tag == "Yellow")
-		{
-			lifetime = Time.time + 5;
-			this.rigidbody2D.isKinematic = true;
-			speed = 0;
-		}
-		//else if (col.gameObject.tag == "Stage") {
-		//	changeDirection();
-		//}
 	}
-
+	
 	//for dash and bubble shield
 	void OnTriggerEnter2D(Collider2D col)
 	{
 		if (col.gameObject.tag == "Projectile") 
 		{
-			Debug.Log ("dash/bubble");
 			Destroy(col.gameObject);
 			Destroy(gameObject);
 		}
 	}
-
-	// Update is called once per frame
-	void Update () 
+	void enemy_AI()
 	{
-		if (gameObject.tag == "Enemy") {
-			anim.SetFloat("Speed",speed);
-		}
-		if (lifetime <= Time.time && this.rigidbody2D.isKinematic == true) Destroy(gameObject);
-		if (walker) 
+		if (shooter && cooldown <= Time.time)
 		{
-			rigidbody2D.gravityScale=1;		
+			//this instantly kills the player? 
+			/*
+			Vector3 firePos = this.transform.position + new Vector3 (0, 5, 0);
+			Rigidbody2D fireObj = Instantiate (freeze, firePos, Quaternion.Euler (new Vector3 (0, 5, 0))) as Rigidbody2D;
+			fireObj.velocity = new Vector2 (0, 15);
+			cooldown = Time.time + 3;*/
 		}
-		else
-			rigidbody2D.gravityScale=0;
-		if (shooter) 
+		
+		if (follow && !frozen)
 		{
-			//shoot projectiles
-		}
-		if (follow) 
-		{
+			Debug.Log("FOLLOW");
 			Vector3 dir = Vector3.Normalize (GameObject.FindWithTag ("Player").transform.position - this.transform.position) * .1f;
-			if(dir.x<0 && facingRight || dir.x>0 && !facingRight)
-				Flip ();
+			if(dir.x<0 && facingRight || dir.x>0 && !facingRight) Flip ();
 			transform.position += dir;
 		}
+		if (follow && !frozen) transform.position += Vector3.Normalize(GameObject.FindWithTag("Player").transform.position - this.transform.position)*.1f;
+
 		else if (direction == (int)directions.LEFT) 
 		{
-			this.transform.position = new Vector3(transform.position.x-speed * Time.deltaTime, transform.position.y, transform.position.z);
-			if (transform.position.x <= initialPosition.x - moveRange) changeDirection();
+			this.transform.position = new Vector3(transform.position.x+speed * Time.deltaTime, transform.position.y, transform.position.z);
+			if (transform.position.x >= initialPosition.z + moveRange) direction = (int)directions.RIGHT;
 		}
 		else if (direction == (int)directions.RIGHT) 
 		{
-			this.transform.position = new Vector3(transform.position.x+speed * Time.deltaTime, transform.position.y, transform.position.z);
-			if (transform.position.x >= initialPosition.x + moveRange) changeDirection();
+			this.transform.position = new Vector3(transform.position.x-speed * Time.deltaTime, transform.position.y, transform.position.z);
+			if (transform.position.x <= initialPosition.z - moveRange) direction = (int)directions.LEFT;
 		}
 		else if (direction == (int)directions.UP) 
 		{
 			this.transform.position = new Vector3(transform.position.x, transform.position.y+ speed * Time.deltaTime, transform.position.z);
-			if (transform.position.y >= initialPosition.y + moveRange) changeDirection();
+			if (transform.position.y >= initialPosition.y + moveRange) direction = (int)directions.DOWN;
 		}
 		else if (direction == (int)directions.DOWN)
 		{
 			this.transform.position = new Vector3(transform.position.x, transform.position.y - speed * Time.deltaTime, transform.position.z);
-			if (transform.position.y <= initialPosition.y - moveRange) changeDirection();
-		}
-
-	}
-
-	void changeDirection(){
-		if (direction == (int)directions.DOWN)
-			direction = (int)directions.UP;
-		else if (direction == (int)directions.UP)
-			direction = (int)directions.DOWN;
-		else if (direction == (int)directions.LEFT) {
-			direction = (int)directions.RIGHT;
-			Flip ();
-		} 
-		else if (direction == (int)directions.RIGHT) {
-			direction = (int)directions.LEFT;
-			Flip ();
+			if (transform.position.y <= initialPosition.y - moveRange) direction = (int)directions.UP;
 		}
 	}
-
+	
+	void changeDirection()
+	{
+		if (direction == (int)directions.DOWN)			direction = (int)directions.UP;
+		else if (direction == (int)directions.UP)		direction = (int)directions.DOWN;
+		else if (direction == (int)directions.LEFT)  {	direction = (int)directions.RIGHT; 			Flip ();		} 
+		else if (direction == (int)directions.RIGHT) {	direction = (int)directions.LEFT;			Flip ();		}
+	}
+	public void groundPounded()
+	{
+		lifetime = Time.time + 10;
+		frozen = true;
+		this.rigidbody2D.isKinematic = true;
+		speed = 0;
+	}
+	
+	void freezeEnemy(Collision2D col)
+	{
+		this.rigidbody2D.isKinematic = true;
+		frozen = true;
+		speed = 0;
+		lifetime = Time.time + 5;
+		myRenderer.sprite = frozenPlatform;
+		Destroy(col.gameObject);
+	}
+	
 	void Flip()
 	{
 		facingRight = !facingRight;
