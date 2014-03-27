@@ -1,4 +1,4 @@
 Hue
 =========
-A Windows Platformer about color
+A Windows Platformer about color<br>
 Status: Milestone 2
