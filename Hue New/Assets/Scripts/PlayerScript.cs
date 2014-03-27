@@ -5,6 +5,7 @@ public class PlayerScript : MonoBehaviour
 {
 	public float maxSpeed = 20;
 	bool facingRight = true;
+	bool cheatMode = false;
 	bool isDoubleJumping = false;
 	bool alive = true;
 	bool grounded = true;
@@ -56,13 +57,14 @@ public class PlayerScript : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		inputProc_devCheats();			//debugging color change & double jump
-		inputProc_movement();			//arrow key controls
-		inputProc_jump();				//jumping controls
-		inputProc_ability();			//ability use button
+		inputProc_devCheats();	//debugging color change & double jump
+
+		inputProc_movement();					//arrow key controls
+		inputProc_jump();						//jumping controls
+		inputProc_ability();					//ability use button
 		
-		ability_bubbleShield();			//fly if we have a bubble
-		ability_groundPound();			//check to see if we're pounding
+		ability_bubbleShield();					//fly if we have a bubble
+		ability_groundPound();					//check to see if we're pounding
 		
 		//flip the player sprite
 		if (move > 0 && !facingRight) 		Flip ();
@@ -106,6 +108,14 @@ public class PlayerScript : MonoBehaviour
 	
 	void inputProc_devCheats()
 	{
+		if (Input.GetKeyDown (KeyCode.Backspace))
+		{
+			AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().jump,transform.position);
+			if (cheatMode) cheatMode = false;
+			else cheatMode = true;
+		}
+		if (!cheatMode) return;
+
 		//color change cheat
 		if (Input.GetKeyDown (KeyCode.LeftControl)) 
 		{
@@ -114,12 +124,13 @@ public class PlayerScript : MonoBehaviour
 		}
 		
 		//double jump Space key control
-		if (!isDoubleJumping && Input.GetKeyDown (KeyCode.Space)) 
+		if (!grounded && !isDoubleJumping && Input.GetKeyDown (KeyCode.Space)) 
 		{
 			rigidbody2D.AddForce (new Vector2 (0, 3500f));
 			isDoubleJumping = true;
 			//Debug.Log (isDoubleJumping);
 		}
+		cooldown = 0;
 	}
 	
 	void inputProc_jump()
@@ -137,7 +148,7 @@ public class PlayerScript : MonoBehaviour
 		{
 			AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().jump,transform.position);
 			rigidbody2D.velocity= new Vector2(rigidbody2D.velocity.x,0f);
-			rigidbody2D.AddForce (new Vector2 (0, 3500f));
+			rigidbody2D.AddForce (new Vector2 (0, 4400f));
 			isDoubleJumping = false;
 		} 
 		
@@ -154,7 +165,7 @@ public class PlayerScript : MonoBehaviour
 		if(bubbleShield && flying)
 		{
 			//if we have a bubble shield, we can fly
-			rigidbody2D.velocity = new Vector2(move * maxSpeed, moveY * maxSpeed);
+			rigidbody2D.velocity = new Vector2((move * (float)0.75) * maxSpeed, (moveY * (float)0.5) * maxSpeed);
 		}
 		else
 		{
@@ -220,19 +231,19 @@ public class PlayerScript : MonoBehaviour
 		{
 			Vector3 firePos = transform.position + new Vector3(0,2,0);
 			Rigidbody2D fireObj = Instantiate(grenade, firePos, Quaternion.Euler(new Vector3(0,0,90f))) as Rigidbody2D;
-			fireObj.velocity = new Vector2(0,60);
+			fireObj.velocity = new Vector2(0,80);
 		}
 		else if(facingRight)
 		{ 
 			Vector3 firePos = transform.position + new Vector3(2,0,0);
 			Rigidbody2D fireObj = Instantiate(grenade, firePos, Quaternion.Euler(new Vector3(0,0,0))) as Rigidbody2D;
-			fireObj.velocity = new Vector2(30,30);
+			fireObj.velocity = new Vector2(40,40);
 		}	
 		else
 		{
 			Vector3 firePos = transform.position + new Vector3(-2,0,0);
 			Rigidbody2D fireObj = Instantiate (grenade, firePos, Quaternion.Euler (new Vector3(0,0,0))) as Rigidbody2D;
-			fireObj.velocity = new Vector2(-30,30);
+			fireObj.velocity = new Vector2(-40,40);
 			
 		}
 		cooldown = 3  + Time.time;
@@ -277,27 +288,30 @@ public class PlayerScript : MonoBehaviour
 			Vector3 firePos;
 			firePos = transform.position + new Vector3(0,-2,0);
 			Rigidbody2D fireObj = Instantiate(paintWall, firePos, Quaternion.Euler(new Vector3(0,0,0))) as Rigidbody2D;
-			
+			cooldown = Time.time + 3;
 		}
 		else if(Input.GetKey(KeyCode.UpArrow))
 		{
 			Vector3 firePos = transform.position + new Vector3(0,5,0);
 			Rigidbody2D fireObj = Instantiate(paintWall, firePos, Quaternion.Euler(new Vector3(0,0,90f))) as Rigidbody2D;
 			fireObj.isKinematic = true;
+			cooldown = Time.time + 6;
 		}
 		else if(facingRight)
 		{
-			Vector3 firePos = transform.position + new Vector3(4,0,0);
+			Vector3 firePos = transform.position + new Vector3(4,1,0);
 			Rigidbody2D fireObj = Instantiate(paintWall, firePos, Quaternion.Euler(new Vector3(0,0,90f))) as Rigidbody2D;
-			fireObj.isKinematic = true;					
+			fireObj.isKinematic = true;
+			cooldown = Time.time + 6;
 		}	
 		else
 		{
-			Vector3 firePos = transform.position + new Vector3(-4,0,0);
+			Vector3 firePos = transform.position + new Vector3(-4,1,0);
 			Rigidbody2D fireObj = Instantiate (paintWall, firePos, Quaternion.Euler (new Vector3(0,0,90f))) as Rigidbody2D;
 			fireObj.isKinematic = true;
+			cooldown = Time.time + 6;
 		}
-		cooldown = Time.time + 3;
+
 	}
 	
 	void ability_Green()
@@ -320,9 +334,9 @@ public class PlayerScript : MonoBehaviour
 			}
 			
 			Vector3 firePos = transform.position + new Vector3 (0, 2, 0);
-			Rigidbody2D fireObj = Instantiate (dash, firePos, Quaternion.Euler (new Vector3 (0, 0, 90f))) as Rigidbody2D;
-			fireObj.isKinematic = true;
-			transform.position += new Vector3 (0, 15, 0);
+			//Rigidbody2D fireObj = Instantiate (dash, firePos, Quaternion.Euler (new Vector3 (0, 0, 90f))) as Rigidbody2D;
+			//fireObj.isKinematic = true;
+			transform.position += new Vector3 (0, 25, 0);
 		}
 		
 		else if (Input.GetKey (KeyCode.DownArrow) && !grounded) 
@@ -343,9 +357,9 @@ public class PlayerScript : MonoBehaviour
 			}
 			
 			Vector3 firePos = transform.position + new Vector3 (0, -2, 0);
-			Rigidbody2D fireObj = Instantiate (dash, firePos, Quaternion.Euler (new Vector3 (0, 0, 90f))) as Rigidbody2D;
-			fireObj.isKinematic = true;
-			transform.position += new Vector3 (0, -15, 0);
+			//Rigidbody2D fireObj = Instantiate (dash, firePos, Quaternion.Euler (new Vector3 (0, 0, 90f))) as Rigidbody2D;
+			//fireObj.isKinematic = true;
+			transform.position += new Vector3 (0, -25, 0);
 		} 
 		else if (Input.GetKey (KeyCode.LeftArrow))
 		{
@@ -365,10 +379,10 @@ public class PlayerScript : MonoBehaviour
 			}
 			
 			Vector3 firePos = transform.position + new Vector3 (-2, 0, 0);
-			Rigidbody2D fireObj = Instantiate (dash, firePos, Quaternion.Euler (new Vector3 (0, 0, 0))) as Rigidbody2D;
-			fireObj.isKinematic = true;
-			Destroy (fireObj.gameObject, .5f);
-			transform.position += new Vector3 (-15, 0, 0);
+			//Rigidbody2D fireObj = Instantiate (dash, firePos, Quaternion.Euler (new Vector3 (0, 0, 0))) as Rigidbody2D;
+			//fireObj.isKinematic = true;
+			//Destroy (fireObj.gameObject, .5f);
+			transform.position += new Vector3 (-25, 0, 0);
 		}
 		else if (facingRight) 
 		{
@@ -388,9 +402,9 @@ public class PlayerScript : MonoBehaviour
 			}
 			
 			Vector3 firePos = transform.position + new Vector3 (2, 0, 0);
-			Rigidbody2D fireObj = Instantiate (dash, firePos, Quaternion.Euler (new Vector3 (0, 0, 0))) as Rigidbody2D;
-			fireObj.isKinematic = true;
-			transform.position += new Vector3 (15, 0, 0);
+			//Rigidbody2D fireObj = Instantiate (dash, firePos, Quaternion.Euler (new Vector3 (0, 0, 0))) as Rigidbody2D;
+			//fireObj.isKinematic = true;
+			transform.position += new Vector3 (25, 0, 0);
 		}
 		cooldown = Time.time + 3;
 	}
@@ -402,7 +416,7 @@ public class PlayerScript : MonoBehaviour
 		{
 			Vector3 pos = (Vector3)transform.position;
 			bubbleShield = Instantiate (bubbleSH, pos, Quaternion.Euler(new Vector3(0,0,0))) as Rigidbody2D;
-			bubbleTime = Time.time + 5;
+			bubbleTime = Time.time + 4;
 			cooldown = Time.time + 10;
 		}
 	}
@@ -442,24 +456,24 @@ public class PlayerScript : MonoBehaviour
 		
 		else if(Input.GetKey(KeyCode.UpArrow))
 		{
-			Vector3 firePos = transform.position + new Vector3(0,2,0);
+			Vector3 firePos = transform.position + new Vector3(0,6,0);
 			Rigidbody2D fireObj = Instantiate(glove, firePos, Quaternion.Euler(new Vector3(0,0,90f))) as Rigidbody2D;
-			fireObj.velocity = new Vector2(0,15);
-			cooldown = Time.time + 1;
+			fireObj.velocity = new Vector2(0,30);
+			cooldown = Time.time + (float)0.5;
 		}
 		else if(facingRight)
 		{
-			Vector3 firePos = transform.position + new Vector3(2,0,0);
+			Vector3 firePos = transform.position + new Vector3(6,0,0);
 			Rigidbody2D fireObj = Instantiate(glove, firePos, Quaternion.Euler(new Vector3(0,0,0))) as Rigidbody2D;
-			fireObj.velocity = new Vector2(15,0);
-			cooldown = Time.time + 1;
+			fireObj.velocity = new Vector2(30,0);
+			cooldown = Time.time + (float)0.5;
 		}	
 		else if (!facingRight)
 		{
-			Vector3 firePos = transform.position + new Vector3(-2,0,0);
+			Vector3 firePos = transform.position + new Vector3(-6,0,0);
 			Rigidbody2D fireObj = Instantiate (glove, firePos, Quaternion.Euler (new Vector3(0,0,180f))) as Rigidbody2D;
-			fireObj.velocity = new Vector2(-15,0);
-			cooldown = Time.time + 1;
+			fireObj.velocity = new Vector2(-30,0);
+			cooldown = Time.time + (float)0.5;
 		}
 	}
 	
@@ -477,14 +491,14 @@ public class PlayerScript : MonoBehaviour
 	
 	void OnCollisionEnter2D(Collision2D col)
 	{
-		if (col.gameObject.tag == "Enemy" && col.gameObject.rigidbody2D.isKinematic == false && alive)
+		if (!cheatMode && col.gameObject.tag == "Enemy" && col.gameObject.rigidbody2D.isKinematic == false && alive)
 		{
+			AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().death,transform.position);
 			alive = false;
 			GameObject.FindWithTag("MainCamera").GetComponent<CameraFollow>().enabled = false;
 			this.rigidbody2D.isKinematic = true;
 			this.GetComponent<PlayerScript>().enabled = false;
 			//animate death
-			AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().death,transform.position);
 			StartCoroutine("PlayerRestart");
 		}
 		if (col.gameObject.tag == "Floor") 
@@ -516,13 +530,36 @@ public class PlayerScript : MonoBehaviour
 			}
 		}
 		color = c;
-		
-		//transitions scene when reached ending/goal
-		if (col.gameObject.tag == "ChamberEnd")
+
+		if (col.gameObject.tag == "Level1")
 		{
 			DontDestroyOnLoad (transform.gameObject);
 			DontDestroyOnLoad (transform.FindChild("Audio"));
-			StartCoroutine("PlayerSceneChange");
+			StartCoroutine("Scene1Change");
+		}
+		if (col.gameObject.tag == "Level2")
+		{
+			DontDestroyOnLoad (transform.gameObject);
+			DontDestroyOnLoad (transform.FindChild("Audio"));
+			StartCoroutine("Scene2Change");
+		}
+		if (col.gameObject.tag == "Level3")
+		{
+			DontDestroyOnLoad (transform.gameObject);
+			DontDestroyOnLoad (transform.FindChild("Audio"));
+			StartCoroutine("Scene3Change");
+		}
+		if (col.gameObject.tag == "Level4")
+		{
+			DontDestroyOnLoad (transform.gameObject);
+			DontDestroyOnLoad (transform.FindChild("Audio"));
+			StartCoroutine("Scene4Change");
+		}
+		if (col.gameObject.tag == "Level5")
+		{
+			DontDestroyOnLoad (transform.gameObject);
+			DontDestroyOnLoad (transform.FindChild("Audio"));
+			StartCoroutine("Scene5Change");
 		}
 		if (col.gameObject.tag == "Goal") 	Debug.Log ("Goal Reached");
 		//backdrop.transform.position = new Vector3(0,0,-10);
@@ -531,14 +568,38 @@ public class PlayerScript : MonoBehaviour
 	IEnumerator PlayerRestart()
 	{
 		//animate death
-		AutoFade.LoadLevel ("ColorRoom", 3, 1, Color.black);
+		AutoFade.LoadLevel ("ColorRoom", 5, 1, Color.black);
 		yield return new WaitForSeconds(1);
-		Destroy (gameObject);
+		//Destroy (gameObject);
 	}
 	
-	IEnumerator PlayerSceneChange()
+	IEnumerator Scene1Change()
 	{
-		AutoFade.LoadLevel ("Physics", 3, 1, Color.black);
+		AutoFade.LoadLevel ("Level1", 3, 1, Color.black);
+		yield return new WaitForSeconds(3);
+		transform.position = new Vector3(0,0,0);
+	}
+	IEnumerator Scene2Change()
+	{
+		AutoFade.LoadLevel ("Level2", 3, 1, Color.black);
+		yield return new WaitForSeconds(3);
+		transform.position = new Vector3(0,0,0);
+	}
+	IEnumerator Scene3Change()
+	{
+		AutoFade.LoadLevel ("Level3", 3, 1, Color.black);
+		yield return new WaitForSeconds(3);
+		transform.position = new Vector3(0,0,0);
+	}
+	IEnumerator Scene4Change()
+	{
+		AutoFade.LoadLevel ("Level4", 3, 1, Color.black);
+		yield return new WaitForSeconds(3);
+		transform.position = new Vector3(0,0,0);
+	}
+	IEnumerator Scene5Change()
+	{
+		AutoFade.LoadLevel ("Level5", 3, 1, Color.black);
 		yield return new WaitForSeconds(3);
 		transform.position = new Vector3(0,0,0);
 	}

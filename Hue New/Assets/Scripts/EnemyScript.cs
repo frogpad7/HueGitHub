@@ -37,8 +37,8 @@ public class EnemyScript : MonoBehaviour
 		direction = (int)directions.LEFT;
 		myRenderer = gameObject.GetComponent<SpriteRenderer>();
 		
-		if (walker) 	{ rigidbody2D.gravityScale=1; Debug.Log ("walker created"); }
-		else			{ rigidbody2D.gravityScale=0; Debug.Log ("flyer created"); }
+		if (walker) 	rigidbody2D.gravityScale=1; 
+		else			rigidbody2D.gravityScale=0;
 	}
 	// Update is called once per frame
 	void Update () 
@@ -52,7 +52,6 @@ public class EnemyScript : MonoBehaviour
 
 		if (frozen) return;
 		
-		if 		(col.gameObject.tag == "Stage") 	changeDirection();
 		else if (col.gameObject.tag == "Yellow") 	changeDirection();
 		else if (col.gameObject.tag == "Orange") 	freezeEnemy(col);
 		
@@ -62,6 +61,7 @@ public class EnemyScript : MonoBehaviour
 			if (col.gameObject.tag != "Grenade") Destroy (col.gameObject);
 			Destroy (gameObject);
 		} 
+		//if 		(col.gameObject.tag == "Stage") 	changeDirection();
 	}
 	
 	//for dash and bubble shield
@@ -87,41 +87,45 @@ public class EnemyScript : MonoBehaviour
 		
 		if (follow && !frozen)
 		{
-			Debug.Log("FOLLOW");
 			Vector3 dir = Vector3.Normalize (GameObject.FindWithTag ("Player").transform.position - this.transform.position) * .1f;
 			if(dir.x<0 && facingRight || dir.x>0 && !facingRight) Flip ();
 			transform.position += dir;
 		}
-		if (follow && !frozen) transform.position += Vector3.Normalize(GameObject.FindWithTag("Player").transform.position - this.transform.position)*.1f;
-
 		else if (direction == (int)directions.LEFT) 
 		{
-			this.transform.position = new Vector3(transform.position.x+speed * Time.deltaTime, transform.position.y, transform.position.z);
-			if (transform.position.x >= initialPosition.z + moveRange) direction = (int)directions.RIGHT;
+			this.transform.position = new Vector3(transform.position.x-speed * Time.deltaTime, transform.position.y, transform.position.z);
+			if (transform.position.x <= initialPosition.x - moveRange) changeDirection();
 		}
 		else if (direction == (int)directions.RIGHT) 
 		{
-			this.transform.position = new Vector3(transform.position.x-speed * Time.deltaTime, transform.position.y, transform.position.z);
-			if (transform.position.x <= initialPosition.z - moveRange) direction = (int)directions.LEFT;
+			this.transform.position = new Vector3(transform.position.x+speed * Time.deltaTime, transform.position.y, transform.position.z);
+			if (transform.position.x >= initialPosition.x + moveRange) changeDirection();
 		}
 		else if (direction == (int)directions.UP) 
 		{
 			this.transform.position = new Vector3(transform.position.x, transform.position.y+ speed * Time.deltaTime, transform.position.z);
-			if (transform.position.y >= initialPosition.y + moveRange) direction = (int)directions.DOWN;
+			if (transform.position.y >= initialPosition.y + moveRange) changeDirection();
 		}
 		else if (direction == (int)directions.DOWN)
 		{
 			this.transform.position = new Vector3(transform.position.x, transform.position.y - speed * Time.deltaTime, transform.position.z);
-			if (transform.position.y <= initialPosition.y - moveRange) direction = (int)directions.UP;
+			if (transform.position.y <= initialPosition.y - moveRange) changeDirection();
 		}
 	}
 	
-	void changeDirection()
-	{
-		if (direction == (int)directions.DOWN)			direction = (int)directions.UP;
-		else if (direction == (int)directions.UP)		direction = (int)directions.DOWN;
-		else if (direction == (int)directions.LEFT)  {	direction = (int)directions.RIGHT; 			Flip ();		} 
-		else if (direction == (int)directions.RIGHT) {	direction = (int)directions.LEFT;			Flip ();		}
+	void changeDirection(){
+		if (direction == (int)directions.DOWN)
+			direction = (int)directions.UP;
+		else if (direction == (int)directions.UP)
+			direction = (int)directions.DOWN;
+		else if (direction == (int)directions.LEFT) {
+			direction = (int)directions.RIGHT;
+			Flip ();
+		} 
+		else if (direction == (int)directions.RIGHT) {
+			direction = (int)directions.LEFT;
+			Flip ();
+		}
 	}
 	public void groundPounded()
 	{

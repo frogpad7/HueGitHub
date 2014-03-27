@@ -25,13 +25,15 @@ public class ProjectileScript : MonoBehaviour
 		else if (gameObject.tag == "Yellow") 	{ Debug.Log ("Platform create"); 	lifetime = Time.time + 6; }
 		else if (gameObject.tag == "Green") 	{ Debug.Log ("Dash create"); 		lifetime = Time.time + 2; }
 		else if (gameObject.tag == "Blue") 		{ Debug.Log ("Bubble create"); 		lifetime = Time.time + 1; }
-		else if (gameObject.tag == "Purple") 	{ Debug.Log ("Glove create"); 		lifetime = Time.time + 1; }
+		else if (gameObject.tag == "Purple") 	{ Debug.Log ("Glove create"); 		lifetime = Time.time + (float)0.5; }
 		else lifetime = Time.time + 10;
 	}
 	
 	void OnCollisionEnter2D(Collision2D col)
 	{
 		//if (col.gameObject.tag == "Player" && gameObject.tag == "Purple") { Debug.Log ("hit player"); Destroy(gameObject); }
+		if (gameObject.tag == "Purple" && col.gameObject.tag == "Player") { Debug.Log ("glove player"); Destroy(gameObject); }
+		else if (gameObject.tag == "Purple" && col.gameObject.tag == "Stage") { Debug.Log ("glove wall"); Destroy(gameObject); }
 		if (gameObject.tag == "Projectile"||
 		    gameObject.tag == "Blue"||gameObject.tag == "Purple") { /*do nothing*/}
 		
