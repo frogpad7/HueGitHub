@@ -9,7 +9,7 @@ public class PlayerScript : MonoBehaviour
 	bool isDoubleJumping = false;
 	bool alive = true;
 	bool grounded = true;
-	bool rBlocked = true;
+	bool fBlocked = true;
 	float groundRad = 0.1f;
 	//controls bubble ability when in air & not in jump control
 	bool flying = false;
@@ -37,7 +37,7 @@ public class PlayerScript : MonoBehaviour
 	
 	public Transform abilityPos;
 	public Transform groundCheck;
-	public Transform rightCheck;
+	public Transform frontCheck;
 	public LayerMask whatIsGround;
 	
 	//ground pound variables
@@ -82,6 +82,7 @@ public class PlayerScript : MonoBehaviour
 		//ability button control
 		if (Input.GetKeyDown (KeyCode.LeftShift) && cooldown <= Time.time) 
 		{
+			anim.SetTrigger("Shooting");
 			if     (color == 1) ability_Red();
 			else if(color == 2) ability_Orange();
 			else if(color == 3) ability_Yellow();
@@ -94,13 +95,16 @@ public class PlayerScript : MonoBehaviour
 	void inputProc_movement()
 	{
 		move = Input.GetAxis("Horizontal");
-		if(rBlocked && move > 0) move = 0;
+		if(fBlocked && facingRight && move > 0) move = 0;
+		if (fBlocked && !facingRight && move < 0) move = 0;
 		
 		moveY = Input.GetAxis("Vertical");
 		float s = move;
 		if (move < 0)
 			s *= -1;
 		anim.SetFloat("Speed", s);
+		anim.SetInteger ("Direction", Mathf.RoundToInt(moveY));
+		anim.SetBool ("FacingR", facingRight);
 		
 		if (grounded && s>0) audio.GetComponent<AudioScript> ().PlayWalk ();
 		else                 audio.GetComponent<AudioScript> ().StopWalk ();
@@ -137,7 +141,7 @@ public class PlayerScript : MonoBehaviour
 	{
 		//checks to see if player can jump
 		grounded = Physics2D.OverlapCircle(groundCheck.position, groundRad, whatIsGround);
-		rBlocked = Physics2D.OverlapCircle(rightCheck.position, groundRad, whatIsGround);
+		fBlocked = Physics2D.OverlapCircle(frontCheck.position, groundRad, whatIsGround);
 		anim.SetBool ("Grounded", grounded);
 
 		//make sure we can't triple jump
@@ -483,10 +487,6 @@ public class PlayerScript : MonoBehaviour
 		Vector3 playScale = transform.localScale;
 		playScale.x *= -1;
 		transform.localScale = playScale;
-		
-		//Vector3 backScale = GameObject.FindWithTag ("Backdrop").GetComponent<Transform> ().transform.localScale;
-		//backScale.x *= -1;
-		//GameObject.FindWithTag ("Backdrop").GetComponent<Transform> ().transform.localScale = backScale;
 	}
 	
 	void OnCollisionEnter2D(Collision2D col)
