@@ -258,28 +258,32 @@ public class PlayerScript : MonoBehaviour
 		AudioSource.PlayClipAtPoint (audio.GetComponent<AudioScript> ().gun, transform.position);
 		if (Input.GetKey (KeyCode.DownArrow) && !grounded) 
 		{
-			Vector3 firePos = transform.position + new Vector3 (0, -2, 0);
+			Vector3 firePos = transform.position + new Vector3 (0, -6, 0);
 			Rigidbody2D fireObj = Instantiate (freeze, firePos, Quaternion.Euler (new Vector3 (0, 0, 0))) as Rigidbody2D;
-			fireObj.velocity = new Vector2 (0, -15);
+			fireObj.velocity = new Vector2 (0, -60);
+			rigidbody2D.AddForce (new Vector2 (0, 500f));
 			
 		}
 		else if (Input.GetKey (KeyCode.UpArrow))
 		{
-			Vector3 firePos = transform.position + new Vector3 (0, 2, 0);
+			Vector3 firePos = transform.position + new Vector3 (0, 6, 0);
 			Rigidbody2D fireObj = Instantiate (freeze, firePos, Quaternion.Euler (new Vector3 (0, 0, 0))) as Rigidbody2D;
-			fireObj.velocity = new Vector2 (0, 15);
+			fireObj.velocity = new Vector2 (0, 60);
+			rigidbody2D.AddForce (new Vector2 (0, -2000f));
 		}
 		else if (facingRight)
 		{
-			Vector3 firePos = transform.position + new Vector3 (2, 0, 0);
+			Vector3 firePos = transform.position + new Vector3 (6, 0, 0);
 			Rigidbody2D fireObj = Instantiate (freeze, firePos, Quaternion.Euler (new Vector3 (0, 0, 0))) as Rigidbody2D;
-			fireObj.velocity = new Vector2 (15, 0);
+			fireObj.velocity = new Vector2 (60, 0);
+			rigidbody2D.AddForce (new Vector2 (-2000f, 0));
 		}
 		else 
 		{
-			Vector3 firePos = transform.position + new Vector3 (-2, 0, 0);
+			Vector3 firePos = transform.position + new Vector3 (-6, 0, 0);
 			Rigidbody2D fireObj = Instantiate (freeze, firePos, Quaternion.Euler (new Vector3 (0, 0, 0))) as Rigidbody2D;
-			fireObj.velocity = new Vector2 (-15, 0);
+			fireObj.velocity = new Vector2 (-60, 0);
+			rigidbody2D.AddForce (new Vector2 (2000f, 0));
 		}
 		cooldown = 1 + Time.time;
 	}

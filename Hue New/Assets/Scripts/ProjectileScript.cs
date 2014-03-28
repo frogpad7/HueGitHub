@@ -31,16 +31,17 @@ public class ProjectileScript : MonoBehaviour
 	
 	void OnCollisionEnter2D(Collision2D col)
 	{
-		//if (col.gameObject.tag == "Player" && gameObject.tag == "Purple") { Debug.Log ("hit player"); Destroy(gameObject); }
 		if (gameObject.tag == "Purple" && col.gameObject.tag == "Player") { Debug.Log ("glove player"); Destroy(gameObject); }
+
+		//ORANGE
+		if (gameObject.tag == "Orange" && col.gameObject.tag == "Player") { Debug.Log ("Orange player"); Destroy(gameObject); }
+		else if (gameObject.tag == "Orange") this.rigidbody2D.isKinematic = true;
+
 		else if (gameObject.tag == "Purple" && col.gameObject.tag == "Stage") { Debug.Log ("glove wall"); Destroy(gameObject); }
 		if (gameObject.tag == "Projectile"||
 		    gameObject.tag == "Blue"||gameObject.tag == "Purple") { /*do nothing*/}
 		
-		else if (gameObject.tag == "Orange" && col.gameObject.tag == "Enemy") 
-		{
-			this.rigidbody2D.isKinematic = true;
-		}
+
 		
 		/*if (col.gameObject.tag == "Player")
 		{

@@ -44,7 +44,7 @@ public class EnemyScript : MonoBehaviour
 	void Update () 
 	{
 		if (!frozen) enemy_AI();
-		if (lifetime <= Time.time && frozen) Destroy(gameObject, 10);
+		if (lifetime <= Time.time && frozen) thaw();
 	}
 	
 	void OnCollisionEnter2D(Collision2D col)
@@ -132,7 +132,7 @@ public class EnemyScript : MonoBehaviour
 		lifetime = Time.time + 10;
 		frozen = true;
 		this.rigidbody2D.isKinematic = true;
-		speed = 0;
+		speed = 5;
 	}
 	
 	void freezeEnemy(Collision2D col)
@@ -140,9 +140,17 @@ public class EnemyScript : MonoBehaviour
 		this.rigidbody2D.isKinematic = true;
 		frozen = true;
 		speed = 0;
-		lifetime = Time.time + 5;
+		lifetime = Time.time + 7;
 		myRenderer.sprite = frozenPlatform;
 		Destroy(col.gameObject);
+	}
+
+	void thaw()
+	{
+		this.rigidbody2D.isKinematic = false;
+		frozen = false;
+		speed = 5;
+		myRenderer.sprite = frozenPlatform;
 	}
 	
 	void Flip()
