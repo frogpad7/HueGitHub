@@ -8,6 +8,8 @@ public class PlayerScript : MonoBehaviour
 	bool cheatMode = false;
 	bool isDoubleJumping = false;
 	bool alive = true;
+	//looks to play land sound
+	bool landed = true;
 	bool grounded = true;
 	bool fBlocked = true;
 	float groundRad = 0.1f;
@@ -154,11 +156,19 @@ public class PlayerScript : MonoBehaviour
 			rigidbody2D.velocity= new Vector2(rigidbody2D.velocity.x,0f);
 			rigidbody2D.AddForce (new Vector2 (0, 4400f));
 			isDoubleJumping = false;
+			landed = false;
 		} 
 		
-		if (grounded) flying = false;
+		if (grounded) {
+			flying = false;
+		}
 		else if (!grounded && (Input.GetKeyDown (KeyCode.UpArrow) || Input.GetKeyDown (KeyCode.DownArrow)))
 			flying = true;
+
+		if(grounded && !landed)
+			AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().land,transform.position);
+
+		landed = grounded;
 	}
 	
 	void ability_bubbleShield()
@@ -505,10 +515,7 @@ public class PlayerScript : MonoBehaviour
 			//animate death
 			StartCoroutine("PlayerRestart");
 		}
-		if (col.gameObject.tag == "Floor") 
-		{
-			//make landing sound		
-		}
+
 	}
 	
 	void OnTriggerEnter2D(Collider2D col)

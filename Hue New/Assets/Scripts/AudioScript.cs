@@ -27,8 +27,8 @@ public class AudioScript : MonoBehaviour {
 		//AudioSource.PlayClipAtPoint (clip, transform.position);
 
 		//increase
-		//if (current.volume != 1)
-			//current.volume += 0.01f;
+		if (current.volume != 1)
+			current.volume += 0.01f;
 
 		//decrease
 		if (wait.volume != 0) {
