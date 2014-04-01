@@ -162,7 +162,7 @@ public class PlayerScript : MonoBehaviour
 		if (grounded) {
 			flying = false;
 		}
-		else if (!grounded && (Input.GetKeyDown (KeyCode.UpArrow) || Input.GetKeyDown (KeyCode.DownArrow)))
+		else if (!grounded && (bubbleShield))
 			flying = true;
 
 		if(grounded && !landed)
@@ -432,6 +432,7 @@ public class PlayerScript : MonoBehaviour
 		//activate the bubble shield
 		if(!bubbleShield && cooldown <= Time.time && bubbleTime < Time.time)
 		{
+			rigidbody2D.AddForce (new Vector2 (0, 2200f));
 			Vector3 pos = (Vector3)transform.position;
 			bubbleShield = Instantiate (bubbleSH, pos, Quaternion.Euler(new Vector3(0,0,0))) as Rigidbody2D;
 			bubbleTime = Time.time + 4;

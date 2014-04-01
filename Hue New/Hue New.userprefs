@@ -1,12 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PauseScript.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PlayerScript.cs">
     <Files>
-      <File FileName="Assets\Scripts\MenuButtonScript.cs" Line="27" Column="2" />
-      <File FileName="Assets\Scripts\PlayerScript.cs" Line="105" Column="16" />
-      <File FileName="Assets\Scripts\PauseScript.cs" Line="30" Column="6" />
-      <File FileName="Assets\Scripts\AudioScript.cs" Line="84" Column="4" />
-      <File FileName="Assets\Scripts\EnemyScript.cs" Line="92" Column="55" />
+      <File FileName="Assets\Scripts\PlayerScript.cs" Line="34" Column="28" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
