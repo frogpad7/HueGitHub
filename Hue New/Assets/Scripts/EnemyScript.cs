@@ -89,7 +89,7 @@ public class EnemyScript : MonoBehaviour
 		{
 			Vector3 dir = Vector3.Normalize (GameObject.FindWithTag ("Player").transform.position - this.transform.position) * .1f;
 			if(dir.x<0 && facingRight || dir.x>0 && !facingRight) Flip ();
-			transform.position += dir;
+			transform.position += dir * (Time.deltaTime * 10 * speed);
 		}
 		else if (direction == (int)directions.LEFT) 
 		{

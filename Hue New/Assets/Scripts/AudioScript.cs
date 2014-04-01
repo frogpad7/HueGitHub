@@ -77,4 +77,15 @@ public class AudioScript : MonoBehaviour {
 		if (walking.isPlaying)
 			walking.Stop ();
 	}
+
+	public void PauseTrack(){
+		current.Pause ();
+		if (!walking.isPlaying)
+			walking.Pause ();
+	}
+
+	public void ResumeTrack(){
+		current.Play ();
+		walking.Play ();
+	}
 }

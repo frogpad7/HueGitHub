@@ -101,7 +101,7 @@ public class PlayerScript : MonoBehaviour
 		if (fBlocked && !facingRight && move < 0) move = 0;
 		
 		moveY = Input.GetAxis("Vertical");
-		float s = move;
+		float s = move * maxSpeed;
 		if (move < 0)
 			s *= -1;
 		anim.SetFloat("Speed", s);
@@ -520,6 +520,7 @@ public class PlayerScript : MonoBehaviour
 	
 	void OnTriggerEnter2D(Collider2D col)
 	{
+		//Debug.Log ("player trigger");
 		//changes color when passing through the color object
 		int c = color;
 		if (col.gameObject.tag 		== "Red")		c = 1;
