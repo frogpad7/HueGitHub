@@ -59,24 +59,18 @@ public class PlayerScript : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		inputProc_devCheats();	//debugging color change & double jump
+		inputProc_devCheats();		//debugging color change & double jump
 
-		inputProc_movement();					//arrow key controls
-		inputProc_jump();						//jumping controls
-		inputProc_ability();					//ability use button
+		inputProc_movement();		//arrow key controls
+		inputProc_jump();			//jumping controls
+		inputProc_ability();		//ability use button
 		
-		ability_bubbleShield();					//fly if we have a bubble
-		ability_groundPound();					//check to see if we're pounding
+		ability_bubbleShield();		//fly if we have a bubble
+		ability_groundPound();		//check to see if we're pounding
 		
 		//flip the player sprite
 		if (move > 0 && !facingRight) 		Flip ();
 		else if (move < 0 && facingRight)	Flip ();
-	}
-	
-	void FixedUpdate() 
-	{
-		//backdrop.rigidbody2D.velocity = new Vector2 (move * maxSpeed, rigidbody2D.velocity.y);
-		//flips player if they change direction
 	}
 	
 	void inputProc_ability()
@@ -154,16 +148,13 @@ public class PlayerScript : MonoBehaviour
 		{
 			AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().jump,transform.position);
 			rigidbody2D.velocity= new Vector2(rigidbody2D.velocity.x,0f);
-			rigidbody2D.AddForce (new Vector2 (0, 4400f));
+			if (!bubbleShield) rigidbody2D.AddForce (new Vector2 (0, 4400f));
 			isDoubleJumping = false;
 			landed = false;
 		} 
 		
-		if (grounded) {
-			flying = false;
-		}
-		else if (!grounded && (bubbleShield))
-			flying = true;
+		if (grounded && !bubbleShield)			flying = false;
+		else if (!grounded && (bubbleShield))	flying = true;
 
 		if(grounded && !landed)
 			AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().land,transform.position);
