@@ -308,14 +308,14 @@ public class PlayerScript : MonoBehaviour
 		}
 		else if(facingRight)
 		{
-			Vector3 firePos = transform.position + new Vector3(4,1,0);
+			Vector3 firePos = transform.position + new Vector3(5,1,0);
 			Rigidbody2D fireObj = Instantiate(paintWall, firePos, Quaternion.Euler(new Vector3(0,0,90f))) as Rigidbody2D;
 			fireObj.isKinematic = true;
 			cooldown = Time.time + 6;
 		}	
 		else
 		{
-			Vector3 firePos = transform.position + new Vector3(-4,1,0);
+			Vector3 firePos = transform.position + new Vector3(-5,1,0);
 			Rigidbody2D fireObj = Instantiate (paintWall, firePos, Quaternion.Euler (new Vector3(0,0,90f))) as Rigidbody2D;
 			fireObj.isKinematic = true;
 			cooldown = Time.time + 6;
@@ -467,7 +467,11 @@ public class PlayerScript : MonoBehaviour
 		else if(Input.GetKey(KeyCode.UpArrow))
 		{
 			Vector3 firePos = transform.position + new Vector3(0,6,0);
-			Rigidbody2D fireObj = Instantiate(glove, firePos, Quaternion.Euler(new Vector3(0,0,90f))) as Rigidbody2D;
+			Rigidbody2D fireObj;
+			if(facingRight)
+				fireObj = Instantiate(glove, firePos, Quaternion.Euler(new Vector3(0,0,90f))) as Rigidbody2D;
+			else
+				fireObj = Instantiate(glove, firePos, Quaternion.Euler(new Vector3(180f,0,270f))) as Rigidbody2D;
 			fireObj.velocity = new Vector2(0,30);
 			cooldown = Time.time + (float)0.5;
 		}
@@ -481,7 +485,7 @@ public class PlayerScript : MonoBehaviour
 		else if (!facingRight)
 		{
 			Vector3 firePos = transform.position + new Vector3(-6,0,0);
-			Rigidbody2D fireObj = Instantiate (glove, firePos, Quaternion.Euler (new Vector3(0,0,180f))) as Rigidbody2D;
+			Rigidbody2D fireObj = Instantiate (glove, firePos, Quaternion.Euler (new Vector3(180f,0,180f))) as Rigidbody2D;
 			fireObj.velocity = new Vector2(-30,0);
 			cooldown = Time.time + (float)0.5;
 		}
