@@ -43,6 +43,8 @@ public class EnemyScript : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		if(gameObject.tag == "Enemy")
+			anim.SetFloat ("Speed", speed);
 		if (!frozen) enemy_AI();
 		if (lifetime <= Time.time && frozen) thaw();
 	}
