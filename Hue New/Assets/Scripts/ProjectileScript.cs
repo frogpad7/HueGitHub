@@ -24,7 +24,7 @@ public class ProjectileScript : MonoBehaviour
 		else if (gameObject.tag == "Orange") 	{ Debug.Log ("Orange create"); 		lifetime = Time.time + 10; }
 		else if (gameObject.tag == "Yellow") 	{ Debug.Log ("Platform create"); 	lifetime = Time.time + 6; }
 		else if (gameObject.tag == "Green") 	{ Debug.Log ("Dash create"); 		lifetime = Time.time + 2; }
-		else if (gameObject.tag == "Blue") 		{ Debug.Log ("Bubble create"); 		lifetime = Time.time + 1; }
+		else if (gameObject.tag == "Blue") 		{ Debug.Log ("Bubble create"); 		lifetime = Time.time + 1000; }
 		else if (gameObject.tag == "Purple") 	{ Debug.Log ("Glove create"); 		lifetime = Time.time + (float)0.5; }
 		else lifetime = Time.time + 10;
 	}

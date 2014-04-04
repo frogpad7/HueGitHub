@@ -69,6 +69,12 @@ public class EnemyScript : MonoBehaviour
 	//for dash and bubble shield
 	void OnTriggerEnter2D(Collider2D col)
 	{
+		if (col.gameObject.tag == "Blue") 
+		{
+			PlayerScript pScript = GameObject.FindWithTag("Player").GetComponent<PlayerScript>();
+			if (pScript.cheatMode != true) Destroy(col.gameObject);
+			Destroy(gameObject);
+		}
 		if (col.gameObject.tag == "Projectile") 
 		{
 			Destroy(col.gameObject);

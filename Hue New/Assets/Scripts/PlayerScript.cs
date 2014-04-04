@@ -5,7 +5,7 @@ public class PlayerScript : MonoBehaviour
 {
 	public float maxSpeed = 20;
 	bool facingRight = true;
-	bool cheatMode = false;
+	public bool cheatMode = false;
 	bool isDoubleJumping = false;
 	bool alive = true;
 	//looks to play land sound
@@ -169,8 +169,9 @@ public class PlayerScript : MonoBehaviour
 		
 		if(bubbleShield && flying)
 		{
-			//if we have a bubble shield, we can fly
-			rigidbody2D.velocity = new Vector2((move * (float)0.75) * maxSpeed, (moveY * (float)0.5) * maxSpeed);
+			//bubble flight control
+			if (cheatMode) rigidbody2D.velocity = new Vector2((move * (float)2.5) * maxSpeed, (moveY * (float)2.5) * maxSpeed);
+			else rigidbody2D.velocity = new Vector2((move * (float)0.75) * maxSpeed, (moveY * (float)0.5) * maxSpeed);
 		}
 		else
 		{
@@ -296,27 +297,27 @@ public class PlayerScript : MonoBehaviour
 		{
 			Vector3 firePos;
 			firePos = transform.position + new Vector3(0,-2,0);
-			Rigidbody2D fireObj = Instantiate(paintWall, firePos, Quaternion.Euler(new Vector3(0,0,0))) as Rigidbody2D;
+			Rigidbody2D fireObj = Instantiate(paintWall, firePos, Quaternion.Euler(new Vector3(0,0,90f))) as Rigidbody2D;
 			cooldown = Time.time + 3;
 		}
 		else if(Input.GetKey(KeyCode.UpArrow))
 		{
 			Vector3 firePos = transform.position + new Vector3(0,5,0);
-			Rigidbody2D fireObj = Instantiate(paintWall, firePos, Quaternion.Euler(new Vector3(0,0,90f))) as Rigidbody2D;
+			Rigidbody2D fireObj = Instantiate(paintWall, firePos, Quaternion.Euler(new Vector3(0,0,0))) as Rigidbody2D;
 			fireObj.isKinematic = true;
 			cooldown = Time.time + 6;
 		}
 		else if(facingRight)
 		{
 			Vector3 firePos = transform.position + new Vector3(5,1,0);
-			Rigidbody2D fireObj = Instantiate(paintWall, firePos, Quaternion.Euler(new Vector3(0,0,90f))) as Rigidbody2D;
+			Rigidbody2D fireObj = Instantiate(paintWall, firePos, Quaternion.Euler(new Vector3(0,0,0))) as Rigidbody2D;
 			fireObj.isKinematic = true;
 			cooldown = Time.time + 6;
 		}	
 		else
 		{
 			Vector3 firePos = transform.position + new Vector3(-5,1,0);
-			Rigidbody2D fireObj = Instantiate (paintWall, firePos, Quaternion.Euler (new Vector3(0,0,90f))) as Rigidbody2D;
+			Rigidbody2D fireObj = Instantiate (paintWall, firePos, Quaternion.Euler (new Vector3(0,0,0))) as Rigidbody2D;
 			fireObj.isKinematic = true;
 			cooldown = Time.time + 6;
 		}
@@ -325,6 +326,7 @@ public class PlayerScript : MonoBehaviour
 	
 	void ability_Green()
 	{
+		if (onMovingPlatform) return;
 		if (Input.GetKey (KeyCode.UpArrow))
 		{
 			Collider2D[] warpDash = Physics2D.OverlapCircleAll (transform.position, 30f);
@@ -370,7 +372,7 @@ public class PlayerScript : MonoBehaviour
 			//fireObj.isKinematic = true;
 			transform.position += new Vector3 (0, -25, 0);
 		} 
-		else if (Input.GetKey (KeyCode.LeftArrow))
+		else if (!facingRight)
 		{
 			Collider2D[] warpDash = Physics2D.OverlapCircleAll (transform.position, 30f);
 			
@@ -426,7 +428,9 @@ public class PlayerScript : MonoBehaviour
 			rigidbody2D.AddForce (new Vector2 (0, 2200f));
 			Vector3 pos = (Vector3)transform.position;
 			bubbleShield = Instantiate (bubbleSH, pos, Quaternion.Euler(new Vector3(0,0,0))) as Rigidbody2D;
-			bubbleTime = Time.time + 4;
+
+			if (cheatMode) bubbleTime = Time.time + 60;
+			else bubbleTime = Time.time + 4;
 			cooldown = Time.time + 10;
 		}
 	}
@@ -450,14 +454,14 @@ public class PlayerScript : MonoBehaviour
 						{
 							eScript.follow = false;
 							eScript.frozen = true;
-							groundPoundBoom [i].rigidbody2D.gravityScale = -2;
-							groundPoundBoom [i].gameObject.rigidbody2D.drag = 1;
+							groundPoundBoom [i].rigidbody2D.gravityScale = -4;
+							groundPoundBoom [i].gameObject.rigidbody2D.drag = 2;
 							//groundPoundBoom [i].gameObject.rigidbody2D.velocity = pushForce;
 						}
 					}
 				}
 			}
-			groundPoundTime = Time.time + 2;
+			groundPoundTime = Time.time + 1;
 			cooldown = Time.time + 5;
 			groundPounding = true;
 			
@@ -473,21 +477,21 @@ public class PlayerScript : MonoBehaviour
 			else
 				fireObj = Instantiate(glove, firePos, Quaternion.Euler(new Vector3(180f,0,270f))) as Rigidbody2D;
 			fireObj.velocity = new Vector2(0,30);
-			cooldown = Time.time + (float)0.5;
+			cooldown = Time.time + (float)0.3;
 		}
 		else if(facingRight)
 		{
 			Vector3 firePos = transform.position + new Vector3(6,0,0);
 			Rigidbody2D fireObj = Instantiate(glove, firePos, Quaternion.Euler(new Vector3(0,0,0))) as Rigidbody2D;
 			fireObj.velocity = new Vector2(30,0);
-			cooldown = Time.time + (float)0.5;
+			cooldown = Time.time + (float)0.3;
 		}	
 		else if (!facingRight)
 		{
 			Vector3 firePos = transform.position + new Vector3(-6,0,0);
 			Rigidbody2D fireObj = Instantiate (glove, firePos, Quaternion.Euler (new Vector3(180f,0,180f))) as Rigidbody2D;
 			fireObj.velocity = new Vector2(-30,0);
-			cooldown = Time.time + (float)0.5;
+			cooldown = Time.time + (float)0.3;
 		}
 	}
 	
@@ -517,14 +521,18 @@ public class PlayerScript : MonoBehaviour
 	void OnTriggerExit2D(Collider2D col)
 	{
 		Debug.Log ("Exit " + col.gameObject.tag);
+		onMovingPlatform = false;
 		if (col.gameObject.tag == "rightleft") { Debug.Log ("!exit----------------------------------------"); col.transform.DetachChildren(); }
 	}
+
+	bool onMovingPlatform = false;
 	
 	void OnTriggerEnter2D(Collider2D col)
 	{
 		Debug.Log ("Enter " + col.gameObject.tag);
 		if (col.gameObject.tag == "rightleft" || col.gameObject.tag == "updown") 
 		{
+			onMovingPlatform = true;
 			this.transform.parent = col.transform;
 		}
 		//Debug.Log ("player trigger");
@@ -587,6 +595,7 @@ public class PlayerScript : MonoBehaviour
 	IEnumerator PlayerRestart()
 	{
 		//animate death
+		bubbleTime = 0;
 		AutoFade.LoadLevel ("ColorRoom", 5, 1, Color.black);
 		yield return new WaitForSeconds(1);
 		//Destroy (gameObject);
@@ -594,30 +603,35 @@ public class PlayerScript : MonoBehaviour
 	
 	IEnumerator Scene1Change()
 	{
+		bubbleTime = 0;
 		AutoFade.LoadLevel ("Level1", 3, 1, Color.black);
 		yield return new WaitForSeconds(3);
 		transform.position = new Vector3(0,0,0);
 	}
 	IEnumerator Scene2Change()
 	{
+		bubbleTime = 0;
 		AutoFade.LoadLevel ("Level2", 3, 1, Color.black);
 		yield return new WaitForSeconds(3);
 		transform.position = new Vector3(0,0,0);
 	}
 	IEnumerator Scene3Change()
 	{
+		bubbleTime = 0;
 		AutoFade.LoadLevel ("Level3", 3, 1, Color.black);
 		yield return new WaitForSeconds(3);
 		transform.position = new Vector3(0,0,0);
 	}
 	IEnumerator Scene4Change()
 	{
+		bubbleTime = 0;
 		AutoFade.LoadLevel ("Level4", 3, 1, Color.black);
 		yield return new WaitForSeconds(3);
 		transform.position = new Vector3(0,0,0);
 	}
 	IEnumerator Scene5Change()
 	{
+		bubbleTime = 0;
 		AutoFade.LoadLevel ("Level5", 3, 1, Color.black);
 		yield return new WaitForSeconds(3);
 		transform.position = new Vector3(0,0,0);
