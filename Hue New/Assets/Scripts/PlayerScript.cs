@@ -513,9 +513,20 @@ public class PlayerScript : MonoBehaviour
 		}
 
 	}
+
+	void OnTriggerExit2D(Collider2D col)
+	{
+		Debug.Log ("Exit " + col.gameObject.tag);
+		if (col.gameObject.tag == "rightleft") { Debug.Log ("!exit----------------------------------------"); col.transform.DetachChildren(); }
+	}
 	
 	void OnTriggerEnter2D(Collider2D col)
 	{
+		Debug.Log ("Enter " + col.gameObject.tag);
+		if (col.gameObject.tag == "rightleft" || col.gameObject.tag == "updown") 
+		{
+			this.transform.parent = col.transform;
+		}
 		//Debug.Log ("player trigger");
 		//changes color when passing through the color object
 		int c = color;
