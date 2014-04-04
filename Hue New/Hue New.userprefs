@@ -1,10 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PlayerScript.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\ProjectileScript.cs">
     <Files>
-      <File FileName="Assets\Scripts\PlayerScript.cs" Line="320" Column="94" />
-      <File FileName="Assets\Scripts\ProjectileScript.cs" Line="27" Column="99" />
-      <File FileName="Assets\Scripts\EnemyScript.cs" Line="74" Column="78" />
+      <File FileName="Assets\Scripts\EnemyScript.cs" Line="174" Column="1" />
+      <File FileName="Assets\Scripts\ProjectileScript.cs" Line="44" Column="9" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

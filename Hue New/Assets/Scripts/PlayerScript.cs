@@ -502,20 +502,23 @@ public class PlayerScript : MonoBehaviour
 		playScale.x *= -1;
 		transform.localScale = playScale;
 	}
+
+	void death()
+	{
+		AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().death,transform.position);
+		alive = false;
+		GameObject.FindWithTag("MainCamera").GetComponent<CameraFollow>().enabled = false;
+		this.rigidbody2D.isKinematic = true;
+		this.GetComponent<PlayerScript>().enabled = false;
+		//animate death
+		StartCoroutine("PlayerRestart");
+	}
 	
 	void OnCollisionEnter2D(Collision2D col)
 	{
-		if (!cheatMode && col.gameObject.tag == "Enemy" && col.gameObject.rigidbody2D.isKinematic == false && alive)
-		{
-			AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().death,transform.position);
-			alive = false;
-			GameObject.FindWithTag("MainCamera").GetComponent<CameraFollow>().enabled = false;
-			this.rigidbody2D.isKinematic = true;
-			this.GetComponent<PlayerScript>().enabled = false;
-			//animate death
-			StartCoroutine("PlayerRestart");
-		}
-
+		Debug.Log ("player collided:" + col.gameObject.tag);
+		if (!cheatMode && col.gameObject.tag == "Projectile") { Debug.Log ("projectile"); Destroy(col.gameObject); death(); }
+		if (!cheatMode && col.gameObject.tag == "Enemy" && col.gameObject.rigidbody2D.isKinematic == false && alive) death();
 	}
 
 	void OnTriggerExit2D(Collider2D col)

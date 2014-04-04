@@ -21,10 +21,10 @@ public class EnemyScript : MonoBehaviour
 	public bool walker = false;
 	public bool shooter = false;
 	public bool frozen = false;
-	//public bool jumper = false;
+	//public bool jumper = fals
 	
 	//freeze & groundPound related
-	public Rigidbody2D freeze;
+	public Rigidbody2D bullet;
 	public Sprite frozenPlatform;
 	private SpriteRenderer myRenderer;
 
@@ -75,22 +75,24 @@ public class EnemyScript : MonoBehaviour
 			if (pScript.cheatMode != true) Destroy(col.gameObject);
 			Destroy(gameObject);
 		}
-		if (col.gameObject.tag == "Projectile") 
-		{
-			Destroy(col.gameObject);
-			Destroy(gameObject);
-		}
 	}
 	void enemy_AI()
 	{
 		if (shooter && cooldown <= Time.time)
 		{
-			//this instantly kills the player? 
-			/*
-			Vector3 firePos = this.transform.position + new Vector3 (0, 5, 0);
-			Rigidbody2D fireObj = Instantiate (freeze, firePos, Quaternion.Euler (new Vector3 (0, 5, 0))) as Rigidbody2D;
-			fireObj.velocity = new Vector2 (0, 15);
-			cooldown = Time.time + 3;*/
+			if (facingRight)
+			{
+				Vector3 firePos = this.transform.position + new Vector3 (5, 0, 0);
+				Rigidbody2D fireObj = (Rigidbody2D)Instantiate (bullet, firePos, Quaternion.Euler (new Vector3 (0, 5, 0)));
+				fireObj.velocity = new Vector2 (15, 0);
+			}
+			else if (!facingRight)
+			{
+				Vector3 firePos = this.transform.position + new Vector3 (-5, 0, 0);
+				Rigidbody2D fireObj = (Rigidbody2D)Instantiate (bullet, firePos, Quaternion.Euler (new Vector3 (0, 5, 0)));
+				fireObj.velocity = new Vector2 (-15, 0);
+			}
+			cooldown = Time.time + 2;
 		}
 		
 		if (follow && !frozen)

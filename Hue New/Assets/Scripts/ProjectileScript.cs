@@ -37,18 +37,11 @@ public class ProjectileScript : MonoBehaviour
 		if (gameObject.tag == "Orange" && col.gameObject.tag == "Player") { Debug.Log ("Orange player"); Destroy(gameObject); }
 		else if (gameObject.tag == "Orange") this.rigidbody2D.isKinematic = true;
 
-		else if (gameObject.tag == "Purple" && col.gameObject.tag == "Stage") { Debug.Log ("glove wall"); Destroy(gameObject); }
-		if (gameObject.tag == "Projectile"||
-		    gameObject.tag == "Blue"||gameObject.tag == "Purple") { /*do nothing*/}
-		
-
-		
-		/*if (col.gameObject.tag == "Player")
-		{
-			//player shot himself condition
-			Debug.Log ("player hit own bullet");
-		} */
-		
+		else if (gameObject.tag == "Purple" && (col.gameObject.tag == "Stage" || col.gameObject.tag == "Floor")) Destroy(gameObject);
+		else if (gameObject.tag == "Projectile" && ( col.gameObject.tag == "Stage" || col.gameObject.tag == "Floor" || col.gameObject.tag == "Yellow")) Destroy(gameObject);
+		else if (gameObject.tag == "Projectile" && col.gameObject.tag == "Purple") { Destroy(col.gameObject); Destroy(gameObject); }  
+		else if (gameObject.tag == "Projectile" && col.gameObject.tag == "Orange") Destroy(col.gameObject);
+		//test
 		//make grenades go boom
 		if (gameObject.tag == "Grenade")
 		{
