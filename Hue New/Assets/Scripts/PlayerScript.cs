@@ -470,7 +470,7 @@ public class PlayerScript : MonoBehaviour
 		
 		else if(Input.GetKey(KeyCode.UpArrow))
 		{
-			Vector3 firePos = transform.position + new Vector3(0,6,0);
+			Vector3 firePos = transform.position + new Vector3(0,7,0);
 			Rigidbody2D fireObj;
 			if(facingRight)
 				fireObj = Instantiate(glove, firePos, Quaternion.Euler(new Vector3(0,0,90f))) as Rigidbody2D;

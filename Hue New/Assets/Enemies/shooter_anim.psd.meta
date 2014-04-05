@@ -1,0 +1,94 @@
+fileFormatVersion: 2
+guid: 4cdd0e39b94037b428ae1174bc3e1310
+TextureImporter:
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings:
+  - buildTarget: iPhone
+    maxTextureSize: 1024
+    textureFormat: -2
+    compressionQuality: 50
+  spriteSheet:
+    sprites:
+    - name: shooter_anim_0
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 78
+        width: 432
+        height: 432
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: shooter_anim_1
+      rect:
+        serializedVersion: 2
+        x: 1171
+        y: 100
+        width: 430
+        height: 431
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: shooter_anim_2
+      rect:
+        serializedVersion: 2
+        x: 1906
+        y: 95
+        width: 446
+        height: 432
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: shooter_anim_3
+      rect:
+        serializedVersion: 2
+        x: 2749
+        y: 95
+        width: 430
+        height: 432
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: shooter_anim_4
+      rect:
+        serializedVersion: 2
+        x: 3481
+        y: 91
+        width: 478
+        height: 432
+      alignment: 0
+      pivot: {x: .5, y: .5}
+  spritePackingTag: 
+  userData: 
