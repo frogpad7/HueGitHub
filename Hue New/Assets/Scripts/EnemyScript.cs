@@ -81,6 +81,7 @@ public class EnemyScript : MonoBehaviour
 	}
 	void enemy_AI()
 	{
+		Shoot ();
 		if (follow && !frozen)
 		{
 			Vector3 dir = Vector3.Normalize (GameObject.FindWithTag ("Player").transform.position - this.transform.position) * .1f;
@@ -109,8 +110,9 @@ public class EnemyScript : MonoBehaviour
 		}
 	}
 
-	void Shoot(){
-		if (shooter)// && cooldown <= Time.time)
+	void Shoot()
+	{
+		if (shooter && cooldown <= Time.time)
 		{
 			if (facingRight)
 			{
@@ -124,7 +126,7 @@ public class EnemyScript : MonoBehaviour
 				Rigidbody2D fireObj = (Rigidbody2D)Instantiate (bullet, firePos, Quaternion.Euler (new Vector3 (0, 5, 0)));
 				fireObj.velocity = new Vector2 (-15, 0);
 			}
-			//cooldown = Time.time + 2;
+			cooldown = Time.time + 2;
 		}
 	}
 
