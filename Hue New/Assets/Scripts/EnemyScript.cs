@@ -12,6 +12,7 @@ public class EnemyScript : MonoBehaviour
 	private int direction;
 	private float cooldown = 0;
 	public float speed = 0;
+//	private float initSpeed;
 	private float lifetime = 0;
 
 	bool facingRight = false;
@@ -34,11 +35,14 @@ public class EnemyScript : MonoBehaviour
 
 	void Start () 
 	{
+//		initSpeed = speed;
+
 		if(gameObject.tag == "Enemy") anim = GetComponent<Animator> ();
 		initialPosition = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
 		direction = dir;
 		myRenderer = gameObject.GetComponent<SpriteRenderer>();
 
+//		if (follow)		speed = 0;
 		if (!faceL)     Flip ();
 		if (walker) 	rigidbody2D.gravityScale=1; 
 		else			rigidbody2D.gravityScale=0;
@@ -54,7 +58,6 @@ public class EnemyScript : MonoBehaviour
 	
 	void OnCollisionEnter2D(Collision2D col)
 	{
-
 		if (frozen) return;
 		
 		else if (col.gameObject.tag == "Yellow") 	changeDirection();
@@ -68,10 +71,16 @@ public class EnemyScript : MonoBehaviour
 		} 
 		//if 		(col.gameObject.tag == "Stage") 	changeDirection();
 	}
-	
-	//for dash and bubble shield
+
 	void OnTriggerEnter2D(Collider2D col)
 	{
+		//For allowing follow enemies to move when player is in range
+//		if (follow) {
+//			if (col.gameObject.tag == "Player")
+//				speed = initSpeed;
+//		}
+
+		//for dash and bubble shield
 		if (col.gameObject.tag == "Blue") 
 		{
 			PlayerScript pScript = GameObject.FindWithTag("Player").GetComponent<PlayerScript>();
@@ -79,6 +88,15 @@ public class EnemyScript : MonoBehaviour
 			Destroy(gameObject);
 		}
 	}
+
+	//For stopping follow enemies from moving when player is out of range
+//	void OnTriggerExit2D(Collider2D col) {
+//		if (follow) {
+//			if (col.gameObject.tag == "Player")
+//				speed = 0;
+//		}
+//	}
+
 	void enemy_AI()
 	{
 		Shoot ();
