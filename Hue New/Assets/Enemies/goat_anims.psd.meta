@@ -48,55 +48,37 @@ TextureImporter:
     - name: goat_anims_0
       rect:
         serializedVersion: 2
-        x: 260
-        y: 1029
-        width: 8
-        height: 14
+        x: 120
+        y: 390
+        width: 813
+        height: 824
       alignment: 0
-      pivot: {x: 0, y: 0}
-    - name: goat_anims_1
+      pivot: {x: .5, y: .5}
+    - name: goat_anims_10
       rect:
         serializedVersion: 2
-        x: 1298
-        y: 1016
-        width: 7
-        height: 14
+        x: 1165
+        y: 396
+        width: 806
+        height: 800
       alignment: 0
-      pivot: {x: 0, y: 0}
-    - name: goat_anims_2
+      pivot: {x: .5, y: .5}
+    - name: goat_anims_13
       rect:
         serializedVersion: 2
-        x: 2411
-        y: 1003
-        width: 8
-        height: 12
+        x: 2288
+        y: 402
+        width: 812
+        height: 788
       alignment: 0
-      pivot: {x: 0, y: 0}
-    - name: goat_anims_3
+      pivot: {x: .5, y: .5}
+    - name: goat_anims_15
       rect:
         serializedVersion: 2
-        x: 3462
-        y: 1037
-        width: 8
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-    - name: goat_anims_4
-      rect:
-        serializedVersion: 2
-        x: 1688
-        y: 465
-        width: 4
-        height: 4
-      alignment: 0
-      pivot: {x: 0, y: 0}
-    - name: goat_anims_5
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 383
-        width: 849
-        height: 855
+        x: 3333
+        y: 390
+        width: 812
+        height: 848
       alignment: 0
       pivot: {x: .5, y: .5}
   spritePackingTag: 
