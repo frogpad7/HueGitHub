@@ -17,6 +17,7 @@ public class PlayerScript : MonoBehaviour
 	bool flying = false;
 	float move;
 	float moveY;
+	int foot;
 	
 	GameObject audio;
 	Animator anim;
@@ -79,6 +80,22 @@ public class PlayerScript : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.LeftShift) && cooldown <= Time.time) 
 		{
 			anim.SetTrigger("Shooting");
+			anim.SetInteger ("Foot",foot);
+			/*if(move > 0 && grounded){
+				if(color == 1)
+					anim.Play("",1);
+				if(color == 2)
+					anim.Play("",1);
+				if(color == 3)
+					anim.Play("",1);
+				if(color == 4)
+					anim.Play("",1);
+				if(color == 5)
+					anim.Play("",1);
+				if(color == 6)
+					anim.Play("",1);
+			}*/
+
 			if     (color == 1) ability_Red();
 			else if(color == 2) ability_Orange();
 			else if(color == 3) ability_Yellow();
@@ -513,7 +530,7 @@ public class PlayerScript : MonoBehaviour
 		//animate death
 		StartCoroutine("PlayerRestart");
 	}
-	
+
 	void OnCollisionEnter2D(Collision2D col)
 	{
 		Debug.Log ("player collided:" + col.gameObject.tag);
@@ -601,7 +618,7 @@ public class PlayerScript : MonoBehaviour
 		bubbleTime = 0;
 		AutoFade.LoadLevel ("ColorRoom", 5, 1, Color.black);
 		yield return new WaitForSeconds(1);
-		//Destroy (gameObject);
+		Destroy (gameObject);
 	}
 	
 	IEnumerator Scene1Change()
@@ -638,5 +655,17 @@ public class PlayerScript : MonoBehaviour
 		AutoFade.LoadLevel ("Level5", 3, 1, Color.black);
 		yield return new WaitForSeconds(3);
 		transform.position = new Vector3(0,0,0);
+	}
+
+	void CenterFoot(){
+		foot = 0;
+	}
+
+	void RightFoot(){
+		foot = 1;
+	}
+
+	void LeftFoot(){
+		foot = 2;
 	}
 }
