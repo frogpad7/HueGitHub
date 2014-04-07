@@ -20,30 +20,37 @@ public class ProjectileScript : MonoBehaviour
 		grenadeExploding = false;
 		camera = GameObject.FindGameObjectWithTag("MainCamera").transform;
 		
-		if 		(gameObject.tag == "Grenade")	{ Debug.Log ("Grenade create"); 	lifetime = Time.time + 3; }
-		else if (gameObject.tag == "Orange") 	{ Debug.Log ("Orange create"); 		lifetime = Time.time + 10; }
-		else if (gameObject.tag == "Yellow") 	{ Debug.Log ("Platform create"); 	lifetime = Time.time + 6; }
-		else if (gameObject.tag == "Green") 	{ Debug.Log ("Dash create"); 		lifetime = Time.time + 2; }
-		else if (gameObject.tag == "Blue") 		{ Debug.Log ("Bubble create"); 		lifetime = Time.time + 1000; }
-		else if (gameObject.tag == "Purple") 	{ Debug.Log ("Glove create"); 		lifetime = Time.time + (float)0.5; }
+		if 		(gameObject.tag == "Grenade")	lifetime = Time.time + 3;
+		else if (gameObject.tag == "Orange") 	lifetime = Time.time + 10;
+		else if (gameObject.tag == "Yellow") 	lifetime = Time.time + 6;
+		else if (gameObject.tag == "Green") 	lifetime = Time.time + 2;
+		else if (gameObject.tag == "Blue") 		lifetime = Time.time + 1000;
+		else if (gameObject.tag == "Purple") 	lifetime = Time.time + (float)0.5;
 		else lifetime = Time.time + 10;
 	}
 	
 	void OnCollisionEnter2D(Collision2D col)
 	{
-		if (gameObject.tag == "Purple" && col.gameObject.tag == "Player") { Debug.Log ("glove player"); Destroy(gameObject); }
+		if (gameObject.tag == "Projectile")
+		{
+			if (col.gameObject.tag == "Projectile") { Destroy(col.gameObject); Destroy(col.gameObject); }
+			else if (col.gameObject.tag == "Orange") Destroy(col.gameObject);
+			if (col.gameObject.tag == "Stage" || col.gameObject.tag == "Floor" || col.gameObject.tag == "Yellow") Destroy(gameObject);
+			if (col.gameObject.tag == "Projectile"  || col.gameObject.tag == "Purple") { Destroy(col.gameObject); Destroy(gameObject); }  
+		}
 
-		//ORANGE
-		if (gameObject.tag == "Orange" && col.gameObject.tag == "Player") { Debug.Log ("Orange player"); Destroy(gameObject); }
+		//player shot himself in the face condition
+		else if (col.gameObject.tag == "Player")
+		{
+			if (gameObject.tag == "Purple" || gameObject.tag == "Orange" ) Destroy(gameObject);
+		}
+
 		else if (gameObject.tag == "Orange") this.rigidbody2D.isKinematic = true;
-
 		else if (gameObject.tag == "Purple" && (col.gameObject.tag == "Stage" || col.gameObject.tag == "Floor")) Destroy(gameObject);
-		else if (gameObject.tag == "Projectile" && ( col.gameObject.tag == "Stage" || col.gameObject.tag == "Floor" || col.gameObject.tag == "Yellow")) Destroy(gameObject);
-		else if (gameObject.tag == "Projectile" && col.gameObject.tag == "Purple") { Destroy(col.gameObject); Destroy(gameObject); }  
-		else if (gameObject.tag == "Projectile" && col.gameObject.tag == "Orange") Destroy(col.gameObject);
+	
 		//test
 		//make grenades go boom
-		if (gameObject.tag == "Grenade")
+		else if (gameObject.tag == "Grenade")
 		{
 			if(col.gameObject.tag == "Enemy")
 			{
@@ -51,9 +58,7 @@ public class ProjectileScript : MonoBehaviour
 				lifetime = Time.time + (float)0.5;
 				grenadeExploding = true;
 			}
-			//GameObject.FindWithTag("Backdrop").GetComponent<SplatterScript>().Splat (red,transform.position);
 		}
-		
 	}
 	
 	// Update is called once per frame

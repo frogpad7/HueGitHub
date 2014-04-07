@@ -3,29 +3,36 @@ using System.Collections;
 
 public class PlayerScript : MonoBehaviour 
 {
-	public float maxSpeed = 20;
-	bool facingRight = true;
-	public bool cheatMode = false;
-	bool isDoubleJumping = false;
-	bool alive = true;
-	//looks to play land sound
-	bool landed = true;
+	//physics and attributes
 	bool grounded = true;
-	bool fBlocked = true;
 	float groundRad = 0.1f;
-	//controls bubble ability when in air & not in jump control
+	bool fBlocked = true;
 	bool flying = false;
+	public float maxSpeed = 20;
+	bool alive = true;
 	float move;
 	float moveY;
-	int foot;
-	
-	GameObject audio;
-	Animator anim;
 	int color = 0;
 	float cooldown = 0;
 	float bubbleTime = 0;
-	
-	//public Rigidbody2D backdrop;
+	bool onMovingPlatform = false;
+
+	//audio
+	GameObject audio;
+	int foot;
+
+	//animation
+	bool facingRight = true;
+	Animator anim;
+
+	//cheat tools
+	public bool cheatMode = false;
+	bool isDoubleJumping = false;
+
+	//looks to play land sound
+	bool landed = true;
+
+	//ridgidbodies
 	public Rigidbody2D ball;
 	public Rigidbody2D grenade;
 	public Rigidbody2D freeze;
@@ -35,9 +42,9 @@ public class PlayerScript : MonoBehaviour
 	public Rigidbody2D bubbleSH;
 	public Rigidbody2D glove;
 	public Sprite groundPoundPlatform;
-	
-	Rigidbody2D bubbleShield;
-	
+	private Rigidbody2D bubbleShield;
+
+	//transforms
 	public Transform abilityPos;
 	public Transform groundCheck;
 	public Transform frontCheck;
@@ -60,14 +67,14 @@ public class PlayerScript : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		inputProc_devCheats();		//debugging color change & double jump
+		inputProc_devCheats();				//debugging color change & double jump
 
-		inputProc_movement();		//arrow key controls
-		inputProc_jump();			//jumping controls
-		inputProc_ability();		//ability use button
+		inputProc_movement();				//arrow key controls
+		inputProc_jump();					//jumping controls
+		inputProc_ability();				//ability use button
 		
-		ability_bubbleShield();		//fly if we have a bubble
-		ability_groundPound();		//check to see if we're pounding
+		ability_bubbleShield();				//fly if we have a bubble
+		ability_groundPound();				//check to see if we're pounding
 		
 		//flip the player sprite
 		if (move > 0 && !facingRight) 		Flip ();
@@ -108,13 +115,16 @@ public class PlayerScript : MonoBehaviour
 	void inputProc_movement()
 	{
 		move = Input.GetAxis("Horizontal");
-		if(fBlocked && facingRight && move > 0) move = 0;
-		if (fBlocked && !facingRight && move < 0) move = 0;
-		
 		moveY = Input.GetAxis("Vertical");
+
+		if (fBlocked)
+		{
+			if (facingRight && move > 0) move = 0;
+			else if (!facingRight && move < 0) move = 0;
+		}
+
 		float s = move * maxSpeed;
-		if (move < 0)
-			s *= -1;
+		if (move < 0) s *= -1;
 		anim.SetFloat("Speed", s);
 		anim.SetInteger ("Direction", Mathf.RoundToInt(moveY));
 		anim.SetBool ("FacingR", facingRight);
@@ -125,12 +135,15 @@ public class PlayerScript : MonoBehaviour
 	
 	void inputProc_devCheats()
 	{
+		//cheats on/off control
 		if (Input.GetKeyDown (KeyCode.Backspace))
 		{
 			AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().jump,transform.position);
 			if (cheatMode) cheatMode = false;
 			else cheatMode = true;
 		}
+
+		//if cheats are off, we're done here.
 		if (!cheatMode) return;
 
 		//color change cheat
@@ -145,7 +158,6 @@ public class PlayerScript : MonoBehaviour
 		{
 			rigidbody2D.AddForce (new Vector2 (0, 3500f));
 			isDoubleJumping = true;
-			//Debug.Log (isDoubleJumping);
 		}
 		cooldown = 0;
 	}
@@ -157,9 +169,6 @@ public class PlayerScript : MonoBehaviour
 		fBlocked = Physics2D.OverlapCircle(frontCheck.position, groundRad, whatIsGround);
 		anim.SetBool ("Grounded", grounded);
 
-		//make sure we can't triple jump
-		if (grounded && isDoubleJumping)  isDoubleJumping = false;
-		
 		//jumping from the ground, and reset the double jump flag
 		if (grounded && Input.GetKeyDown(KeyCode.Space)) 
 		{
@@ -173,44 +182,40 @@ public class PlayerScript : MonoBehaviour
 		if (grounded && !bubbleShield)			flying = false;
 		else if (!grounded && (bubbleShield))	flying = true;
 
-		if(grounded && !landed)
-			AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().land,transform.position);
-
+		if(grounded && !landed)	AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().land,transform.position);
 		landed = grounded;
 	}
 	
 	void ability_bubbleShield()
 	{
 		//make sure the bubble doesn't go running away
-		if (bubbleShield) bubbleShield.transform.position = rigidbody2D.transform.position;
-		
-		if(bubbleShield && flying)
+		if (bubbleShield) 
 		{
-			//bubble flight control
-			if (cheatMode) rigidbody2D.velocity = new Vector2((move * (float)2.5) * maxSpeed, (moveY * (float)2.5) * maxSpeed);
-			else rigidbody2D.velocity = new Vector2((move * (float)0.75) * maxSpeed, (moveY * (float)0.5) * maxSpeed);
+			bubbleShield.transform.position = rigidbody2D.transform.position;
+		
+			if(flying)
+			{
+				//bubble flight control
+				if (cheatMode) rigidbody2D.velocity = new Vector2((move * (float)2.5) * maxSpeed, (moveY * (float)2.5) * maxSpeed);
+				else rigidbody2D.velocity = new Vector2((move * (float)0.75) * maxSpeed, (moveY * (float)0.5) * maxSpeed);
+
+				if (!grounded && bubbleTime >= Time.time) gameObject.rigidbody2D.gravityScale = 0;
+				else if (bubbleTime < Time.time) 
+				{
+					Destroy(bubbleShield.gameObject);
+					bubbleShield = null;
+					flying = false;
+					gameObject.rigidbody2D.gravityScale = 1;
+				}
+				else gameObject.rigidbody2D.gravityScale = 1;
+			}
 		}
 		else
 		{
-			//moves player and the object held
+			//movemewnt for the player and the object held
 			rigidbody2D.velocity = new Vector2(move * maxSpeed, rigidbody2D.velocity.y);
 		}	
-		
 		//when we have a bubble active, this allows hover
-		if (color == 5 && bubbleShield && !grounded && flying && bubbleTime >= Time.time) 
-		{
-			gameObject.rigidbody2D.gravityScale = 0;
-		}
-		else if (bubbleShield && bubbleTime < Time.time) 
-		{
-			Debug.Log("Bubble Over!");
-			Destroy(bubbleShield.gameObject);
-			//splatter blue spray
-			bubbleShield = null;
-			flying = false;
-			gameObject.rigidbody2D.gravityScale = 1;
-		}
-		else gameObject.rigidbody2D.gravityScale = 1;
 	}
 	
 	void ability_groundPound()
@@ -534,28 +539,27 @@ public class PlayerScript : MonoBehaviour
 	void OnCollisionEnter2D(Collision2D col)
 	{
 		Debug.Log ("player collided:" + col.gameObject.tag);
-		if (!cheatMode && col.gameObject.tag == "Projectile") { Debug.Log ("projectile"); Destroy(col.gameObject); death(); }
-		if (!cheatMode && col.gameObject.tag == "Enemy" && col.gameObject.rigidbody2D.isKinematic == false && alive) death();
+		if (!cheatMode)
+		{
+			if (bubbleShield && col.gameObject.tag == "Projectile") { Destroy(col.gameObject); bubbleTime = 0; }
+			else if (col.gameObject.tag == "Projectile") { Destroy(col.gameObject); death(); }
+			else if (col.gameObject.tag == "Enemy" && col.gameObject.rigidbody2D.isKinematic == false && alive) death();
+		}
 	}
 
 	void OnTriggerExit2D(Collider2D col)
 	{
-		Debug.Log ("Exit " + col.gameObject.tag);
 		onMovingPlatform = false;
-		if (col.gameObject.tag == "rightleft") { Debug.Log ("!exit----------------------------------------"); col.transform.DetachChildren(); }
+		if (col.gameObject.tag == "rightleft") col.transform.DetachChildren();
 	}
 
-	bool onMovingPlatform = false;
-	
 	void OnTriggerEnter2D(Collider2D col)
 	{
-		Debug.Log ("Enter " + col.gameObject.tag);
 		if (col.gameObject.tag == "rightleft" || col.gameObject.tag == "updown") 
 		{
 			onMovingPlatform = true;
 			this.transform.parent = col.transform;
 		}
-		//Debug.Log ("player trigger");
 		//changes color when passing through the color object
 		int c = color;
 		if (col.gameObject.tag 		== "Red")		c = 1;
@@ -657,15 +661,7 @@ public class PlayerScript : MonoBehaviour
 		transform.position = new Vector3(0,0,0);
 	}
 
-	void CenterFoot(){
-		foot = 0;
-	}
-
-	void RightFoot(){
-		foot = 1;
-	}
-
-	void LeftFoot(){
-		foot = 2;
-	}
+	void CenterFoot(){ foot = 0; }
+	void RightFoot (){ foot = 1; }
+	void LeftFoot  (){ foot = 2; }
 }
