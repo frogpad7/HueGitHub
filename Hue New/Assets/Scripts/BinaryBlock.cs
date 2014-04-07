@@ -3,8 +3,8 @@ using System.Collections;
 
 public class BinaryBlock : MonoBehaviour {
 	
-	int respawnTotal = 600;
-	int respawnTimer = 0;
+	float respawnTotal = 10;
+	float respawnTimer = 0;
 
 	Vector3 initialPosition;
 	public Vector3 destinationParent = new Vector3(0, 0, 0);
@@ -40,7 +40,7 @@ public class BinaryBlock : MonoBehaviour {
 		//Check if in the destination position
 		if (destination == true) {
 			//Check if respawn timer has run out
-			if (respawnTimer == respawnTotal) {
+			if (respawnTimer >= respawnTotal) {
 				//Move back to initial position
 				this.transform.position = initialPosition;
 				destination = false;
@@ -49,7 +49,7 @@ public class BinaryBlock : MonoBehaviour {
 				respawnTimer = 0;
 			} else {
 				//Increase respawn timer
-				respawnTimer += 1;
+				respawnTimer += 1 * Time.deltaTime;
 			}
 		}
 	}
