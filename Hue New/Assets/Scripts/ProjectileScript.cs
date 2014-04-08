@@ -99,6 +99,7 @@ public class ProjectileScript : MonoBehaviour
 		{
 			Debug.Log ("grenade out of life");
 			Destroy (this.gameObject);
+			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (red, transform.position);
 		}
 		else if (lifetime < Time.time && !grenadeExploding) 
 		{ 
@@ -107,8 +108,6 @@ public class ProjectileScript : MonoBehaviour
 			{
 				lifetime = Time.time + (float)0.5;
 				grenadeExploding = true;
-				
-				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (red, transform.position);
 			} 
 			else if (gameObject.tag == "Orange")
 				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (orange, transform.position);
