@@ -12,7 +12,7 @@ public class EnemyScript : MonoBehaviour
 	private int direction;
 	private float cooldown = 0;
 	public float speed = 0;
-//	private float initSpeed;
+	public float initSpeed;
 	private float lifetime = 0;
 
 	bool facingRight = false;
@@ -38,14 +38,14 @@ public class EnemyScript : MonoBehaviour
 
 	void Start () 
 	{
-//		initSpeed = speed;
+		initSpeed = speed;
 
 		if(gameObject.tag == "Enemy") anim = GetComponent<Animator> ();
 		initialPosition = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
 		direction = dir;
 		myRenderer = gameObject.GetComponent<SpriteRenderer>();
 
-//		if (follow)		speed = 0;
+		if (follow)		speed = 0;
 		if (!faceL)     Flip ();
 		if (walker) 	rigidbody2D.gravityScale=1; 
 		else			rigidbody2D.gravityScale=0;
@@ -78,10 +78,10 @@ public class EnemyScript : MonoBehaviour
 	void OnTriggerEnter2D(Collider2D col)
 	{
 		//For allowing follow enemies to move when player is in range
-//		if (follow) {
-//			if (col.gameObject.tag == "Player")
-//				speed = initSpeed;
-//		}
+		if (follow) {
+			if (col.gameObject.tag == "Player")
+				speed = initSpeed;
+		}
 
 		//for dash and bubble shield
 		if (col.gameObject.tag == "Blue") 
@@ -93,12 +93,12 @@ public class EnemyScript : MonoBehaviour
 	}
 
 	//For stopping follow enemies from moving when player is out of range
-//	void OnTriggerExit2D(Collider2D col) {
-//		if (follow) {
-//			if (col.gameObject.tag == "Player")
-//				speed = 0;
-//		}
-//	}
+	void OnTriggerExit2D(Collider2D col) {
+		if (follow) {
+			if (col.gameObject.tag == "Player")
+				speed = 0;
+		}
+	}
 
 	void enemy_AI()
 	{
