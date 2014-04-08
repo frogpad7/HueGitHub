@@ -29,7 +29,7 @@ public class EnemyScript : MonoBehaviour
 	//freeze & groundPound related
 	public Rigidbody2D bullet;
 	public Sprite frozenPlatform;
-	private SpriteRenderer myRenderer;
+	SpriteRenderer myRenderer;
 
 	Animator anim;
 
@@ -43,7 +43,7 @@ public class EnemyScript : MonoBehaviour
 		if(gameObject.tag == "Enemy") anim = GetComponent<Animator> ();
 		initialPosition = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
 		direction = dir;
-		myRenderer = gameObject.GetComponent<SpriteRenderer>();
+		myRenderer = this.gameObject.GetComponent<SpriteRenderer>();
 
 //		if (follow)		speed = 0;
 		if (!faceL)     Flip ();
@@ -61,7 +61,7 @@ public class EnemyScript : MonoBehaviour
 	
 	void OnCollisionEnter2D(Collision2D col)
 	{
-		if (frozen) return;
+		if (frozen&&col.gameObject.tag!="Player") Destroy (col.gameObject);
 		
 		else if (col.gameObject.tag == "Yellow") 	changeDirection();
 		else if (col.gameObject.tag == "Orange") 	freezeEnemy(col);
@@ -169,18 +169,23 @@ public class EnemyScript : MonoBehaviour
 	{
 		lifetime = Time.time + 10;
 		frozen = true;
+		anim.SetBool ("Platform", false);
+		anim.SetBool ("Frozen", frozen);
 		this.rigidbody2D.isKinematic = true;
 		speed = 5;
-		myRenderer.sprite = pFreeze;
+		//myRenderer.sprite = pFreeze;
 	}
 	
 	void freezeEnemy(Collision2D col)
 	{
+		Debug.Log ("FREEZE");
 		this.rigidbody2D.isKinematic = true;
 		frozen = true;
+		anim.SetBool ("Platform", true);
+		anim.SetBool ("Frozen", frozen);
 		speed = 0;
 		lifetime = Time.time + 7;
-		myRenderer.sprite = oFreeze;
+		//myRenderer.sprite = oFreeze;
 		Destroy(col.gameObject);
 	}
 
@@ -188,6 +193,7 @@ public class EnemyScript : MonoBehaviour
 	{
 		this.rigidbody2D.isKinematic = false;
 		frozen = false;
+		anim.SetBool ("Frozen", frozen);
 		speed = 5;
 		//myRenderer.sprite = frozenPlatform;
 	}
