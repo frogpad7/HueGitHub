@@ -33,6 +33,9 @@ public class EnemyScript : MonoBehaviour
 
 	Animator anim;
 
+	public Sprite pFreeze;
+	public Sprite oFreeze;
+
 	void Start () 
 	{
 //		initSpeed = speed;
@@ -168,6 +171,7 @@ public class EnemyScript : MonoBehaviour
 		frozen = true;
 		this.rigidbody2D.isKinematic = true;
 		speed = 5;
+		myRenderer.sprite = pFreeze;
 	}
 	
 	void freezeEnemy(Collision2D col)
@@ -176,7 +180,7 @@ public class EnemyScript : MonoBehaviour
 		frozen = true;
 		speed = 0;
 		lifetime = Time.time + 7;
-		myRenderer.sprite = frozenPlatform;
+		myRenderer.sprite = oFreeze;
 		Destroy(col.gameObject);
 	}
 
@@ -185,7 +189,7 @@ public class EnemyScript : MonoBehaviour
 		this.rigidbody2D.isKinematic = false;
 		frozen = false;
 		speed = 5;
-		myRenderer.sprite = frozenPlatform;
+		//myRenderer.sprite = frozenPlatform;
 	}
 	
 	void Flip()
