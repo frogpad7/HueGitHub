@@ -3,12 +3,12 @@ guid: 34973bd2cf904814a980193728e72533
 MonoImporter:
   serializedVersion: 2
   defaultReferences:
-  - red: {fileID: 21300000, guid: 397836a47216e3c429a07fa077629f08, type: 3}
-  - orange: {fileID: 21300000, guid: 92e10d24c72399d4181737bae134670b, type: 3}
-  - yellow: {fileID: 21300000, guid: 86043ca00a9ff334cb7a4042da459727, type: 3}
-  - green: {fileID: 21300000, guid: 8d16adb4f9d47b440bea76163c45aaa0, type: 3}
-  - blue: {fileID: 21300000, guid: 850d8324b1aab79488eef5c423803e5a, type: 3}
-  - purple: {fileID: 21300000, guid: 41b0f4e726c206040ba47e6bb30ce5dc, type: 3}
+  - red: {fileID: 21300000, guid: 39498bc3aaa4a6e4798d204c7edbbdec, type: 3}
+  - orange: {fileID: 21300000, guid: 678c5e4bb24c9e74e8ca9672ee63a346, type: 3}
+  - yellow: {fileID: 21300000, guid: 56df355fac350eb40aea4224646a4db8, type: 3}
+  - green: {fileID: 21300000, guid: 1080dd44b76fbcf40b981b969f078c5e, type: 3}
+  - blue: {fileID: 21300000, guid: c55451828ff80a64189117664b6dcb15, type: 3}
+  - purple: {fileID: 21300000, guid: 3535ac8452c142b4f9b6ed42405e3ca5, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

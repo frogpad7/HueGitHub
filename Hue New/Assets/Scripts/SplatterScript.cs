@@ -3,6 +3,13 @@ using System.Collections;
 
 public class SplatterScript : MonoBehaviour {
 
+	public Sprite red;
+	public Sprite orange;
+	public Sprite yellow;
+	public Sprite green;
+	public Sprite blue;
+	public Sprite purple;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -23,17 +30,17 @@ public class SplatterScript : MonoBehaviour {
 		splat.AddComponent<SpriteRenderer> ();
 		splat.GetComponent<SpriteRenderer> ().sortingLayerName = "Canvas";
 		splat.GetComponent<SpriteRenderer> ().sprite = s;
-		if (s.name == "Block_Red")
+		if (s.name == "Red_Splatter")
 			splat.name = "Red";
-		if (s.name == "Block_Orange")
+		if (s.name == "Orange_Splatter")
 			splat.name = "Orange";
-		if (s.name == "Block_Yellow")
+		if (s.name == "Yellow_Splatter")
 			splat.name = "Yellow";
-		if (s.name == "Block_Green")
+		if (s.name == "Green_Splatter")
 			splat.name = "Green";
-		if (s.name == "Block_Blue")
+		if (s.name == "Blue_Splatter")
 			splat.name = "Blue";
-		if (s.name == "Block_Purple")
+		if (s.name == "Purple_Splatter")
 			splat.name = "Purple";
 		else
 			splat.name = "Unknown";

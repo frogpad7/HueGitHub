@@ -3,28 +3,36 @@ using System.Collections;
 
 public class PlayerScript : MonoBehaviour 
 {
-	public float maxSpeed = 20;
-	bool facingRight = true;
-	bool cheatMode = false;
-	bool isDoubleJumping = false;
-	bool alive = true;
-	//looks to play land sound
-	bool landed = true;
+	//physics and attributes
 	bool grounded = true;
-	bool fBlocked = true;
 	float groundRad = 0.1f;
-	//controls bubble ability when in air & not in jump control
+	bool fBlocked = true;
 	bool flying = false;
+	public float maxSpeed = 20;
+	bool alive = true;
 	float move;
 	float moveY;
-	
-	GameObject audio;
-	Animator anim;
 	int color = 0;
 	float cooldown = 0;
 	float bubbleTime = 0;
-	
-	//public Rigidbody2D backdrop;
+	bool onMovingPlatform = false;
+
+	//audio
+	GameObject audio;
+	int foot;
+
+	//animation
+	bool facingRight = true;
+	Animator anim;
+
+	//cheat tools
+	public bool cheatMode = false;
+	bool isDoubleJumping = false;
+
+	//looks to play land sound
+	bool landed = true;
+
+	//ridgidbodies
 	public Rigidbody2D ball;
 	public Rigidbody2D grenade;
 	public Rigidbody2D freeze;
@@ -34,9 +42,9 @@ public class PlayerScript : MonoBehaviour
 	public Rigidbody2D bubbleSH;
 	public Rigidbody2D glove;
 	public Sprite groundPoundPlatform;
-	
-	Rigidbody2D bubbleShield;
-	
+	private Rigidbody2D bubbleShield;
+
+	//transforms
 	public Transform abilityPos;
 	public Transform groundCheck;
 	public Transform frontCheck;
@@ -59,14 +67,14 @@ public class PlayerScript : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		inputProc_devCheats();		//debugging color change & double jump
+		inputProc_devCheats();				//debugging color change & double jump
 
-		inputProc_movement();		//arrow key controls
-		inputProc_jump();			//jumping controls
-		inputProc_ability();		//ability use button
+		inputProc_movement();				//arrow key controls
+		inputProc_jump();					//jumping controls
+		inputProc_ability();				//ability use button
 		
-		ability_bubbleShield();		//fly if we have a bubble
-		ability_groundPound();		//check to see if we're pounding
+		ability_bubbleShield();				//fly if we have a bubble
+		ability_groundPound();				//check to see if we're pounding
 		
 		//flip the player sprite
 		if (move > 0 && !facingRight) 		Flip ();
@@ -79,6 +87,22 @@ public class PlayerScript : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.LeftShift) && cooldown <= Time.time) 
 		{
 			anim.SetTrigger("Shooting");
+			anim.SetInteger ("Foot",foot);
+			/*if(move > 0 && grounded){
+				if(color == 1)
+					anim.Play("",1);
+				if(color == 2)
+					anim.Play("",1);
+				if(color == 3)
+					anim.Play("",1);
+				if(color == 4)
+					anim.Play("",1);
+				if(color == 5)
+					anim.Play("",1);
+				if(color == 6)
+					anim.Play("",1);
+			}*/
+
 			if     (color == 1) ability_Red();
 			else if(color == 2) ability_Orange();
 			else if(color == 3) ability_Yellow();
@@ -91,13 +115,16 @@ public class PlayerScript : MonoBehaviour
 	void inputProc_movement()
 	{
 		move = Input.GetAxis("Horizontal");
-		if(fBlocked && facingRight && move > 0) move = 0;
-		if (fBlocked && !facingRight && move < 0) move = 0;
-		
 		moveY = Input.GetAxis("Vertical");
+
+		if (fBlocked)
+		{
+			if (facingRight && move > 0) move = 0;
+			else if (!facingRight && move < 0) move = 0;
+		}
+
 		float s = move * maxSpeed;
-		if (move < 0)
-			s *= -1;
+		if (move < 0) s *= -1;
 		anim.SetFloat("Speed", s);
 		anim.SetInteger ("Direction", Mathf.RoundToInt(moveY));
 		anim.SetBool ("FacingR", facingRight);
@@ -108,12 +135,15 @@ public class PlayerScript : MonoBehaviour
 	
 	void inputProc_devCheats()
 	{
+		//cheats on/off control
 		if (Input.GetKeyDown (KeyCode.Backspace))
 		{
 			AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().jump,transform.position);
 			if (cheatMode) cheatMode = false;
 			else cheatMode = true;
 		}
+
+		//if cheats are off, we're done here.
 		if (!cheatMode) return;
 
 		//color change cheat
@@ -128,7 +158,6 @@ public class PlayerScript : MonoBehaviour
 		{
 			rigidbody2D.AddForce (new Vector2 (0, 3500f));
 			isDoubleJumping = true;
-			//Debug.Log (isDoubleJumping);
 		}
 		cooldown = 0;
 	}
@@ -140,9 +169,6 @@ public class PlayerScript : MonoBehaviour
 		fBlocked = Physics2D.OverlapCircle(frontCheck.position, groundRad, whatIsGround);
 		anim.SetBool ("Grounded", grounded);
 
-		//make sure we can't triple jump
-		if (grounded && isDoubleJumping)  isDoubleJumping = false;
-		
 		//jumping from the ground, and reset the double jump flag
 		if (grounded && Input.GetKeyDown(KeyCode.Space)) 
 		{
@@ -156,43 +182,40 @@ public class PlayerScript : MonoBehaviour
 		if (grounded && !bubbleShield)			flying = false;
 		else if (!grounded && (bubbleShield))	flying = true;
 
-		if(grounded && !landed)
-			AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().land,transform.position);
-
+		if(grounded && !landed)	AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().land,transform.position);
 		landed = grounded;
 	}
 	
 	void ability_bubbleShield()
 	{
 		//make sure the bubble doesn't go running away
-		if (bubbleShield) bubbleShield.transform.position = rigidbody2D.transform.position;
-		
-		if(bubbleShield && flying)
+		if (bubbleShield) 
 		{
-			//if we have a bubble shield, we can fly
-			rigidbody2D.velocity = new Vector2((move * (float)0.75) * maxSpeed, (moveY * (float)0.5) * maxSpeed);
+			bubbleShield.transform.position = rigidbody2D.transform.position;
+		
+			if(flying)
+			{
+				//bubble flight control
+				if (cheatMode) rigidbody2D.velocity = new Vector2((move * (float)2.5) * maxSpeed, (moveY * (float)2.5) * maxSpeed);
+				else rigidbody2D.velocity = new Vector2((move * (float)0.75) * maxSpeed, (moveY * (float)0.5) * maxSpeed);
+
+				if (!grounded && bubbleTime >= Time.time) gameObject.rigidbody2D.gravityScale = 0;
+				else if (bubbleTime < Time.time) 
+				{
+					Destroy(bubbleShield.gameObject);
+					bubbleShield = null;
+					flying = false;
+					gameObject.rigidbody2D.gravityScale = 1;
+				}
+				else gameObject.rigidbody2D.gravityScale = 1;
+			}
 		}
 		else
 		{
-			//moves player and the object held
+			//movemewnt for the player and the object held
 			rigidbody2D.velocity = new Vector2(move * maxSpeed, rigidbody2D.velocity.y);
 		}	
-		
 		//when we have a bubble active, this allows hover
-		if (color == 5 && bubbleShield && !grounded && flying && bubbleTime >= Time.time) 
-		{
-			gameObject.rigidbody2D.gravityScale = 0;
-		}
-		else if (bubbleShield && bubbleTime < Time.time) 
-		{
-			Debug.Log("Bubble Over!");
-			Destroy(bubbleShield.gameObject);
-			//splatter blue spray
-			bubbleShield = null;
-			flying = false;
-			gameObject.rigidbody2D.gravityScale = 1;
-		}
-		else gameObject.rigidbody2D.gravityScale = 1;
 	}
 	
 	void ability_groundPound()
@@ -296,27 +319,27 @@ public class PlayerScript : MonoBehaviour
 		{
 			Vector3 firePos;
 			firePos = transform.position + new Vector3(0,-2,0);
-			Rigidbody2D fireObj = Instantiate(paintWall, firePos, Quaternion.Euler(new Vector3(0,0,0))) as Rigidbody2D;
+			Rigidbody2D fireObj = Instantiate(paintWall, firePos, Quaternion.Euler(new Vector3(0,0,90f))) as Rigidbody2D;
 			cooldown = Time.time + 3;
 		}
 		else if(Input.GetKey(KeyCode.UpArrow))
 		{
 			Vector3 firePos = transform.position + new Vector3(0,5,0);
-			Rigidbody2D fireObj = Instantiate(paintWall, firePos, Quaternion.Euler(new Vector3(0,0,90f))) as Rigidbody2D;
+			Rigidbody2D fireObj = Instantiate(paintWall, firePos, Quaternion.Euler(new Vector3(0,0,0))) as Rigidbody2D;
 			fireObj.isKinematic = true;
 			cooldown = Time.time + 6;
 		}
 		else if(facingRight)
 		{
-			Vector3 firePos = transform.position + new Vector3(4,1,0);
-			Rigidbody2D fireObj = Instantiate(paintWall, firePos, Quaternion.Euler(new Vector3(0,0,90f))) as Rigidbody2D;
+			Vector3 firePos = transform.position + new Vector3(5,1,0);
+			Rigidbody2D fireObj = Instantiate(paintWall, firePos, Quaternion.Euler(new Vector3(0,0,0))) as Rigidbody2D;
 			fireObj.isKinematic = true;
 			cooldown = Time.time + 6;
 		}	
 		else
 		{
-			Vector3 firePos = transform.position + new Vector3(-4,1,0);
-			Rigidbody2D fireObj = Instantiate (paintWall, firePos, Quaternion.Euler (new Vector3(0,0,90f))) as Rigidbody2D;
+			Vector3 firePos = transform.position + new Vector3(-5,1,0);
+			Rigidbody2D fireObj = Instantiate (paintWall, firePos, Quaternion.Euler (new Vector3(0,0,0))) as Rigidbody2D;
 			fireObj.isKinematic = true;
 			cooldown = Time.time + 6;
 		}
@@ -325,6 +348,7 @@ public class PlayerScript : MonoBehaviour
 	
 	void ability_Green()
 	{
+		if (onMovingPlatform) return;
 		if (Input.GetKey (KeyCode.UpArrow))
 		{
 			Collider2D[] warpDash = Physics2D.OverlapCircleAll (transform.position, 30f);
@@ -370,7 +394,7 @@ public class PlayerScript : MonoBehaviour
 			//fireObj.isKinematic = true;
 			transform.position += new Vector3 (0, -25, 0);
 		} 
-		else if (Input.GetKey (KeyCode.LeftArrow))
+		else if (!facingRight)
 		{
 			Collider2D[] warpDash = Physics2D.OverlapCircleAll (transform.position, 30f);
 			
@@ -426,7 +450,9 @@ public class PlayerScript : MonoBehaviour
 			rigidbody2D.AddForce (new Vector2 (0, 2200f));
 			Vector3 pos = (Vector3)transform.position;
 			bubbleShield = Instantiate (bubbleSH, pos, Quaternion.Euler(new Vector3(0,0,0))) as Rigidbody2D;
-			bubbleTime = Time.time + 4;
+
+			if (cheatMode) bubbleTime = Time.time + 60;
+			else bubbleTime = Time.time + 4;
 			cooldown = Time.time + 10;
 		}
 	}
@@ -450,14 +476,14 @@ public class PlayerScript : MonoBehaviour
 						{
 							eScript.follow = false;
 							eScript.frozen = true;
-							groundPoundBoom [i].rigidbody2D.gravityScale = -2;
-							groundPoundBoom [i].gameObject.rigidbody2D.drag = 1;
+							groundPoundBoom [i].rigidbody2D.gravityScale = -4;
+							groundPoundBoom [i].gameObject.rigidbody2D.drag = 2;
 							//groundPoundBoom [i].gameObject.rigidbody2D.velocity = pushForce;
 						}
 					}
 				}
 			}
-			groundPoundTime = Time.time + 2;
+			groundPoundTime = Time.time + 1;
 			cooldown = Time.time + 5;
 			groundPounding = true;
 			
@@ -466,24 +492,28 @@ public class PlayerScript : MonoBehaviour
 		
 		else if(Input.GetKey(KeyCode.UpArrow))
 		{
-			Vector3 firePos = transform.position + new Vector3(0,6,0);
-			Rigidbody2D fireObj = Instantiate(glove, firePos, Quaternion.Euler(new Vector3(0,0,90f))) as Rigidbody2D;
+			Vector3 firePos = transform.position + new Vector3(0,7,0);
+			Rigidbody2D fireObj;
+			if(facingRight)
+				fireObj = Instantiate(glove, firePos, Quaternion.Euler(new Vector3(0,0,90f))) as Rigidbody2D;
+			else
+				fireObj = Instantiate(glove, firePos, Quaternion.Euler(new Vector3(180f,0,270f))) as Rigidbody2D;
 			fireObj.velocity = new Vector2(0,30);
-			cooldown = Time.time + (float)0.5;
+			cooldown = Time.time + (float)0.3;
 		}
 		else if(facingRight)
 		{
 			Vector3 firePos = transform.position + new Vector3(6,0,0);
 			Rigidbody2D fireObj = Instantiate(glove, firePos, Quaternion.Euler(new Vector3(0,0,0))) as Rigidbody2D;
 			fireObj.velocity = new Vector2(30,0);
-			cooldown = Time.time + (float)0.5;
+			cooldown = Time.time + (float)0.3;
 		}	
 		else if (!facingRight)
 		{
 			Vector3 firePos = transform.position + new Vector3(-6,0,0);
-			Rigidbody2D fireObj = Instantiate (glove, firePos, Quaternion.Euler (new Vector3(0,0,180f))) as Rigidbody2D;
+			Rigidbody2D fireObj = Instantiate (glove, firePos, Quaternion.Euler (new Vector3(180f,0,180f))) as Rigidbody2D;
 			fireObj.velocity = new Vector2(-30,0);
-			cooldown = Time.time + (float)0.5;
+			cooldown = Time.time + (float)0.3;
 		}
 	}
 	
@@ -494,25 +524,42 @@ public class PlayerScript : MonoBehaviour
 		playScale.x *= -1;
 		transform.localScale = playScale;
 	}
-	
+
+	void death()
+	{
+		AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().death,transform.position);
+		alive = false;
+		GameObject.FindWithTag("MainCamera").GetComponent<CameraFollow>().enabled = false;
+		this.rigidbody2D.isKinematic = true;
+		this.GetComponent<PlayerScript>().enabled = false;
+		//animate death
+		StartCoroutine("PlayerRestart");
+	}
+
 	void OnCollisionEnter2D(Collision2D col)
 	{
-		if (!cheatMode && col.gameObject.tag == "Enemy" && col.gameObject.rigidbody2D.isKinematic == false && alive)
+		Debug.Log ("player collided:" + col.gameObject.tag);
+		if (!cheatMode)
 		{
-			AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().death,transform.position);
-			alive = false;
-			GameObject.FindWithTag("MainCamera").GetComponent<CameraFollow>().enabled = false;
-			this.rigidbody2D.isKinematic = true;
-			this.GetComponent<PlayerScript>().enabled = false;
-			//animate death
-			StartCoroutine("PlayerRestart");
+			if (bubbleShield && col.gameObject.tag == "Projectile") { Destroy(col.gameObject); bubbleTime = 0; }
+			else if (col.gameObject.tag == "Projectile") { Destroy(col.gameObject); death(); }
+			else if (col.gameObject.tag == "Enemy" && col.gameObject.rigidbody2D.isKinematic == false && alive) death();
 		}
-
 	}
-	
+
+	void OnTriggerExit2D(Collider2D col)
+	{
+		onMovingPlatform = false;
+		if (col.gameObject.tag == "rightleft") col.transform.DetachChildren();
+	}
+
 	void OnTriggerEnter2D(Collider2D col)
 	{
-		//Debug.Log ("player trigger");
+		if (col.gameObject.tag == "rightleft" || col.gameObject.tag == "updown") 
+		{
+			onMovingPlatform = true;
+			this.transform.parent = col.transform;
+		}
 		//changes color when passing through the color object
 		int c = color;
 		if (col.gameObject.tag 		== "Red")		c = 1;
@@ -572,39 +619,49 @@ public class PlayerScript : MonoBehaviour
 	IEnumerator PlayerRestart()
 	{
 		//animate death
+		bubbleTime = 0;
 		AutoFade.LoadLevel ("ColorRoom", 5, 1, Color.black);
 		yield return new WaitForSeconds(1);
-		//Destroy (gameObject);
+		Destroy (gameObject);
 	}
 	
 	IEnumerator Scene1Change()
 	{
+		bubbleTime = 0;
 		AutoFade.LoadLevel ("Level1", 3, 1, Color.black);
 		yield return new WaitForSeconds(3);
 		transform.position = new Vector3(0,0,0);
 	}
 	IEnumerator Scene2Change()
 	{
+		bubbleTime = 0;
 		AutoFade.LoadLevel ("Level2", 3, 1, Color.black);
 		yield return new WaitForSeconds(3);
 		transform.position = new Vector3(0,0,0);
 	}
 	IEnumerator Scene3Change()
 	{
+		bubbleTime = 0;
 		AutoFade.LoadLevel ("Level3", 3, 1, Color.black);
 		yield return new WaitForSeconds(3);
 		transform.position = new Vector3(0,0,0);
 	}
 	IEnumerator Scene4Change()
 	{
+		bubbleTime = 0;
 		AutoFade.LoadLevel ("Level4", 3, 1, Color.black);
 		yield return new WaitForSeconds(3);
 		transform.position = new Vector3(0,0,0);
 	}
 	IEnumerator Scene5Change()
 	{
+		bubbleTime = 0;
 		AutoFade.LoadLevel ("Level5", 3, 1, Color.black);
 		yield return new WaitForSeconds(3);
 		transform.position = new Vector3(0,0,0);
 	}
+
+	void CenterFoot(){ foot = 0; }
+	void RightFoot (){ foot = 1; }
+	void LeftFoot  (){ foot = 2; }
 }
