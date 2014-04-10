@@ -621,6 +621,7 @@ public class PlayerScript : MonoBehaviour
 		//animate death
 		bubbleTime = 0;
 		AutoFade.LoadLevel ("ColorRoom", 5, 1, Color.black);
+		PlayerPrefs.SetInt ("Level", 1);
 		yield return new WaitForSeconds(1);
 		Destroy (gameObject);
 	}
