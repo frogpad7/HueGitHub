@@ -21,7 +21,6 @@ public class SplatterScript : MonoBehaviour {
 	}
 
 	public void Splat(Sprite s, Vector3 pos){
-		Debug.Log ("SPLAT!!!");
 		//Vector3 center = gameObject.transform.position;
 		//center.z = 0.0f;
 		GameObject splat = new GameObject ();

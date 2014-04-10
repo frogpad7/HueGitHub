@@ -11,6 +11,7 @@ public class EnemyScript : MonoBehaviour
 	public int moveRange = 10; //0-stationary else-directional
 	private int direction;
 	private float cooldown = 0;
+	private bool isPlatform = false;
 	public float speed = 0;
 	public float initSpeed;
 	private float lifetime = 0;
@@ -57,7 +58,7 @@ public class EnemyScript : MonoBehaviour
 	{
 		if(gameObject.tag == "Enemy") anim.SetFloat ("Speed", speed);
 		if (!frozen && pScript.alive) enemy_AI();
-		if (lifetime <= Time.time && frozen) thaw();
+		if (lifetime <= Time.time && isPlatform) thaw();
 	}
 	
 	void OnCollisionEnter2D(Collision2D col)
@@ -163,18 +164,19 @@ public class EnemyScript : MonoBehaviour
 	}
 	public void groundPounded()
 	{
-		lifetime = Time.time + 10;
+		lifetime = Time.time + 6;
 		frozen = true;
-		anim.SetBool ("Platform", false);
-		anim.SetBool ("Frozen", frozen);
+		isPlatform = true;
 		this.rigidbody2D.isKinematic = true;
 		speed = 5;
-		//myRenderer.sprite = pFreeze;
+		anim.SetBool ("Platform", false);
+		anim.SetBool ("Frozen", frozen);
+
+
 	}
 	
 	void freezeEnemy(Collision2D col)
 	{
-		Debug.Log ("FREEZE");
 		this.rigidbody2D.isKinematic = true;
 		frozen = true;
 		anim.SetBool ("Platform", true);
@@ -191,6 +193,8 @@ public class EnemyScript : MonoBehaviour
 		frozen = false;
 		anim.SetBool ("Frozen", frozen);
 		speed = 5;
+		if (walker) this.rigidbody2D.gravityScale = 1;
+		isPlatform = false;
 		//myRenderer.sprite = frozenPlatform;
 	}
 	

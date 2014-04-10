@@ -228,16 +228,10 @@ public class PlayerScript : MonoBehaviour
 				if (groundPoundBoom [i].gameObject.rigidbody2D != null) 
 				{
 					EnemyScript eScript = groundPoundBoom[i].GetComponent<EnemyScript>();
-					if (groundPoundBoom [i].gameObject.rigidbody2D.gameObject.tag == "Enemy" && eScript.walker) 
+					if (groundPoundBoom [i].gameObject.rigidbody2D.gameObject.tag == "Enemy") 
 					{
 						groundPoundBoom[i].gameObject.rigidbody2D.velocity = new Vector3(0,0,0);
-						SpriteRenderer eRenderer = groundPoundBoom[i].GetComponent<SpriteRenderer>();
-						eRenderer.sprite = groundPoundPlatform;
-						
 						eScript.groundPounded();
-						
-						//groundPoundBoom[i].gameObject.rigidbody2D.isKinematic = true;
-						Debug.Log ("Enemy Stopping!");
 					}
 				}
 			}
@@ -359,7 +353,6 @@ public class PlayerScript : MonoBehaviour
 				{
 					if (warpDash[i].gameObject.rigidbody2D.gameObject.tag == "Enemy") 
 					{
-						Debug.Log ("Warpdash Detected Enemy");
 						if (Mathf.Abs(transform.position.x - warpDash[i].gameObject.transform.position.x)<= 2)
 							if (transform.position.y < warpDash[i].gameObject.transform.position.y) Destroy (warpDash[i].gameObject);
 					}
@@ -382,7 +375,6 @@ public class PlayerScript : MonoBehaviour
 				{
 					if (warpDash[i].gameObject.rigidbody2D.gameObject.tag == "Enemy") 
 					{
-						Debug.Log ("Warpdash Detected Enemy");
 						if (Mathf.Abs(transform.position.x - warpDash[i].gameObject.transform.position.x)<= 2)
 							if (transform.position.y > warpDash[i].gameObject.transform.position.y) Destroy (warpDash[i].gameObject);
 					}
@@ -404,7 +396,6 @@ public class PlayerScript : MonoBehaviour
 				{
 					if (warpDash[i].gameObject.rigidbody2D.gameObject.tag == "Enemy") 
 					{
-						Debug.Log ("Warpdash Detected Enemy");
 						if (Mathf.Abs(transform.position.y - warpDash[i].gameObject.transform.position.y)<= 2)
 							if (transform.position.x > warpDash[i].gameObject.transform.position.x) Destroy (warpDash[i].gameObject);
 					}
@@ -427,7 +418,6 @@ public class PlayerScript : MonoBehaviour
 				{
 					if (warpDash[i].gameObject.rigidbody2D.gameObject.tag == "Enemy") 
 					{
-						Debug.Log ("Warpdash Detected Enemy");
 						if (Mathf.Abs(transform.position.y - warpDash[i].gameObject.transform.position.y)<= 2)
 							if (transform.position.x < warpDash[i].gameObject.transform.position.x) Destroy (warpDash[i].gameObject);
 					}
@@ -474,20 +464,18 @@ public class PlayerScript : MonoBehaviour
 						EnemyScript eScript = groundPoundBoom[i].GetComponent<EnemyScript>();
 						if (eScript.walker)
 						{
-							eScript.follow = false;
 							eScript.frozen = true;
 							groundPoundBoom [i].rigidbody2D.gravityScale = -4;
 							groundPoundBoom [i].gameObject.rigidbody2D.drag = 2;
-							//groundPoundBoom [i].gameObject.rigidbody2D.velocity = pushForce;
 						}
+						else if (eScript.follow) eScript.frozen = true;
 					}
 				}
 			}
 			groundPoundTime = Time.time + 1;
-			cooldown = Time.time + 5;
+			cooldown = Time.time + 7;
 			groundPounding = true;
 			
-			Debug.Log("Time.time=" + Time.time + " gPT:" + groundPoundTime);
 		}
 		
 		else if(Input.GetKey(KeyCode.UpArrow))
@@ -538,7 +526,6 @@ public class PlayerScript : MonoBehaviour
 
 	void OnCollisionEnter2D(Collision2D col)
 	{
-		Debug.Log ("player collided:" + col.gameObject.tag);
 		if (!cheatMode)
 		{
 			if (flying && (col.gameObject.tag == "Projectile" || col.gameObject.tag == "Enemy")) { Destroy(col.gameObject); bubbleTime = 0; }
@@ -612,7 +599,6 @@ public class PlayerScript : MonoBehaviour
 			DontDestroyOnLoad (transform.FindChild("Audio"));
 			StartCoroutine("Scene5Change");
 		}
-		if (col.gameObject.tag == "Goal") 	Debug.Log ("Goal Reached");
 		//backdrop.transform.position = new Vector3(0,0,-10);
 	}
 	

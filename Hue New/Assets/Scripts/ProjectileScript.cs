@@ -85,11 +85,9 @@ public class ProjectileScript : MonoBehaviour
 					if (hit.rigidbody2D.gameObject.tag == "Player")
 					{
 						hit.rigidbody2D.AddForce ((hit.transform.position - gameObject.transform.position) * 20f);
-						Debug.Log ("Pushing!");
 					}
 					else if (hit.rigidbody2D.gameObject.tag == "Enemy")
 					{
-						Debug.Log("grenade blast hit enemy!");
 						Destroy(hit.rigidbody2D.gameObject);
 					}
 				}
@@ -120,11 +118,7 @@ public class ProjectileScript : MonoBehaviour
 			else if (gameObject.tag == "Purple")
 				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (purple, transform.position);
 			
-			if(!grenadeExploding) 
-			{
-				Debug.Log ("Player Weapon Dissipated"); 
-				Destroy (this.gameObject); 
-			}
+			if(!grenadeExploding) Destroy (this.gameObject); 
 		} 
 	}
 	
