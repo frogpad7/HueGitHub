@@ -528,10 +528,11 @@ public class PlayerScript : MonoBehaviour
 	{
 		if (!cheatMode)
 		{
-			if (flying && (col.gameObject.tag == "Projectile" || col.gameObject.tag == "Enemy")) { Destroy(col.gameObject); bubbleTime = 0; }
+			if (flying &(col.gameObject.tag == "Projectile" || col.gameObject.tag == "Enemy")) { Destroy(col.gameObject); bubbleTime = 0; }
 			else if (col.gameObject.tag == "Projectile") { Destroy(col.gameObject); death(); }
 			else if (col.gameObject.tag == "Enemy" && col.gameObject.rigidbody2D.isKinematic == false && alive) death();
 		}
+		else if (flying && col.gameObject.tag == "Enemy") Destroy(col.gameObject);
 	}
 
 	void OnTriggerExit2D(Collider2D col)
