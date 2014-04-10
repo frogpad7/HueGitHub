@@ -66,14 +66,9 @@ public class EnemyScript : MonoBehaviour
 		
 		else if (col.gameObject.tag == "Yellow") 	changeDirection();
 		else if (col.gameObject.tag == "Orange") 	freezeEnemy(col);
+		else if (col.gameObject.tag == "Purple") 	{ Destroy (gameObject); Destroy(col.gameObject); }
 		
-		if (col.gameObject.tag == "Projectile" || col.gameObject.tag == "Red" ||col.gameObject.tag == "Grenade"||
-		    col.gameObject.tag == "Blue" || col.gameObject.tag == "Purple") 
-		{
-			if (col.gameObject.tag != "Grenade") Destroy (col.gameObject);
-			//Destroy (gameObject);
-		} 
-		//if 		(col.gameObject.tag == "Stage") 	changeDirection();
+	//if 		(col.gameObject.tag == "Stage") 	changeDirection();
 	}
 
 	void OnTriggerEnter2D(Collider2D col)
