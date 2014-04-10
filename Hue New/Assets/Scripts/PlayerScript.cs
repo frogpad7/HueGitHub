@@ -9,7 +9,7 @@ public class PlayerScript : MonoBehaviour
 	bool fBlocked = true;
 	bool flying = false;
 	public float maxSpeed = 20;
-	bool alive = true;
+	public bool alive = true;
 	float move;
 	float moveY;
 	int color = 0;
@@ -541,7 +541,7 @@ public class PlayerScript : MonoBehaviour
 		Debug.Log ("player collided:" + col.gameObject.tag);
 		if (!cheatMode)
 		{
-			if (bubbleShield && col.gameObject.tag == "Projectile") { Destroy(col.gameObject); bubbleTime = 0; }
+			if (flying && (col.gameObject.tag == "Projectile" || col.gameObject.tag == "Enemy")) { Destroy(col.gameObject); bubbleTime = 0; }
 			else if (col.gameObject.tag == "Projectile") { Destroy(col.gameObject); death(); }
 			else if (col.gameObject.tag == "Enemy" && col.gameObject.rigidbody2D.isKinematic == false && alive) death();
 		}

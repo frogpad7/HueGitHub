@@ -30,6 +30,7 @@ public class EnemyScript : MonoBehaviour
 	public Rigidbody2D bullet;
 	public Sprite frozenPlatform;
 	SpriteRenderer myRenderer;
+	PlayerScript pScript;
 
 	Animator anim;
 
@@ -38,6 +39,7 @@ public class EnemyScript : MonoBehaviour
 
 	void Start () 
 	{
+		pScript = GameObject.FindWithTag("Player").GetComponent<PlayerScript>();
 		initSpeed = speed;
 
 		if(gameObject.tag == "Enemy") anim = GetComponent<Animator> ();
@@ -53,15 +55,14 @@ public class EnemyScript : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if(gameObject.tag == "Enemy")
-			anim.SetFloat ("Speed", speed);
-		if (!frozen) enemy_AI();
+		if(gameObject.tag == "Enemy") anim.SetFloat ("Speed", speed);
+		if (!frozen && pScript.alive) enemy_AI();
 		if (lifetime <= Time.time && frozen) thaw();
 	}
 	
 	void OnCollisionEnter2D(Collision2D col)
 	{
-		if (frozen&&col.gameObject.tag!="Player") Destroy (col.gameObject);
+		if (frozen && col.gameObject.tag != "Player") Destroy(col.gameObject);
 		
 		else if (col.gameObject.tag == "Yellow") 	changeDirection();
 		else if (col.gameObject.tag == "Orange") 	freezeEnemy(col);
@@ -70,7 +71,7 @@ public class EnemyScript : MonoBehaviour
 		    col.gameObject.tag == "Blue" || col.gameObject.tag == "Purple") 
 		{
 			if (col.gameObject.tag != "Grenade") Destroy (col.gameObject);
-			Destroy (gameObject);
+			//Destroy (gameObject);
 		} 
 		//if 		(col.gameObject.tag == "Stage") 	changeDirection();
 	}
@@ -86,9 +87,9 @@ public class EnemyScript : MonoBehaviour
 		//for dash and bubble shield
 		if (col.gameObject.tag == "Blue") 
 		{
-			PlayerScript pScript = GameObject.FindWithTag("Player").GetComponent<PlayerScript>();
+			/*PlayerScript pScript = GameObject.FindWithTag("Player").GetComponent<PlayerScript>();
 			if (pScript.cheatMode != true) Destroy(col.gameObject);
-			Destroy(gameObject);
+			Destroy(gameObject);*/
 		}
 	}
 
