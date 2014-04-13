@@ -3,7 +3,6 @@ using System.Collections;
 
 public class EnemyScript : MonoBehaviour 
 {
-
 	enum directions {LEFT=0, RIGHT=1, UP=2, DOWN=3};
 	
 	//status and attributes
