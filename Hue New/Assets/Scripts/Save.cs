@@ -48,7 +48,6 @@ public class Save : MonoBehaviour {
 					Objects[i].transform.position.x + "|" + Objects[i].transform.position.y + "|" +Objects[i].transform.position.z + "|"
 					+ ";";
 		}
-
 		FileOperations.WriteToFile("Saves/Save.isf", SaveString);
 	}
 	

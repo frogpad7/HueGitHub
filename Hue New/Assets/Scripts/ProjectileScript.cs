@@ -97,7 +97,7 @@ public class ProjectileScript : MonoBehaviour
 		{
 			Debug.Log ("grenade out of life");
 			Destroy (this.gameObject);
-			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (red, transform.position);
+			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (1, transform.position);
 		}
 		else if (lifetime < Time.time && !grenadeExploding) 
 		{ 
@@ -108,15 +108,15 @@ public class ProjectileScript : MonoBehaviour
 				grenadeExploding = true;
 			} 
 			else if (gameObject.tag == "Orange")
-				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (orange, transform.position);
+				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (2, transform.position);
 			else if (gameObject.tag == "Yellow")
-				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (yellow, transform.position);
+				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (3, transform.position);
 			else if (gameObject.tag == "Green")
-				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (green, transform.position);
+				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (4, transform.position);
 			else if (gameObject.tag == "Blue")
-				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (blue, transform.position);
+				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (5, transform.position);
 			else if (gameObject.tag == "Purple")
-				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (purple, transform.position);
+				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (6, transform.position);
 			
 			if(!grenadeExploding) Destroy (this.gameObject); 
 		} 
