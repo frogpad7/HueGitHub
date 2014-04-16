@@ -16,18 +16,17 @@ public class MenuButtonScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		/*if (PlayerPrefs.HasKey ("Color")) {
-			if (PlayerPrefs.GetInt ("Color") == 1)
-				hover = Color.red;
+		if (gameObject.name == "Continue") {
+			renderer.material.color = Color.black;
+			//DontDestroyOnLoad (gameObject);		
 		}
 		else
-			hover = Color.green;*/
+			mcs = GameObject.FindWithTag ("MainCamera").GetComponent<MenuCameraScript> ();
 
 		if(PlayerPrefs.HasKey("Level"))
 		   level = PlayerPrefs.GetInt ("Level");
 		else
 		   level = 1;
-		mcs = GameObject.FindWithTag ("MainCamera").GetComponent<MenuCameraScript> ();
 	}
 	
 	// Update is called once per frame
@@ -36,6 +35,7 @@ public class MenuButtonScript : MonoBehaviour {
 	}
 
 	void OnMouseEnter(){
+		Debug.Log ("FOUND YoU!!");
 		if (gameObject.name != "Pause") 
 		{
 			if (gameObject.name == "New")			
@@ -52,12 +52,16 @@ public class MenuButtonScript : MonoBehaviour {
 				renderer.material.color = Color.magenta;
 			if (gameObject.name == "Back")			
 				renderer.material.color = Color.black;
+			if(gameObject.name == "Continue")
+				renderer.material.color = Color.black;
 		}
 	}
 
 	void OnMouseExit(){
-		if(gameObject.name != "Pause")
-		renderer.material.color = Color.white;
+		if(gameObject.name != "Pause"||gameObject.name == "Continue")
+			renderer.material.color = Color.white;
+		if(gameObject.name == "Continue")
+			renderer.material.color = Color.black;
 	}
 
 	void OnMouseUp(){
@@ -74,8 +78,10 @@ public class MenuButtonScript : MonoBehaviour {
 			//pause.name = "Pause";
 			//DontDestroyOnLoad (pause);
 			pause.GetComponent<PauseScript> ().inuse = true;
+			//PauseFollow();
 			Application.LoadLevel (level + ((level - 1) * 2));
 			Screen.showCursor = false;
+			pause.GetComponent<PauseScript>().findPlayer = true;
 		} if (gameObject.name == "Quit") {
 			Application.Quit ();
 			//PlayerPrefs.SetInt ("Color", 1);
@@ -89,8 +95,16 @@ public class MenuButtonScript : MonoBehaviour {
 		} if (gameObject.name == "Back") {
 			mcs.changeLoc(origin);
 		}
-
+		if (gameObject.name == "Continue") {
+			pause.GetComponent<PauseScript>().Unpause();
+		}
 			//Debug.Log ("I live for a pause");
 			//Instantiate ();
+	}
+
+	IEnumerator PauseFollow(){
+		Application.LoadLevel (level + ((level - 1) * 2));
+		yield return new WaitForSeconds(3);
+		pause.AddComponent<CameraFollow>();
 	}
 }

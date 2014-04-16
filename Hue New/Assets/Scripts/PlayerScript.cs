@@ -485,6 +485,7 @@ public class PlayerScript : MonoBehaviour
 
 	void death()
 	{
+		Destroy (GameObject.FindWithTag ("Pause"));
 		AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().death,transform.position);
 		alive = false;
 		GameObject.FindWithTag("MainCamera").GetComponent<CameraFollow>().enabled = false;
