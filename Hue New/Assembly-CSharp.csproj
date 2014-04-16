@@ -53,11 +53,14 @@
      <Compile Include="Assets\Scripts\CrackedBlock.cs" />
      <Compile Include="Assets\Scripts\EnemyScript.cs" />
      <Compile Include="Assets\Scripts\EnemyTrigger.cs" />
+     <Compile Include="Assets\Scripts\FileOperationClass.cs" />
      <Compile Include="Assets\Scripts\MenuButtonScript.cs" />
+     <Compile Include="Assets\Scripts\MenuCameraScript.cs" />
      <Compile Include="Assets\Scripts\PauseScript.cs" />
      <Compile Include="Assets\Scripts\PlayerScript.cs" />
      <Compile Include="Assets\Scripts\ProjectileScript.cs" />
      <Compile Include="Assets\Scripts\RightAndLeft.cs" />
+     <Compile Include="Assets\Scripts\Save.cs" />
      <Compile Include="Assets\Scripts\SplatterScript.cs" />
      <Compile Include="Assets\Scripts\StartMoving.cs" />
      <Compile Include="Assets\Scripts\UpAndDown.cs" />
