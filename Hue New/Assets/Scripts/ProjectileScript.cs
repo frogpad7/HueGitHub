@@ -3,12 +3,6 @@ using System.Collections;
 
 public class ProjectileScript : MonoBehaviour 
 {
-	public Sprite red;
-	public Sprite orange;
-	public Sprite yellow;
-	public Sprite green;
-	public Sprite blue;
-	public Sprite purple;
 	
 	private Transform camera;
 	private float lifetime = 0;

@@ -7,6 +7,7 @@ public class AudioScript : MonoBehaviour {
 	public AudioSource redTrack;
 	public AudioSource blueTrack;
 	public AudioSource yellowTrack;
+	public AudioSource purpleTrack;
 	public AudioSource walking;
 	public AudioClip death;
 	public AudioClip jump;
@@ -64,7 +65,8 @@ public class AudioScript : MonoBehaviour {
 		}
 		//now purple
 		if (color == 6) {
-			
+			wait = current;
+			current = purpleTrack;
 		}
 	}
 

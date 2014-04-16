@@ -218,34 +218,36 @@ public class PlayerScript : MonoBehaviour
 	
 	void ability_Red()
 	{
+		Rigidbody2D fireObj;
 		if(Input.GetKey(KeyCode.DownArrow))
 		{
 			Vector3 firePos;
 			if(facingRight) 	firePos = transform.position + new Vector3(2,0,0);
 			else				firePos = transform.position + new Vector3(-2,0,0);
 			
-			Rigidbody2D fireObj = Instantiate(grenade, firePos, Quaternion.Euler(new Vector3(0,0,0))) as Rigidbody2D;
+			fireObj = Instantiate(grenade, firePos, Quaternion.Euler(new Vector3(0,0,0))) as Rigidbody2D;
 		}
 		else if(Input.GetKey(KeyCode.UpArrow))
 		{
 			Vector3 firePos = transform.position + new Vector3(0,2,0);
-			Rigidbody2D fireObj = Instantiate(grenade, firePos, Quaternion.Euler(new Vector3(0,0,90f))) as Rigidbody2D;
+			fireObj = Instantiate(grenade, firePos, Quaternion.Euler(new Vector3(0,0,90f))) as Rigidbody2D;
 			fireObj.velocity = new Vector2(0,80);
 		}
 		else if(facingRight)
 		{ 
 			Vector3 firePos = transform.position + new Vector3(2,0,0);
-			Rigidbody2D fireObj = Instantiate(grenade, firePos, Quaternion.Euler(new Vector3(0,0,0))) as Rigidbody2D;
+			fireObj = Instantiate(grenade, firePos, Quaternion.Euler(new Vector3(0,0,0))) as Rigidbody2D;
 			fireObj.velocity = new Vector2(40,40);
 		}	
 		else
 		{
 			Vector3 firePos = transform.position + new Vector3(-2,0,0);
-			Rigidbody2D fireObj = Instantiate (grenade, firePos, Quaternion.Euler (new Vector3(0,0,0))) as Rigidbody2D;
+			fireObj = Instantiate (grenade, firePos, Quaternion.Euler (new Vector3(0,0,0))) as Rigidbody2D;
 			fireObj.velocity = new Vector2(-40,40);
 			
 		}
 		cooldown = 3  + Time.time;
+		fireObj.GetComponent<AudioSource> ().Play ();
 	}
 	
 	void ability_Orange()
