@@ -37,7 +37,7 @@ public class MenuButtonScript : MonoBehaviour {
 
 	}
 
-	void OnMouseEnter(){
+	void OnMouseOver(){
 		Debug.Log ("FOUND YoU!!");
 		if (gameObject.name != "Pause") 
 		{
@@ -74,7 +74,7 @@ public class MenuButtonScript : MonoBehaviour {
 			//pause = (GameObject)Instantiate (pause);
 			//pause.name = "Pause";
 			//DontDestroyOnLoad (pause);
-			pause.GetComponent<PauseScript>().inuse = true;
+			//pause.GetComponent<PauseScript>().inuse = true;
 			Application.LoadLevel (1);
 			Screen.showCursor = false;
 		}
@@ -82,10 +82,10 @@ public class MenuButtonScript : MonoBehaviour {
 			//pause = (GameObject)Instantiate (pause);
 			//pause.name = "Pause";
 			//DontDestroyOnLoad (pause);
-			pause.GetComponent<PauseScript> ().inuse = true;
+			//pause.GetComponent<PauseScript> ().inuse = true;
 			Application.LoadLevel (level + ((level - 1) * 2));
 			Screen.showCursor = false;
-			pause.GetComponent<PauseScript>().findPlayer = true;
+			//pause.GetComponent<PauseScript>().findPlayer = true;
 		} if (gameObject.name == "Quit") {
 			Application.Quit ();
 			PlayerPrefs.SetInt ("Level", level);
