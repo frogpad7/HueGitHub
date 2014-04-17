@@ -5,7 +5,7 @@ public class PlayerScript : MonoBehaviour
 {
 	//physics and attributes
 	bool grounded = true;
-	float groundRad = 0.1f;
+	float groundRad = 0.5f;
 	bool fBlocked = true;
 	bool flying = false;
 	public float maxSpeed = 20;
