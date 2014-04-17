@@ -23,6 +23,7 @@ public class MenuCameraScript : MonoBehaviour {
 	}
 
 	public void changeLoc(Vector3 l){
+		//Debug.Log ("Lerp-a-derp");
 		startTime = Time.time;
 		travel = l;
 	}

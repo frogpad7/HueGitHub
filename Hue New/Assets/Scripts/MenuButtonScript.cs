@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MenuButtonScript : MonoBehaviour {
 
-	MenuCameraScript mcs;
+	public MenuCameraScript mcs;
 	public GameObject pause;
 	Vector3 load = new Vector3 (30, 0, -10);
 	Vector3 options = new Vector3 (0, 15, -10);
@@ -21,7 +21,7 @@ public class MenuButtonScript : MonoBehaviour {
 			//DontDestroyOnLoad (gameObject);		
 		//}
 		//else
-			mcs = GameObject.FindWithTag ("MainCamera").GetComponent<MenuCameraScript> ();
+			//mcs = GameObject.FindWithTag ("MainCamera").GetComponent<MenuCameraScript> ();
 
 		if(PlayerPrefs.HasKey("Level"))
 		   level = PlayerPrefs.GetInt ("Level");
@@ -74,6 +74,7 @@ public class MenuButtonScript : MonoBehaviour {
 	}
 
 	void OnMouseUp(){
+		//Debug.Log ("ClIcK");
 		if (gameObject.name == "New") {
 			//pause = (GameObject)Instantiate (pause);
 			//pause.name = "Pause";
@@ -116,15 +117,20 @@ public class MenuButtonScript : MonoBehaviour {
 			pause.GetComponent<PauseScript>().saving = true;
 		}
 		if (gameObject.name == "Yes") {
+			Debug.Log (pause.GetComponent<PauseScript>().saving);
 			if(pause.GetComponent<PauseScript>().saving)
 				GameObject.FindWithTag("Backdrop").GetComponent<SplatterScript>().SaveGame();
 			Application.LoadLevel("MainMenu");
+			Time.timeScale = 1;
 		}
 		if (gameObject.name == "No") {
 			pause.GetComponent<PauseScript>().Confirm();
 			pause.GetComponent<PauseScript>().saving = false;
 		}
-
+		if (gameObject.name == "Restart") {
+			Application.LoadLevel("MainMenu");
+			Time.timeScale = 1;
+		}
 			//Debug.Log ("I live for a pause");
 			//Instantiate ();
 	}	

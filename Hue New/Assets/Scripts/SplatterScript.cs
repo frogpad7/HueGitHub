@@ -30,11 +30,11 @@ public class SplatterScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.F5))
-		{
+		//if(Input.GetKeyDown(KeyCode.F5))
+		//{
 			Objects = GameObject.FindGameObjectsWithTag("Savable");
-			SaveGame();
-		}
+			//SaveGame();
+		//}
 	}
 
 	public void Splat(int c, Vector3 pos){
@@ -95,6 +95,7 @@ public class SplatterScript : MonoBehaviour {
 			
 			foreach(string record in ObjectsLoaded)
 			{
+				if(record.Length>0){
 				string[] recordSelected = record.Split(',');
 				
 				string naz, poz1, rot1;
@@ -158,6 +159,7 @@ public class SplatterScript : MonoBehaviour {
 				}
 				splat.transform.parent = this.gameObject.transform;
 				splat.transform.position = new Vector3(Convert.ToSingle(poz[0]),Convert.ToSingle(poz[1]),0);
+				}
 			}
 		}
 	}
