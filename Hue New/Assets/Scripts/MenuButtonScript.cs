@@ -27,6 +27,9 @@ public class MenuButtonScript : MonoBehaviour {
 		   level = PlayerPrefs.GetInt ("Level");
 		else
 		   level = 1;
+
+		if (this.name == "Level")
+			GetComponent<TextMesh> ().text = "Level " + level;
 	}
 	
 	// Update is called once per frame
@@ -52,8 +55,10 @@ public class MenuButtonScript : MonoBehaviour {
 				renderer.material.color = Color.magenta;
 			if (gameObject.name == "Back")			
 				renderer.material.color = Color.black;
-			if(gameObject.name == "Continue")
+			if (gameObject.name == "Level")			
 				renderer.material.color = Color.black;
+			if(gameObject.name == "Continue")
+				renderer.material.color = Color.cyan;
 		}
 	}
 
@@ -73,19 +78,20 @@ public class MenuButtonScript : MonoBehaviour {
 			Application.LoadLevel (1);
 			Screen.showCursor = false;
 		}
-		if (gameObject.name == "Load") {
+		if (gameObject.name == "Level") {
 			//pause = (GameObject)Instantiate (pause);
 			//pause.name = "Pause";
 			//DontDestroyOnLoad (pause);
 			pause.GetComponent<PauseScript> ().inuse = true;
-			//PauseFollow();
 			Application.LoadLevel (level + ((level - 1) * 2));
 			Screen.showCursor = false;
 			pause.GetComponent<PauseScript>().findPlayer = true;
 		} if (gameObject.name == "Quit") {
 			Application.Quit ();
-			//PlayerPrefs.SetInt ("Color", 1);
 			PlayerPrefs.SetInt ("Level", level);
+		} 
+		if (gameObject.name == "Load") {
+			mcs.changeLoc(load);
 		} if (gameObject.name == "Options") {
 			mcs.changeLoc(options);
 		} if (gameObject.name == "Controls") {
@@ -100,11 +106,5 @@ public class MenuButtonScript : MonoBehaviour {
 		}
 			//Debug.Log ("I live for a pause");
 			//Instantiate ();
-	}
-
-	IEnumerator PauseFollow(){
-		Application.LoadLevel (level + ((level - 1) * 2));
-		yield return new WaitForSeconds(3);
-		pause.AddComponent<CameraFollow>();
 	}
 }
