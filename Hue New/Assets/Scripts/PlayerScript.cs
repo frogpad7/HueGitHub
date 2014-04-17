@@ -18,7 +18,7 @@ public class PlayerScript : MonoBehaviour
 	bool onMovingPlatform = false;
 
 	//audio
-	GameObject audio;
+	public GameObject audio;
 	int foot;
 
 	//animation
@@ -60,7 +60,7 @@ public class PlayerScript : MonoBehaviour
 	void Start () 
 	{ 
 		anim = GetComponent<Animator>();
-		audio = GameObject.FindWithTag ("Audio");
+		//audio = GameObject.FindWithTag ("Audio");
 		DontDestroyOnLoad (transform.gameObject);
 		DontDestroyOnLoad (transform.FindChild("Audio"));
 	}
@@ -559,9 +559,13 @@ public class PlayerScript : MonoBehaviour
 		bubbleTime = 0;
 		AutoFade.LoadLevel ("ColorRoom", 5, 1, Color.black);
 		PlayerPrefs.SetInt ("Level", 1);
-		yield return new WaitForSeconds(1);
-		Destroy (gameObject);
-		Destroy (GameObject.FindWithTag ("Backdrop"));
+		yield return new WaitForSeconds(5);
+		alive = true;
+		this.rigidbody2D.isKinematic = false;
+		this.GetComponent<PlayerScript>().enabled = true;
+		transform.position = new Vector3(0,0,0);
+		//Destroy (gameObject);
+		//GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript>().CreateHue();
 	}
 	
 	IEnumerator Scene1Change()

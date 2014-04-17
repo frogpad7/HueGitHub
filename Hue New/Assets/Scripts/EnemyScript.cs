@@ -39,7 +39,10 @@ public class EnemyScript : MonoBehaviour
 
 	void Start () 
 	{
-		pScript = GameObject.FindWithTag("Player").GetComponent<PlayerScript>();
+		do {
+			pScript = GameObject.FindWithTag ("Player").GetComponent<PlayerScript> ();
+		} while(!GameObject.FindWithTag("Player"));
+
 		initSpeed = speed;
 
 		if(gameObject.tag == "Enemy") anim = GetComponent<Animator> ();

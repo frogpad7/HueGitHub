@@ -22,6 +22,8 @@ public class SplatterScript : MonoBehaviour {
 	public GameObject blue;
 	public GameObject purple;
 
+	public GameObject hue;
+
 	// Use this for initialization
 	void Start () {
 		//PlayerPrefs.SetString ("Backdrop", "");
@@ -31,11 +33,7 @@ public class SplatterScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//if(Input.GetKeyDown(KeyCode.F5))
-		//{
-			Objects = GameObject.FindGameObjectsWithTag("Savable");
-			//SaveGame();
-		//}
+		Objects = GameObject.FindGameObjectsWithTag("Savable");
 	}
 
 	public void Splat(int c, Vector3 pos){
@@ -150,5 +148,9 @@ public class SplatterScript : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	public void CreateHue(){
+		Instantiate (hue);
 	}
 }
