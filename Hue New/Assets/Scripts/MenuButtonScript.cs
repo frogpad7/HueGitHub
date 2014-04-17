@@ -16,11 +16,11 @@ public class MenuButtonScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if (gameObject.name == "Continue") {
+		//if (gameObject.name == "Continue") {
 			renderer.material.color = Color.black;
 			//DontDestroyOnLoad (gameObject);		
-		}
-		else
+		//}
+		//else
 			mcs = GameObject.FindWithTag ("MainCamera").GetComponent<MenuCameraScript> ();
 
 		if(PlayerPrefs.HasKey("Level"))
@@ -37,35 +37,39 @@ public class MenuButtonScript : MonoBehaviour {
 
 	}
 
-	void OnMouseOver(){
-		Debug.Log ("FOUND YoU!!");
+	void OnMouseEnter(){
+		//Debug.Log ("FOUND YoU!!");
 		if (gameObject.name != "Pause") 
 		{
 			if (gameObject.name == "New")			
 				renderer.material.color = Color.red;
-			if (gameObject.name == "Load")			
+			else if (gameObject.name == "Load")			
 				renderer.material.color = Color.gray;
-			if (gameObject.name == "Options")			
+			else if (gameObject.name == "Options")			
 				renderer.material.color = Color.yellow;
-			if (gameObject.name == "Controls")			
+			else if (gameObject.name == "Controls")			
 				renderer.material.color = Color.green;
-			if (gameObject.name == "Credits")			
+			else if (gameObject.name == "Credits")			
 				renderer.material.color = Color.blue;
-			if (gameObject.name == "Quit")			
+			else if (gameObject.name == "Quit")			
 				renderer.material.color = Color.magenta;
-			if (gameObject.name == "Back")			
+			else if (gameObject.name == "Back")			
 				renderer.material.color = Color.black;
-			if (gameObject.name == "Level")			
+			else if (gameObject.name == "Level")			
 				renderer.material.color = Color.black;
-			if(gameObject.name == "Continue")
+			else if(gameObject.name == "Continue")
+				renderer.material.color = Color.cyan;
+			else
 				renderer.material.color = Color.cyan;
 		}
 	}
 
 	void OnMouseExit(){
-		if(gameObject.name != "Pause"||gameObject.name == "Continue")
-			renderer.material.color = Color.white;
-		if(gameObject.name == "Continue")
+		//if(gameObject.name != "Pause")
+			//renderer.material.color = Color.white;
+		//if(gameObject.name == "Continue")
+			//renderer.material.color = Color.black;
+		//else
 			renderer.material.color = Color.black;
 	}
 
@@ -104,6 +108,23 @@ public class MenuButtonScript : MonoBehaviour {
 		if (gameObject.name == "Continue") {
 			pause.GetComponent<PauseScript>().Unpause();
 		}
+		if (gameObject.name == "Menu") {
+			//pause.getcomponent<PauseScript>().
+		}
+		if (gameObject.name == "Save") {
+			//pause.getcomponent<PauseScript>().
+		}
+		if (gameObject.name == "YesM") {
+			Application.LoadLevel("MainMenu");
+		}
+		if (gameObject.name == "YesS") {
+			GameObject.FindWithTag("Backdrop").GetComponent<SplatterScript>().SaveGame();
+			Application.LoadLevel("MainMenu");
+		}
+		if (gameObject.name == "No") {
+			//pause.getcomponent<PauseScript>().
+		}
+
 			//Debug.Log ("I live for a pause");
 			//Instantiate ();
 	}

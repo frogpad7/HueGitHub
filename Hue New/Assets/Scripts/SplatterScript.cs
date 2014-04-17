@@ -75,7 +75,7 @@ public class SplatterScript : MonoBehaviour {
 		//Instantiate (splat, pos, Quaternion.Euler (0, 0, 0));
 	}
 
-	void SaveGame(){
+	public void SaveGame(){
 		SaveString = "";
 		for(int i = 0; i < Objects.Length; i++)
 		{
@@ -86,13 +86,11 @@ public class SplatterScript : MonoBehaviour {
 					+ ";";
 		}
 		PlayerPrefs.SetString ("Backdrop", SaveString);
-		//FileOperations.WriteToFile("Saves/Save.isf", SaveString);
 	}
 	
 	void LoadGame(){	
 		if(PlayerPrefs.HasKey("Backdrop")){
 			LoadString = PlayerPrefs.GetString ("Backdrop");
-			//LoadString = FileOperations.ReadFile("Saves/Save.isf");
 			string[] ObjectsLoaded = LoadString.Split(';');
 			
 			foreach(string record in ObjectsLoaded)
