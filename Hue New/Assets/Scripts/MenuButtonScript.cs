@@ -10,24 +10,20 @@ public class MenuButtonScript : MonoBehaviour {
 	Vector3 controls = new Vector3 (-30, 0, -10);
 	Vector3 credits = new Vector3 (0, -15, -10);
 	Vector3 origin = new Vector3 (0, 0, -10);
-
-	Color hover;
-	int level;
+	
+	public GameObject hue;
+	public GameObject backdrop;
 
 	// Use this for initialization
 	void Start () {
 		//if (gameObject.name == "Continue") {
 			renderer.material.color = Color.black;
-			//DontDestroyOnLoad (gameObject);		
 		//}
-		//else
-			//mcs = GameObject.FindWithTag ("MainCamera").GetComponent<MenuCameraScript> ();
-
-		if(PlayerPrefs.HasKey("Level"))
-		   level = PlayerPrefs.GetInt ("Level");
+		int level;
+		if(PlayerPrefs.HasKey("Level1"))
+			level = PlayerPrefs.GetInt ("Level1");
 		else
-		   level = 1;
-
+			level = 1;
 		if (this.name == "Level")
 			GetComponent<TextMesh> ().text = "Level " + level;
 	}
@@ -38,7 +34,6 @@ public class MenuButtonScript : MonoBehaviour {
 	}
 
 	void OnMouseEnter(){
-		//Debug.Log ("FOUND YoU!!");
 		if (gameObject.name != "Pause") 
 		{
 			if (gameObject.name == "New")			
@@ -74,26 +69,26 @@ public class MenuButtonScript : MonoBehaviour {
 	}
 
 	void OnMouseUp(){
-		//Debug.Log ("ClIcK");
 		if (gameObject.name == "New") {
-			//pause = (GameObject)Instantiate (pause);
-			//pause.name = "Pause";
-			//DontDestroyOnLoad (pause);
-			//pause.GetComponent<PauseScript>().inuse = true;
+			PlayerPrefs.SetString("Backdrop","");
 			Application.LoadLevel (1);
+			Instantiate(hue);
+			Instantiate(backdrop);
 			Screen.showCursor = false;
 		}
 		if (gameObject.name == "Level") {
-			//pause = (GameObject)Instantiate (pause);
-			//pause.name = "Pause";
-			//DontDestroyOnLoad (pause);
-			//pause.GetComponent<PauseScript> ().inuse = true;
+			int level;
+			if(PlayerPrefs.HasKey("Level1"))
+				level = PlayerPrefs.GetInt ("Level1");
+			else
+				level = 1;
+			PlayerPrefs.SetString ("Backdrop",PlayerPrefs.GetString("Backdrop1"));
 			Application.LoadLevel (level + ((level - 1) * 2));
+			Instantiate(hue);
+			Instantiate(backdrop);
 			Screen.showCursor = false;
-			//pause.GetComponent<PauseScript>().findPlayer = true;
 		} if (gameObject.name == "Quit") {
 			Application.Quit ();
-			PlayerPrefs.SetInt ("Level", level);
 		} 
 		if (gameObject.name == "Load") {
 			mcs.changeLoc(load);
@@ -118,8 +113,12 @@ public class MenuButtonScript : MonoBehaviour {
 		}
 		if (gameObject.name == "Yes") {
 			Debug.Log (pause.GetComponent<PauseScript>().saving);
-			if(pause.GetComponent<PauseScript>().saving)
+			if(pause.GetComponent<PauseScript>().saving){
 				GameObject.FindWithTag("Backdrop").GetComponent<SplatterScript>().SaveGame();
+				PlayerPrefs.SetInt("Level1",PlayerPrefs.GetInt("Level"));
+			}
+			Destroy (GameObject.FindWithTag("Player"));
+			Destroy (GameObject.FindWithTag("Backdrop"));
 			Application.LoadLevel("MainMenu");
 			Time.timeScale = 1;
 		}
@@ -127,11 +126,5 @@ public class MenuButtonScript : MonoBehaviour {
 			pause.GetComponent<PauseScript>().Confirm();
 			pause.GetComponent<PauseScript>().saving = false;
 		}
-		if (gameObject.name == "Restart") {
-			Application.LoadLevel("MainMenu");
-			Time.timeScale = 1;
-		}
-			//Debug.Log ("I live for a pause");
-			//Instantiate ();
 	}	
 }

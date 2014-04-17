@@ -25,6 +25,7 @@ public class SplatterScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//PlayerPrefs.SetString ("Backdrop", "");
+		DontDestroyOnLoad (gameObject);
 		LoadGame ();
 	}
 	
@@ -71,8 +72,6 @@ public class SplatterScript : MonoBehaviour {
 		//splat.GetComponent<SpriteRenderer> ().sortingLayerName = "Canvas";
 		//splat.GetComponent<SpriteRenderer> ().sprite = s;
 		//splat.tag = "Savable";
-
-		//Instantiate (splat, pos, Quaternion.Euler (0, 0, 0));
 	}
 
 	public void SaveGame(){
@@ -85,12 +84,12 @@ public class SplatterScript : MonoBehaviour {
 					Objects[i].transform.position.x + "|" + Objects[i].transform.position.y
 					+ ";";
 		}
-		PlayerPrefs.SetString ("Backdrop", SaveString);
+		PlayerPrefs.SetString ("Backdrop1", SaveString);
 	}
 	
 	void LoadGame(){	
 		if(PlayerPrefs.HasKey("Backdrop")&&PlayerPrefs.GetString("Backdrop").Length>0){
-			LoadString = PlayerPrefs.GetString ("Backdrop");
+			LoadString = PlayerPrefs.GetString ("Backdrop1");
 			string[] ObjectsLoaded = LoadString.Split(';');
 			
 			foreach(string record in ObjectsLoaded)
@@ -101,8 +100,7 @@ public class SplatterScript : MonoBehaviour {
 				string naz, poz1, rot1;
 				string[] poz, rot;
 				
-				Vector3 pozycja;
-				//Quaternion rotacja;
+				//Vector3 pozycja;
 				
 				naz = recordSelected[0].ToString();
 				Debug.Log("Loaded: "+naz);
@@ -110,21 +108,11 @@ public class SplatterScript : MonoBehaviour {
 				poz1 = recordSelected[1].ToString();
 				Debug.Log("Loaded: "+poz1);
 				
-				//rot1 = recordSelected[2].ToString();
-				//Debug.Log("Loaded: "+rot1);
-				
 				poz = poz1.Split('|');
 				
-				//rot = rot1.Split('|');
-				
-				pozycja.x = Convert.ToSingle(poz[0]);
-				pozycja.y = Convert.ToSingle(poz[1]);
-				pozycja.z = 0;
-				
-				//rotacja.x = 0;
-				//rotacja.y = 0;
-				//rotacja.z = 0;
-				//rotacja.w = 1;
+				//pozycja.x = Convert.ToSingle(poz[0]);
+				//pozycja.y = Convert.ToSingle(poz[1]);
+				//pozycja.z = 0;
 
 				GameObject splat = new GameObject ();
 				if(naz == "Red")

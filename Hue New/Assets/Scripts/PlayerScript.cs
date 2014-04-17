@@ -61,6 +61,8 @@ public class PlayerScript : MonoBehaviour
 	{ 
 		anim = GetComponent<Animator>();
 		audio = GameObject.FindWithTag ("Audio");
+		DontDestroyOnLoad (transform.gameObject);
+		DontDestroyOnLoad (transform.FindChild("Audio"));
 	}
 	
 	// Update is called once per frame
@@ -485,7 +487,6 @@ public class PlayerScript : MonoBehaviour
 
 	void death()
 	{
-		Destroy (GameObject.FindWithTag ("Pause"));
 		AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().death,transform.position);
 		alive = false;
 		GameObject.FindWithTag("MainCamera").GetComponent<CameraFollow>().enabled = false;
@@ -541,35 +542,15 @@ public class PlayerScript : MonoBehaviour
 		color = c;
 
 		if (col.gameObject.tag == "Level1")
-		{
-			DontDestroyOnLoad (transform.gameObject);
-			DontDestroyOnLoad (transform.FindChild("Audio"));
 			StartCoroutine("Scene1Change");
-		}
 		if (col.gameObject.tag == "Level2")
-		{
-			DontDestroyOnLoad (transform.gameObject);
-			DontDestroyOnLoad (transform.FindChild("Audio"));
 			StartCoroutine("Scene2Change");
-		}
 		if (col.gameObject.tag == "Level3")
-		{
-			DontDestroyOnLoad (transform.gameObject);
-			DontDestroyOnLoad (transform.FindChild("Audio"));
 			StartCoroutine("Scene3Change");
-		}
 		if (col.gameObject.tag == "Level4")
-		{
-			DontDestroyOnLoad (transform.gameObject);
-			DontDestroyOnLoad (transform.FindChild("Audio"));
 			StartCoroutine("Scene4Change");
-		}
 		if (col.gameObject.tag == "Level5")
-		{
-			DontDestroyOnLoad (transform.gameObject);
-			DontDestroyOnLoad (transform.FindChild("Audio"));
 			StartCoroutine("Scene5Change");
-		}
 	}
 	
 	IEnumerator PlayerRestart()
@@ -580,6 +561,7 @@ public class PlayerScript : MonoBehaviour
 		PlayerPrefs.SetInt ("Level", 1);
 		yield return new WaitForSeconds(1);
 		Destroy (gameObject);
+		Destroy (GameObject.FindWithTag ("Backdrop"));
 	}
 	
 	IEnumerator Scene1Change()
@@ -592,6 +574,7 @@ public class PlayerScript : MonoBehaviour
 	IEnumerator Scene2Change()
 	{
 		bubbleTime = 0;
+		PlayerPrefs.SetInt ("Level", 2);
 		AutoFade.LoadLevel ("Level2", 3, 1, Color.black);
 		yield return new WaitForSeconds(3);
 		transform.position = new Vector3(0,0,0);
@@ -599,6 +582,7 @@ public class PlayerScript : MonoBehaviour
 	IEnumerator Scene3Change()
 	{
 		bubbleTime = 0;
+		PlayerPrefs.SetInt ("Level", 3);
 		AutoFade.LoadLevel ("Level3", 3, 1, Color.black);
 		yield return new WaitForSeconds(3);
 		transform.position = new Vector3(0,0,0);
@@ -606,6 +590,7 @@ public class PlayerScript : MonoBehaviour
 	IEnumerator Scene4Change()
 	{
 		bubbleTime = 0;
+		PlayerPrefs.SetInt ("Level", 4);
 		AutoFade.LoadLevel ("Level4", 3, 1, Color.black);
 		yield return new WaitForSeconds(3);
 		transform.position = new Vector3(0,0,0);
@@ -613,6 +598,7 @@ public class PlayerScript : MonoBehaviour
 	IEnumerator Scene5Change()
 	{
 		bubbleTime = 0;
+		PlayerPrefs.SetInt ("Level", 5);
 		AutoFade.LoadLevel ("Level5", 3, 1, Color.black);
 		yield return new WaitForSeconds(3);
 		transform.position = new Vector3(0,0,0);
