@@ -4,14 +4,16 @@ using System.Collections;
 public class PauseScript : MonoBehaviour {
 	
 	private bool paused = false;
+	public bool saving = false;
+	public GameObject menu;
 
 	// Use this for initialization
 	void Start () {
-		DontDestroyOnLoad (gameObject);
-		GameObject p = GameObject.FindWithTag ("MainCamera");
-		if (p != null){
-			transform.parent = p.transform;
-		}
+		//DontDestroyOnLoad (gameObject);
+		//GameObject p = GameObject.FindWithTag ("MainCamera");
+		//if (p != null){
+		//	transform.parent = p.transform;
+		//}
 	}
 	// Update is called once per frame
 	void Update () {
@@ -31,8 +33,8 @@ public class PauseScript : MonoBehaviour {
 		GameObject.FindWithTag ("Audio").GetComponent<AudioScript> ().PauseTrack ();
 		GameObject.FindWithTag ("Player").GetComponent<PlayerScript> ().maxSpeed = 0;
 		Screen.showCursor = true;
-		MeshRenderer[] mr = GetComponentsInChildren<MeshRenderer> ();
-		BoxCollider2D[] bc = GetComponentsInChildren<BoxCollider2D> ();
+		MeshRenderer[] mr = menu.GetComponentsInChildren<MeshRenderer> ();
+		BoxCollider2D[] bc = menu.GetComponentsInChildren<BoxCollider2D> ();
 		for (int i = 0; i < mr.Length; i++)
 			mr [i].enabled = true;
 		for (int j = 0; j < bc.Length; j++)
@@ -45,12 +47,21 @@ public class PauseScript : MonoBehaviour {
 		GameObject.FindWithTag ("Audio").GetComponent<AudioScript> ().ResumeTrack ();
 		GameObject.FindWithTag ("Player").GetComponent<PlayerScript> ().maxSpeed = 20;
 		Screen.showCursor = false;
-		MeshRenderer[] mr = GetComponentsInChildren<MeshRenderer> ();
-		BoxCollider2D[] bc = GetComponentsInChildren<BoxCollider2D> ();
+		MeshRenderer[] mr = menu.GetComponentsInChildren<MeshRenderer> ();
+		BoxCollider2D[] bc = menu.GetComponentsInChildren<BoxCollider2D> ();
 		for (int i = 0; i < mr.Length; i++)
 			mr [i].enabled = false;
 		for (int j = 0; j < bc.Length; j++)
 			bc [j].enabled = false;
 		paused = !paused;
+	}	
+
+	public void Confirm(){
+		MeshRenderer[] mr = GetComponentsInChildren<MeshRenderer> ();
+		BoxCollider2D[] bc = GetComponentsInChildren<BoxCollider2D> ();
+		for (int i = 0; i < mr.Length; i++)
+			mr [i].enabled = !mr[i].enabled;
+		for (int j = 0; j < bc.Length; j++)
+			bc [j].enabled = !bc [j].enabled;
 	}
 }

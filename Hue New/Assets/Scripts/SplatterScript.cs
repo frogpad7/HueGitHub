@@ -24,6 +24,7 @@ public class SplatterScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		//PlayerPrefs.SetString ("Backdrop", "");
 		LoadGame ();
 	}
 	
@@ -64,7 +65,6 @@ public class SplatterScript : MonoBehaviour {
 			splat = (GameObject)Instantiate (purple);	
 			splat.name = "Purple";
 		}
-		//GameObject splat = Instantiate ();
 		splat.transform.parent = this.gameObject.transform;
 		splat.transform.position = new Vector3(pos.x,pos.y,0);
 		//splat.AddComponent<SpriteRenderer> ();
@@ -82,14 +82,14 @@ public class SplatterScript : MonoBehaviour {
 			SaveString += 
 				Objects[i].name 
 					+ ","+ 
-					Objects[i].transform.position.x + "|" + Objects[i].transform.position.y + "|" +Objects[i].transform.position.z + "|"
+					Objects[i].transform.position.x + "|" + Objects[i].transform.position.y
 					+ ";";
 		}
 		PlayerPrefs.SetString ("Backdrop", SaveString);
 	}
 	
 	void LoadGame(){	
-		if(PlayerPrefs.HasKey("Backdrop")){
+		if(PlayerPrefs.HasKey("Backdrop")&&PlayerPrefs.GetString("Backdrop").Length>0){
 			LoadString = PlayerPrefs.GetString ("Backdrop");
 			string[] ObjectsLoaded = LoadString.Split(';');
 			
@@ -101,7 +101,7 @@ public class SplatterScript : MonoBehaviour {
 				string[] poz, rot;
 				
 				Vector3 pozycja;
-				Quaternion rotacja;
+				//Quaternion rotacja;
 				
 				naz = recordSelected[0].ToString();
 				Debug.Log("Loaded: "+naz);
@@ -118,31 +118,46 @@ public class SplatterScript : MonoBehaviour {
 				
 				pozycja.x = Convert.ToSingle(poz[0]);
 				pozycja.y = Convert.ToSingle(poz[1]);
-				pozycja.z = Convert.ToSingle(poz[2]);
+				pozycja.z = 0;
 				
-				rotacja.x = 0;
-				rotacja.y = 0;
-				rotacja.z = 0;
-				rotacja.w = 1;
-				
-				if(naz == "Player" || naz == "Player(Clone)")
+				//rotacja.x = 0;
+				//rotacja.y = 0;
+				//rotacja.z = 0;
+				//rotacja.w = 1;
+
+				GameObject splat = new GameObject ();
+				if(naz == "Red")
 				{
-					//Instantiate(Player, pozycja, rotacja);
+					splat = (GameObject)Instantiate (red);	
+					splat.name = "Red";
 				}
-				
-				if(naz == "Rock2" || naz == "Rock2(Clone)")
+				if(naz == "Orange")
 				{
-					//Instantiate(Rock2, pozycja, rotacja);
+					splat = (GameObject)Instantiate (orange);	
+					splat.name = "Orange";
 				}
-				
-				if(naz == "Rock4" || naz == "Rock4(Clone)")
+				if(naz == "Yellow")
 				{
-					//Instantiate(Rock4, pozycja, rotacja);
+					splat = (GameObject)Instantiate (yellow);	
+					splat.name = "Yellow";
 				}
-				if(naz == "Fence" || naz == "Fence(Clone)")
+				if(naz == "Green")
 				{
-					//Instantiate(Fence, pozycja, rotacja);
+					splat = (GameObject)Instantiate (green);	
+					splat.name = "Green";
 				}
+				if(naz == "Blue")
+				{
+					splat = (GameObject)Instantiate (blue);	
+					splat.name = "Blue";
+				}
+				if(naz == "Purple")
+				{
+					splat = (GameObject)Instantiate (purple);	
+					splat.name = "Purple";
+				}
+				splat.transform.parent = this.gameObject.transform;
+				splat.transform.position = new Vector3(Convert.ToSingle(poz[0]),Convert.ToSingle(poz[1]),0);
 			}
 		}
 	}

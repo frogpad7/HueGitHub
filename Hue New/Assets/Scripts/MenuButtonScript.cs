@@ -109,23 +109,23 @@ public class MenuButtonScript : MonoBehaviour {
 			pause.GetComponent<PauseScript>().Unpause();
 		}
 		if (gameObject.name == "Menu") {
-			//pause.getcomponent<PauseScript>().
+			pause.GetComponent<PauseScript>().Confirm();
 		}
 		if (gameObject.name == "Save") {
-			//pause.getcomponent<PauseScript>().
+			pause.GetComponent<PauseScript>().Confirm();
+			pause.GetComponent<PauseScript>().saving = true;
 		}
-		if (gameObject.name == "YesM") {
-			Application.LoadLevel("MainMenu");
-		}
-		if (gameObject.name == "YesS") {
-			GameObject.FindWithTag("Backdrop").GetComponent<SplatterScript>().SaveGame();
+		if (gameObject.name == "Yes") {
+			if(pause.GetComponent<PauseScript>().saving)
+				GameObject.FindWithTag("Backdrop").GetComponent<SplatterScript>().SaveGame();
 			Application.LoadLevel("MainMenu");
 		}
 		if (gameObject.name == "No") {
-			//pause.getcomponent<PauseScript>().
+			pause.GetComponent<PauseScript>().Confirm();
+			pause.GetComponent<PauseScript>().saving = false;
 		}
 
 			//Debug.Log ("I live for a pause");
 			//Instantiate ();
-	}
+	}	
 }
