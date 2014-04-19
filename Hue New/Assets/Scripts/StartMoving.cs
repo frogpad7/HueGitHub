@@ -7,7 +7,7 @@ public class StartMoving : MonoBehaviour {
 	UpAndDown eScript2;
 	public GameObject parentblock;
 
-	enum directions {RIGHTANDLEFT = 1, UPANDDOWN = 0};
+	enum directions {RIGHTANDLEFT = 0, UPANDDOWN = 1};
 	public int direction = (int)directions.RIGHTANDLEFT;
 	float initSpeed;
 		
