@@ -29,8 +29,9 @@ public class ProjectileScript : MonoBehaviour
 		{
 			if (col.gameObject.tag == "Projectile") { Destroy(col.gameObject); Destroy(col.gameObject); }
 			else if (col.gameObject.tag == "Orange") Destroy(col.gameObject);
-			if (col.gameObject.tag == "Stage" || col.gameObject.tag == "Floor" || col.gameObject.tag == "Yellow") Destroy(gameObject);
-			if (col.gameObject.tag == "Projectile"  || col.gameObject.tag == "Purple") { Destroy(col.gameObject); Destroy(gameObject); }  
+			else if (col.gameObject.tag == "Stage" || col.gameObject.tag == "Floor" || col.gameObject.tag == "Yellow") Destroy(gameObject);
+			else if (col.gameObject.tag == "Projectile"  || col.gameObject.tag == "Purple") { Destroy(col.gameObject); Destroy(gameObject); } 
+			else if (col.gameObject.tag != "Player") Destroy(gameObject);
 		}
 
 		//player shot himself in the face condition
@@ -39,10 +40,9 @@ public class ProjectileScript : MonoBehaviour
 			if (gameObject.tag == "Purple" || gameObject.tag == "Orange" ) Destroy(gameObject);
 		}
 
-		else if (gameObject.tag == "Orange") this.rigidbody2D.isKinematic = true;
+		//else if (gameObject.tag == "Orange") this.rigidbody2D.isKinematic = true;
 		else if (gameObject.tag == "Purple" && (col.gameObject.tag == "Stage" || col.gameObject.tag == "Floor")) Destroy(gameObject);
 	
-		//test
 		//make grenades go boom
 		else if (gameObject.tag == "Grenade")
 		{

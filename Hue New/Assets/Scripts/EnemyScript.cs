@@ -21,6 +21,7 @@ public class EnemyScript : MonoBehaviour
 	public bool follow = false;
 	public bool walker = false;
 	public bool shooter = false;
+	public bool downShooter = false;
 	public bool frozen = false;
 	//public bool jumper = false;
 	public int dir;
@@ -39,9 +40,15 @@ public class EnemyScript : MonoBehaviour
 
 	void Start () 
 	{
-		do {
-			pScript = GameObject.FindWithTag ("Player").GetComponent<PlayerScript> ();
-		} while(!GameObject.FindWithTag("Player"));
+		do { pScript = GameObject.FindWithTag ("Player").GetComponent<PlayerScript> (); }
+		while(!GameObject.FindWithTag("Player"));
+
+		if (downShooter) 
+		{
+			shooter = false;
+			Debug.Log("ERR : An ENEMY cannot be both a down-shooter and a shooter!");
+			Debug.Log("WARN: ENEMY defaulted to regular shooter!");
+		}
 
 		initSpeed = speed;
 
@@ -58,9 +65,9 @@ public class EnemyScript : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if(gameObject.tag == "Enemy") anim.SetFloat ("Speed", speed);
-		if (!frozen && pScript.alive) enemy_AI();
-		if (lifetime <= Time.time && isPlatform) thaw();
+		if (gameObject.tag == "Enemy") anim.SetFloat ("Speed", speed);
+		if (!frozen && pScript.alive)  enemy_AI();
+		else if (lifetime <= Time.time && isPlatform) thaw();
 	}
 	
 	void OnCollisionEnter2D(Collision2D col)
@@ -77,26 +84,16 @@ public class EnemyScript : MonoBehaviour
 	void OnTriggerEnter2D(Collider2D col)
 	{
 		//For allowing follow enemies to move when player is in range
-		if (follow) {
-			if (col.gameObject.tag == "Player")
-				speed = initSpeed;
-		}
+		if (follow) 
+			if (col.gameObject.tag == "Player")	speed = initSpeed;
 
-		//for dash and bubble shield
-		if (col.gameObject.tag == "Blue") 
-		{
-			/*PlayerScript pScript = GameObject.FindWithTag("Player").GetComponent<PlayerScript>();
-			if (pScript.cheatMode != true) Destroy(col.gameObject);
-			Destroy(gameObject);*/
-		}
 	}
 
 	//For stopping follow enemies from moving when player is out of range
-	void OnTriggerExit2D(Collider2D col) {
-		if (follow) {
-			if (col.gameObject.tag == "Player")
-				speed = 0;
-		}
+	void OnTriggerExit2D(Collider2D col) 
+	{
+		if (follow)
+			if (col.gameObject.tag == "Player")	speed = 0;
 	}
 
 	void enemy_AI()
@@ -148,6 +145,12 @@ public class EnemyScript : MonoBehaviour
 			}
 			cooldown = Time.time + 2;
 		}
+		else if (downShooter && cooldown <= Time.time)
+		{
+			Vector3 firePos = this.transform.position + new Vector3 (0, -5, 0);
+			Rigidbody2D fireObj = (Rigidbody2D)Instantiate (bullet, firePos, Quaternion.Euler (new Vector3 (0, -5, 0)));
+			fireObj.velocity = new Vector2 (0, -15);
+		}
 	}
 
 	void changeDirection(){
@@ -173,27 +176,29 @@ public class EnemyScript : MonoBehaviour
 		speed = 5;
 		anim.SetBool ("Platform", false);
 		anim.SetBool ("Frozen", frozen);
-
-
 	}
 	
 	void freezeEnemy(Collision2D col)
 	{
-		this.rigidbody2D.isKinematic = true;
+		lifetime = Time.time + 7;
 		frozen = true;
+		isPlatform = true;
+		this.rigidbody2D.isKinematic = true;
 		anim.SetBool ("Platform", true);
 		anim.SetBool ("Frozen", frozen);
-		speed = 0;
-		lifetime = Time.time + 7;
+		speed = 5;
+
 		//myRenderer.sprite = oFreeze;
 		Destroy(col.gameObject);
 	}
 
 	void thaw()
 	{
+		Debug.Log("Thawing Enemy");
 		this.rigidbody2D.isKinematic = false;
 		frozen = false;
 		anim.SetBool ("Frozen", frozen);
+		anim.SetBool ("Platform", false);
 		speed = 5;
 		if (walker) this.rigidbody2D.gravityScale = 1;
 		isPlatform = false;

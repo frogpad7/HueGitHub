@@ -88,7 +88,7 @@ public class PlayerScript : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.LeftShift) && cooldown <= Time.time) 
 		{
 			anim.SetTrigger("Shooting");
-			anim.SetInteger ("Foot",foot);
+			anim.SetInteger("Foot",foot);
 
 			if     (color == 1) ability_Red();
 			else if(color == 2) ability_Orange();
@@ -101,7 +101,7 @@ public class PlayerScript : MonoBehaviour
 	
 	void inputProc_movement()
 	{
-		move = Input.GetAxis("Horizontal");
+		move =  Input.GetAxis("Horizontal");
 		moveY = Input.GetAxis("Vertical");
 
 		if (fBlocked)
@@ -149,7 +149,7 @@ public class PlayerScript : MonoBehaviour
 	{
 		//checks to see if player can jump
 		grounded = Physics2D.OverlapCircle(groundCheck.position, groundRad, whatIsGround);
-		fBlocked = Physics2D.OverlapCircle(frontCheck.position, groundRad, whatIsGround);
+		fBlocked = Physics2D.OverlapCircle(frontCheck.position,  groundRad, whatIsGround);
 		anim.SetBool ("Grounded", grounded);
 
 		//jumping from the ground, and reset the double jump flag
@@ -204,14 +204,21 @@ public class PlayerScript : MonoBehaviour
 			//stop the enemy movement to make them hover
 			for (int i=0; i<groundPoundBoom.GetLength(0); i++) 
 			{
-				if (groundPoundBoom [i].gameObject.rigidbody2D != null) 
+				try
 				{
-					EnemyScript eScript = groundPoundBoom[i].GetComponent<EnemyScript>();
-					if (groundPoundBoom [i].gameObject.rigidbody2D.gameObject.tag == "Enemy") 
+					if (groundPoundBoom [i].gameObject != null) 
 					{
-						groundPoundBoom[i].gameObject.rigidbody2D.velocity = new Vector3(0,0,0);
-						eScript.groundPounded();
+						EnemyScript eScript = groundPoundBoom[i].GetComponent<EnemyScript>();
+						if (groundPoundBoom [i].gameObject.rigidbody2D.gameObject.tag == "Enemy") 
+						{
+							groundPoundBoom[i].gameObject.rigidbody2D.velocity = new Vector3(0,0,0);
+							eScript.groundPounded();
+						}
 					}
+				}
+				catch(System.Exception e)
+				{
+					Debug.Log("ERR: Ground Pound Problem:");
 				}
 			}
 			groundPounding = false;
@@ -541,16 +548,11 @@ public class PlayerScript : MonoBehaviour
 		}
 		color = c;
 
-		if (col.gameObject.tag == "Level1")
-			StartCoroutine("Scene1Change");
-		if (col.gameObject.tag == "Level2")
-			StartCoroutine("Scene2Change");
-		if (col.gameObject.tag == "Level3")
-			StartCoroutine("Scene3Change");
-		if (col.gameObject.tag == "Level4")
-			StartCoroutine("Scene4Change");
-		if (col.gameObject.tag == "Level5")
-			StartCoroutine("Scene5Change");
+		if (col.gameObject.tag == "Level1")			StartCoroutine("Scene1Change");
+		else if (col.gameObject.tag == "Level2")	StartCoroutine("Scene2Change");
+		else if (col.gameObject.tag == "Level3")	StartCoroutine("Scene3Change");
+		else if (col.gameObject.tag == "Level4")	StartCoroutine("Scene4Change");
+		else if (col.gameObject.tag == "Level5")	StartCoroutine("Scene5Change");
 	}
 	
 	IEnumerator PlayerRestart()
