@@ -19,17 +19,20 @@ public class PlayerScript : MonoBehaviour
 
 	//audio
 	public GameObject audio;
-	int foot;
 
 	//animation
 	bool facingRight = true;
 	Animator anim;
+	int foot;
 
 	//cheat tools
 	public bool cheatMode = false;
 
 	//looks to play land sound
 	bool landed = true;
+	bool loading = false;
+
+	int stage;
 
 	//ridgidbodies
 	public Rigidbody2D ball;
@@ -63,6 +66,9 @@ public class PlayerScript : MonoBehaviour
 		//audio = GameObject.FindWithTag ("Audio");
 		DontDestroyOnLoad (transform.gameObject);
 		DontDestroyOnLoad (transform.FindChild("Audio"));
+
+		int level = PlayerPrefs.GetInt ("Level");
+		stage = level + ((level - 1) * 2);
 	}
 	
 	// Update is called once per frame
@@ -549,11 +555,14 @@ public class PlayerScript : MonoBehaviour
 		}
 		color = c;
 
-		if (col.gameObject.tag == "Level1")			StartCoroutine("Scene1Change");
-		else if (col.gameObject.tag == "Level2")	StartCoroutine("Scene2Change");
-		else if (col.gameObject.tag == "Level3")	StartCoroutine("Scene3Change");
-		else if (col.gameObject.tag == "Level4")	StartCoroutine("Scene4Change");
-		else if (col.gameObject.tag == "Level5")	StartCoroutine("Scene5Change");
+		if (col.gameObject.name == "Finish" && !loading) {
+			StartCoroutine ("SceneChange");
+			loading = true;		
+		}
+		//else if (col.gameObject.tag == "Level2")	StartCoroutine("Scene2Change");
+		//else if (col.gameObject.tag == "Level3")	StartCoroutine("Scene3Change");
+		//else if (col.gameObject.tag == "Level4")	StartCoroutine("Scene4Change");
+		//else if (col.gameObject.tag == "Level5")	StartCoroutine("Scene5Change");
 	}
 	
 	IEnumerator PlayerRestart()
@@ -588,12 +597,16 @@ public class PlayerScript : MonoBehaviour
 		GetComponent<SpriteRenderer> ().material.color = new Color (255 - c, 255 - c, 255 - c);
 	}
 	
-	IEnumerator Scene1Change()
+	IEnumerator SceneChange()
 	{
 		bubbleTime = 0;
-		AutoFade.LoadLevel ("Level1", 3, 1, Color.black);
+		stage++;
+		AutoFade.LoadLevel (stage, 3, 1, Color.black);
+		PlayerPrefs.SetInt ("Level", stage);
+		Debug.Log (PlayerPrefs.GetInt ("Level"));
 		yield return new WaitForSeconds(3);
 		transform.position = new Vector3(0,0,0);
+		loading = false;
 	}
 	IEnumerator Scene2Change()
 	{

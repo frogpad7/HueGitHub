@@ -14,12 +14,13 @@ public class MenuButtonScript : MonoBehaviour {
 	public GameObject hue;
 	public GameObject backdrop;
 
+	int level;
+
 	// Use this for initialization
 	void Start () {
 		//if (gameObject.name == "Continue") {
 			renderer.material.color = Color.black;
 		//}
-		int level;
 		if(PlayerPrefs.HasKey("Level1"))
 			level = PlayerPrefs.GetInt ("Level1");
 		else
@@ -71,19 +72,15 @@ public class MenuButtonScript : MonoBehaviour {
 	void OnMouseUp(){
 		if (gameObject.name == "New") {
 			PlayerPrefs.SetString("Backdrop","");
+			PlayerPrefs.SetInt ("Level",1);
 			Application.LoadLevel (1);
-			//Instantiate(hue);
 			GameObject b = (GameObject)Instantiate(backdrop);
 			b.GetComponent<SplatterScript>().CreateHue();
 			Screen.showCursor = false;
 		}
 		if (gameObject.name == "Level") {
-			int level;
-			if(PlayerPrefs.HasKey("Level1"))
-				level = PlayerPrefs.GetInt ("Level1");
-			else
-				level = 1;
 			PlayerPrefs.SetString ("Backdrop",PlayerPrefs.GetString("Backdrop1"));
+			PlayerPrefs.SetInt ("Level",level);
 			Application.LoadLevel (level + ((level - 1) * 2));
 			GameObject b = (GameObject)Instantiate(backdrop);
 			b.GetComponent<SplatterScript>().CreateHue();
@@ -116,7 +113,11 @@ public class MenuButtonScript : MonoBehaviour {
 			Debug.Log (pause.GetComponent<PauseScript>().saving);
 			if(pause.GetComponent<PauseScript>().saving){
 				GameObject.FindWithTag("Backdrop").GetComponent<SplatterScript>().SaveGame();
-				PlayerPrefs.SetInt("Level1",PlayerPrefs.GetInt("Level"));
+				level = PlayerPrefs.GetInt("Level");
+				if(level%2 == 0){
+					level--;
+				}
+				PlayerPrefs.SetInt("Level1",1 + ((level - 1) / 2));
 			}
 			Destroy (GameObject.FindWithTag("Player"));
 			Destroy (GameObject.FindWithTag("Backdrop"));
