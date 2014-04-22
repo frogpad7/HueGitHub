@@ -496,6 +496,7 @@ public class PlayerScript : MonoBehaviour
 	{
 		AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().death,transform.position);
 		alive = false;
+		anim.SetBool ("Alive", false);
 		GameObject.FindWithTag("MainCamera").GetComponent<CameraFollow>().enabled = false;
 		this.rigidbody2D.isKinematic = true;
 		this.GetComponent<PlayerScript>().enabled = false;
@@ -558,16 +559,33 @@ public class PlayerScript : MonoBehaviour
 	IEnumerator PlayerRestart()
 	{
 		//animate death
+
+		int i = 0;
+		while (i<256) {
+			//Debug.Log (i);
+			PlayerDying(i);	
+			//GetComponent<SpriteRenderer> ().material.color = new Color (255 - i, 255 - i, 255 - i);
+			i++;
+		}
+		//GetComponent<SpriteRenderer> ().material.color = new Color (255 - 255, 255 - 255, 255 - 255);
 		bubbleTime = 0;
 		AutoFade.LoadLevel ("ColorRoom", 5, 1, Color.black);
 		PlayerPrefs.SetInt ("Level", 1);
 		yield return new WaitForSeconds(5);
 		alive = true;
+		anim.SetBool ("Alive", true);
 		this.rigidbody2D.isKinematic = false;
 		this.GetComponent<PlayerScript>().enabled = true;
 		transform.position = new Vector3(0,0,0);
+		GetComponent<SpriteRenderer> ().material.color = new Color (255,255,255);
 		//Destroy (gameObject);
 		//GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript>().CreateHue();
+	}
+
+	IEnumerator PlayerDying(int c)
+	{
+		yield return new WaitForSeconds(1f);
+		GetComponent<SpriteRenderer> ().material.color = new Color (255 - c, 255 - c, 255 - c);
 	}
 	
 	IEnumerator Scene1Change()

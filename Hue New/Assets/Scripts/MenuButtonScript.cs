@@ -72,8 +72,9 @@ public class MenuButtonScript : MonoBehaviour {
 		if (gameObject.name == "New") {
 			PlayerPrefs.SetString("Backdrop","");
 			Application.LoadLevel (1);
-			Instantiate(hue);
-			Instantiate(backdrop);
+			//Instantiate(hue);
+			GameObject b = (GameObject)Instantiate(backdrop);
+			b.GetComponent<SplatterScript>().CreateHue();
 			Screen.showCursor = false;
 		}
 		if (gameObject.name == "Level") {
@@ -84,8 +85,8 @@ public class MenuButtonScript : MonoBehaviour {
 				level = 1;
 			PlayerPrefs.SetString ("Backdrop",PlayerPrefs.GetString("Backdrop1"));
 			Application.LoadLevel (level + ((level - 1) * 2));
-			Instantiate(hue);
-			Instantiate(backdrop);
+			GameObject b = (GameObject)Instantiate(backdrop);
+			b.GetComponent<SplatterScript>().CreateHue();
 			Screen.showCursor = false;
 		} if (gameObject.name == "Quit") {
 			Application.Quit ();
