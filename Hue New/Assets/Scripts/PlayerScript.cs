@@ -8,7 +8,7 @@ public class PlayerScript : MonoBehaviour
 	float groundRad = 0.5f;
 	bool fBlocked = true;
 	bool flying = false;
-	public float maxSpeed = 20;
+	public float maxSpeed = 30;
 	public bool alive = true;
 	float move;
 	float moveY;
@@ -601,10 +601,12 @@ public class PlayerScript : MonoBehaviour
 	{
 		bubbleTime = 0;
 		stage++;
+		maxSpeed = 0;
 		AutoFade.LoadLevel (stage, 3, 1, Color.black);
 		PlayerPrefs.SetInt ("Level", stage);
 		Debug.Log (PlayerPrefs.GetInt ("Level"));
 		yield return new WaitForSeconds(3);
+		maxSpeed = 30;
 		transform.position = new Vector3(0,0,0);
 		loading = false;
 	}
