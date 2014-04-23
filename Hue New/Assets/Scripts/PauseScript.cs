@@ -31,7 +31,6 @@ public class PauseScript : MonoBehaviour {
 		//Debug.Log ("p a u s e");
 		Time.timeScale = 0;
 		GameObject.FindWithTag ("Audio").GetComponent<AudioScript> ().PauseTrack ();
-		GameObject.FindWithTag ("Player").GetComponent<PlayerScript> ().maxSpeed = 0;
 		Screen.showCursor = true;
 		MeshRenderer[] mr = menu.GetComponentsInChildren<MeshRenderer> ();
 		BoxCollider2D[] bc = menu.GetComponentsInChildren<BoxCollider2D> ();
@@ -45,7 +44,6 @@ public class PauseScript : MonoBehaviour {
 	public void Unpause(){
 		Time.timeScale = 1;
 		GameObject.FindWithTag ("Audio").GetComponent<AudioScript> ().ResumeTrack ();
-		GameObject.FindWithTag ("Player").GetComponent<PlayerScript> ().maxSpeed = 20;
 		Screen.showCursor = false;
 		MeshRenderer[] mr = menu.GetComponentsInChildren<MeshRenderer> ();
 		BoxCollider2D[] bc = menu.GetComponentsInChildren<BoxCollider2D> ();
