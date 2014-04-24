@@ -508,6 +508,7 @@ public class PlayerScript : MonoBehaviour
 		GameObject.FindWithTag("MainCamera").GetComponent<CameraFollow>().enabled = false;
 		this.rigidbody2D.isKinematic = true;
 		this.GetComponent<PlayerScript>().enabled = false;
+		stage = 1;
 		StartCoroutine("PlayerRestart");
 	}
 
