@@ -14,6 +14,8 @@ public class AudioScript : MonoBehaviour {
 	public AudioClip land;
 	public AudioClip gun;
 	public AudioClip paint;
+	public AudioClip punch;
+
 	AudioSource current;
 	AudioSource wait;
 	// Use this for initialization
