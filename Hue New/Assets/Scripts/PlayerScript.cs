@@ -191,6 +191,7 @@ public class PlayerScript : MonoBehaviour
 				if (!grounded && bubbleTime >= Time.time) gameObject.rigidbody2D.gravityScale = 0;
 				else if (bubbleTime < Time.time) 
 				{
+					GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (5, transform.position);
 					Destroy(bubbleShield.gameObject);
 					bubbleShield = null;
 					flying = false;
@@ -609,38 +610,6 @@ public class PlayerScript : MonoBehaviour
 		maxSpeed = 30;
 		transform.position = new Vector3(0,0,0);
 		loading = false;
-	}
-	IEnumerator Scene2Change()
-	{
-		bubbleTime = 0;
-		PlayerPrefs.SetInt ("Level", 2);
-		AutoFade.LoadLevel ("Level2", 3, 1, Color.black);
-		yield return new WaitForSeconds(3);
-		transform.position = new Vector3(0,0,0);
-	}
-	IEnumerator Scene3Change()
-	{
-		bubbleTime = 0;
-		PlayerPrefs.SetInt ("Level", 3);
-		AutoFade.LoadLevel ("Level3", 3, 1, Color.black);
-		yield return new WaitForSeconds(3);
-		transform.position = new Vector3(0,0,0);
-	}
-	IEnumerator Scene4Change()
-	{
-		bubbleTime = 0;
-		PlayerPrefs.SetInt ("Level", 4);
-		AutoFade.LoadLevel ("Level4", 3, 1, Color.black);
-		yield return new WaitForSeconds(3);
-		transform.position = new Vector3(0,0,0);
-	}
-	IEnumerator Scene5Change()
-	{
-		bubbleTime = 0;
-		PlayerPrefs.SetInt ("Level", 5);
-		AutoFade.LoadLevel ("Level5", 3, 1, Color.black);
-		yield return new WaitForSeconds(3);
-		transform.position = new Vector3(0,0,0);
 	}
 
 	void CenterFoot(){ foot = 0; }
