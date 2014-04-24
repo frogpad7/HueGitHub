@@ -591,6 +591,7 @@ public class PlayerScript : MonoBehaviour
 		transform.position = new Vector3(0,0,0);
 		GetComponent<SpriteRenderer> ().material.color = new Color (255,255,255);
 		color = 0;
+		anim.SetInteger ("Color", 0);
 	}
 
 	IEnumerator PlayerDying(int c)
