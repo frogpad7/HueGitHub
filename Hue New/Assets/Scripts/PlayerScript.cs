@@ -22,7 +22,7 @@ public class PlayerScript : MonoBehaviour
 
 	//animation
 	bool facingRight = true;
-	Animator anim;
+	public Animator anim;
 	int foot;
 
 	//cheat tools
@@ -62,7 +62,7 @@ public class PlayerScript : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{ 
-		anim = GetComponent<Animator>();
+		//anim = GetComponent<Animator>();
 		//audio = GameObject.FindWithTag ("Audio");
 		DontDestroyOnLoad (transform.gameObject);
 		DontDestroyOnLoad (transform.FindChild("Audio"));
@@ -587,8 +587,7 @@ public class PlayerScript : MonoBehaviour
 		this.GetComponent<PlayerScript>().enabled = true;
 		transform.position = new Vector3(0,0,0);
 		GetComponent<SpriteRenderer> ().material.color = new Color (255,255,255);
-		//Destroy (gameObject);
-		//GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript>().CreateHue();
+		color = 0;
 	}
 
 	IEnumerator PlayerDying(int c)
