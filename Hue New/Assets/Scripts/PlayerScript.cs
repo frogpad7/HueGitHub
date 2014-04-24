@@ -335,6 +335,7 @@ public class PlayerScript : MonoBehaviour
 	
 	void ability_Green()
 	{
+		GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (4, transform.position);
 		if (onMovingPlatform) return;
 		if (Input.GetKey (KeyCode.UpArrow))
 		{
