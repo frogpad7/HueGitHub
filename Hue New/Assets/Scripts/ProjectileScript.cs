@@ -107,8 +107,10 @@ public class ProjectileScript : MonoBehaviour
 				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (3, transform.position);
 			else if (gameObject.tag == "Green")
 				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (4, transform.position);
-			else if (gameObject.tag == "Blue")
+			else if (gameObject.tag == "Blue"){
 				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (5, transform.position);
+				Debug.Log ("Pop");
+			}
 			else if (gameObject.tag == "Purple")
 				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (6, transform.position);
 			

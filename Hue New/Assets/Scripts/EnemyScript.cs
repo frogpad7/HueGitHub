@@ -76,7 +76,11 @@ public class EnemyScript : MonoBehaviour
 		
 		else if (col.gameObject.tag == "Yellow") 	changeDirection();
 		else if (col.gameObject.tag == "Orange") 	freezeEnemy(col);
-		else if (col.gameObject.tag == "Purple") 	{ Destroy (gameObject); Destroy(col.gameObject); }
+		else if (col.gameObject.tag == "Purple") 	{ 
+			Destroy (gameObject); 
+			Destroy(col.gameObject); 
+			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (6, transform.position);
+		}
 		
 	//if 		(col.gameObject.tag == "Stage") 	changeDirection();
 	}
@@ -202,6 +206,7 @@ public class EnemyScript : MonoBehaviour
 		speed = 5;
 		if (walker) this.rigidbody2D.gravityScale = 1;
 		isPlatform = false;
+		GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (2, transform.position);
 		//myRenderer.sprite = frozenPlatform;
 	}
 	
