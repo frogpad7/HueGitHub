@@ -90,9 +90,12 @@ public class PlayerScript : MonoBehaviour
 	
 	void inputProc_ability()
 	{
+		if(cooldown <= Time.time)
+			anim.SetLayerWeight(2,0f);
 		//ability button control
 		if (Input.GetKeyDown (KeyCode.LeftShift) && cooldown <= Time.time) 
 		{
+			anim.SetLayerWeight(2,1f);
 			anim.SetTrigger("Shooting");
 			anim.SetInteger("Foot",foot);
 

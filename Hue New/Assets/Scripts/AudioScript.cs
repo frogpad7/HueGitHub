@@ -3,18 +3,22 @@ using System.Collections;
 
 public class AudioScript : MonoBehaviour {
 
-	public AudioSource blankTrack;
-	public AudioSource redTrack;
-	public AudioSource blueTrack;
-	public AudioSource yellowTrack;
-	public AudioSource purpleTrack;
-	public AudioSource walking;
+
 	public AudioClip death;
 	public AudioClip jump;
 	public AudioClip land;
 	public AudioClip gun;
 	public AudioClip paint;
 	public AudioClip punch;
+
+	public AudioSource blankTrack;
+	public AudioSource redTrack;
+	public AudioSource orangeTrack;
+	public AudioSource yellowTrack;
+	public AudioSource greenTrack;
+	public AudioSource blueTrack;
+	public AudioSource purpleTrack;
+	public AudioSource walking;
 
 	AudioSource current;
 	AudioSource wait;
