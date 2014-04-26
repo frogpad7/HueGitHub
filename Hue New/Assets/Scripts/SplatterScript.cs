@@ -39,37 +39,43 @@ public class SplatterScript : MonoBehaviour {
 	public void Splat(int c, Vector3 pos){
 		//Vector3 center = gameObject.transform.position;
 		//center.z = 0.0f;
-		GameObject splat = new GameObject ();
+		GameObject splat;
 		if (c == 1) {
 			splat = (GameObject)Instantiate (red);	
 			splat.name = "Red";
+			splat.transform.parent = this.gameObject.transform;
+			splat.transform.position = new Vector3(pos.x,pos.y,0);
 		}
 		if (c == 2) {
 			splat = (GameObject)Instantiate (orange);	
 			splat.name = "Orange";
+			splat.transform.parent = this.gameObject.transform;
+			splat.transform.position = new Vector3(pos.x,pos.y,0);
 		}
 		if (c == 3) {
 			splat = (GameObject)Instantiate (yellow);	
 			splat.name = "Yellow";
+			splat.transform.parent = this.gameObject.transform;
+			splat.transform.position = new Vector3(pos.x,pos.y,0);
 		}
 		if (c == 4) {
 			splat = (GameObject)Instantiate (green);	
 			splat.name = "Green";
+			splat.transform.parent = this.gameObject.transform;
+			splat.transform.position = new Vector3(pos.x,pos.y,0);
 		}
 		if (c == 5) {
 			splat = (GameObject)Instantiate (blue);	
 			splat.name = "Blue";
+			splat.transform.parent = this.gameObject.transform;
+			splat.transform.position = new Vector3(pos.x,pos.y,0);
 		}
 		if (c == 6) {
 			splat = (GameObject)Instantiate (purple);	
 			splat.name = "Purple";
+			splat.transform.parent = this.gameObject.transform;
+			splat.transform.position = new Vector3(pos.x,pos.y,0);
 		}
-		splat.transform.parent = this.gameObject.transform;
-		splat.transform.position = new Vector3(pos.x,pos.y,0);
-		//splat.AddComponent<SpriteRenderer> ();
-		//splat.GetComponent<SpriteRenderer> ().sortingLayerName = "Canvas";
-		//splat.GetComponent<SpriteRenderer> ().sprite = s;
-		//splat.tag = "Savable";
 	}
 
 	public void SaveGame(){
