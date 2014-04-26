@@ -12,7 +12,7 @@ public class PlayerScript : MonoBehaviour
 	public bool alive = true;
 	float move;
 	float moveY;
-	int color = 0;
+	public int color = 0;
 	float cooldown = 0;
 	float bubbleTime = 0;
 	bool onMovingPlatform = false;
