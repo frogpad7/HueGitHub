@@ -79,7 +79,7 @@ public class EnemyScript : MonoBehaviour
 		else if (col.gameObject.tag == "Purple") 	{ 
 			Destroy (gameObject); 
 			Destroy(col.gameObject); 
-			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (6, transform.position);
+			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (6, transform.position, new Quaternion());
 		}
 		
 	//if 		(col.gameObject.tag == "Stage") 	changeDirection();
@@ -206,7 +206,7 @@ public class EnemyScript : MonoBehaviour
 		speed = 5;
 		if (walker) this.rigidbody2D.gravityScale = 1;
 		isPlatform = false;
-		GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (2, transform.position);
+		GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (2, transform.position, new Quaternion());
 		//myRenderer.sprite = frozenPlatform;
 	}
 	

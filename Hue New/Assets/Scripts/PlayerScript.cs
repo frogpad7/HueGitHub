@@ -69,7 +69,8 @@ public class PlayerScript : MonoBehaviour
 		DontDestroyOnLoad (transform.FindChild("Audio"));
 
 		int level = PlayerPrefs.GetInt ("Level");
-		stage = level + ((level - 1) * 2);
+		stage = 1 + ((level - 1) * 2);
+		Debug.Log (stage);
 	}
 	
 	// Update is called once per frame
@@ -195,7 +196,7 @@ public class PlayerScript : MonoBehaviour
 				if (!grounded && bubbleTime >= Time.time) gameObject.rigidbody2D.gravityScale = 0;
 				else if (bubbleTime < Time.time) 
 				{
-					GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (5, transform.position);
+					GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (5, transform.position, new Quaternion());
 					Destroy(bubbleShield.gameObject);
 					bubbleShield = null;
 					flying = false;
@@ -340,7 +341,7 @@ public class PlayerScript : MonoBehaviour
 	
 	void ability_Green()
 	{
-		GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (4, transform.position);
+
 		if (onMovingPlatform) return;
 		if (Input.GetKey (KeyCode.UpArrow))
 		{
@@ -358,9 +359,10 @@ public class PlayerScript : MonoBehaviour
 				}
 			}
 			
-			Vector3 firePos = transform.position + new Vector3 (0, 2, 0);
+			Vector3 firePos = transform.position + new Vector3 (0, 12.5f, 0);
 			//Rigidbody2D fireObj = Instantiate (dash, firePos, Quaternion.Euler (new Vector3 (0, 0, 90f))) as Rigidbody2D;
 			//fireObj.isKinematic = true;
+			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (4, firePos, Quaternion.Euler(new Vector3(0,90,0)));
 			transform.position += new Vector3 (0, 25, 0);
 		}
 		
@@ -379,7 +381,8 @@ public class PlayerScript : MonoBehaviour
 				}
 			}
 			
-			Vector3 firePos = transform.position + new Vector3 (0, -2, 0);
+			Vector3 firePos = transform.position + new Vector3 (0, -12.5f, 0);
+			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (4, firePos, Quaternion.Euler(new Vector3(0,270,0)));
 			transform.position += new Vector3 (0, -25, 0);
 		} 
 		else if (!facingRight)
@@ -398,7 +401,8 @@ public class PlayerScript : MonoBehaviour
 				}
 			}
 			
-			Vector3 firePos = transform.position + new Vector3 (-2, 0, 0);
+			Vector3 firePos = transform.position + new Vector3 (-12.5f, 0, 0);
+			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (4, firePos, Quaternion.Euler(new Vector3(0,180,0)));
 			transform.position += new Vector3 (-25, 0, 0);
 		}
 		else if (facingRight) 
@@ -417,9 +421,10 @@ public class PlayerScript : MonoBehaviour
 				}
 			}
 			
-			Vector3 firePos = transform.position + new Vector3 (2, 0, 0);
+			Vector3 firePos = transform.position + new Vector3 (12.5f, 0, 0);
 			//Rigidbody2D fireObj = Instantiate (dash, firePos, Quaternion.Euler (new Vector3 (0, 0, 0))) as Rigidbody2D;
 			//fireObj.isKinematic = true;
+			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (4, firePos, new Quaternion());
 			transform.position += new Vector3 (25, 0, 0);
 		}
 		cooldown = Time.time + 3;
@@ -512,7 +517,6 @@ public class PlayerScript : MonoBehaviour
 		GameObject.FindWithTag("MainCamera").GetComponent<CameraFollow>().enabled = false;
 		this.rigidbody2D.isKinematic = true;
 		this.GetComponent<PlayerScript>().enabled = false;
-		stage = 1;
 		StartCoroutine("PlayerRestart");
 	}
 
@@ -568,10 +572,6 @@ public class PlayerScript : MonoBehaviour
 			StartCoroutine ("SceneChange");
 			loading = true;		
 		}
-		//else if (col.gameObject.tag == "Level2")	StartCoroutine("Scene2Change");
-		//else if (col.gameObject.tag == "Level3")	StartCoroutine("Scene3Change");
-		//else if (col.gameObject.tag == "Level4")	StartCoroutine("Scene4Change");
-		//else if (col.gameObject.tag == "Level5")	StartCoroutine("Scene5Change");
 
 		if (col.gameObject.tag == "Foreground") {
 			//Turn block red
@@ -613,7 +613,12 @@ public class PlayerScript : MonoBehaviour
 		}
 		//GetComponent<SpriteRenderer> ().material.color = new Color (255 - 255, 255 - 255, 255 - 255);
 		bubbleTime = 0;
-		AutoFade.LoadLevel ("ColorRoom", 5, 1, Color.black);
+		if (stage % 2 == 0) {
+			AutoFade.LoadLevel ("ColorRoom", 5, 1, Color.black);
+			stage = 1;		
+		}
+		else
+			AutoFade.LoadLevel (stage, 5, 1, Color.black);
 		PlayerPrefs.SetInt ("Level", 1);
 		yield return new WaitForSeconds(5);
 		alive = true;

@@ -81,7 +81,7 @@ public class MenuButtonScript : MonoBehaviour {
 		if (gameObject.name == "Level") {
 			PlayerPrefs.SetString ("Backdrop",PlayerPrefs.GetString("Backdrop1"));
 			PlayerPrefs.SetInt ("Level",level);
-			Application.LoadLevel (level + ((level - 1) * 2));
+			Application.LoadLevel (1 + ((level - 1) * 2));
 			GameObject b = (GameObject)Instantiate(backdrop);
 			b.GetComponent<SplatterScript>().CreateHue();
 			Screen.showCursor = false;

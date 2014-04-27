@@ -23,10 +23,12 @@ public class SplatterScript : MonoBehaviour {
 	public GameObject purple;
 
 	public GameObject hue;
+	System.Random rand;
 
 	// Use this for initialization
 	void Start () {
 		//PlayerPrefs.SetString ("Backdrop", "");
+		rand = new System.Random();
 		DontDestroyOnLoad (gameObject);
 		LoadGame ();
 	}
@@ -36,45 +38,54 @@ public class SplatterScript : MonoBehaviour {
 		Objects = GameObject.FindGameObjectsWithTag("Savable");
 	}
 
-	public void Splat(int c, Vector3 pos){
+	public void Splat(int c, Vector3 pos, Quaternion rot){
 		//Vector3 center = gameObject.transform.position;
 		//center.z = 0.0f;
 		GameObject splat;
 		if (c == 1) {
+			rot.y = rand.Next(360);
 			splat = (GameObject)Instantiate (red);	
 			splat.name = "Red";
 			splat.transform.parent = this.gameObject.transform;
 			splat.transform.position = new Vector3(pos.x,pos.y,0);
+			splat.transform.rotation = rot;
 		}
 		if (c == 2) {
 			splat = (GameObject)Instantiate (orange);	
 			splat.name = "Orange";
 			splat.transform.parent = this.gameObject.transform;
 			splat.transform.position = new Vector3(pos.x,pos.y,0);
+			splat.transform.rotation = rot;
 		}
 		if (c == 3) {
 			splat = (GameObject)Instantiate (yellow);	
 			splat.name = "Yellow";
 			splat.transform.parent = this.gameObject.transform;
 			splat.transform.position = new Vector3(pos.x,pos.y,0);
+			splat.transform.rotation = rot;
 		}
 		if (c == 4) {
 			splat = (GameObject)Instantiate (green);	
 			splat.name = "Green";
 			splat.transform.parent = this.gameObject.transform;
 			splat.transform.position = new Vector3(pos.x,pos.y,0);
+			splat.transform.rotation = rot;
 		}
 		if (c == 5) {
+			rot.y = rand.Next(360);
 			splat = (GameObject)Instantiate (blue);	
 			splat.name = "Blue";
 			splat.transform.parent = this.gameObject.transform;
 			splat.transform.position = new Vector3(pos.x,pos.y,0);
+			splat.transform.rotation = rot;
 		}
 		if (c == 6) {
+			rot.y = rand.Next(360);
 			splat = (GameObject)Instantiate (purple);	
 			splat.name = "Purple";
 			splat.transform.parent = this.gameObject.transform;
 			splat.transform.position = new Vector3(pos.x,pos.y,0);
+			splat.transform.rotation = rot;
 		}
 	}
 
