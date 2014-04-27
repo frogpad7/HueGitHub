@@ -569,6 +569,32 @@ public class PlayerScript : MonoBehaviour
 		//else if (col.gameObject.tag == "Level3")	StartCoroutine("Scene3Change");
 		//else if (col.gameObject.tag == "Level4")	StartCoroutine("Scene4Change");
 		//else if (col.gameObject.tag == "Level5")	StartCoroutine("Scene5Change");
+
+		if (col.gameObject.tag == "Foreground") {
+			//Turn block red
+			if (color == 1)
+				col.gameObject.GetComponent<SpriteRenderer> ().color = new Color (1f, 0f, 0f);
+		
+			//Turn block orange
+			else if (color == 2) 
+				col.gameObject.GetComponent<SpriteRenderer> ().color = new Color (1f, 0.5f, 0f);
+		
+			//Turn block yellow
+			else if (color == 3)
+				col.gameObject.GetComponent<SpriteRenderer> ().color = new Color (1f, 1f, 0f);
+		
+			//Turn block green
+			else if (color == 4)
+				col.gameObject.GetComponent<SpriteRenderer> ().color = new Color (0f, 1f, 0f);
+		
+			//Turn block blue
+			else if (color == 5)
+				col.gameObject.GetComponent<SpriteRenderer> ().color = new Color (0f, 0f, 1f);
+		
+			//Turn block purple
+			else if (color == 6)
+				col.gameObject.GetComponent<SpriteRenderer> ().color = new Color (1f, 0f, 1f);
+		}
 	}
 	
 	IEnumerator PlayerRestart()
