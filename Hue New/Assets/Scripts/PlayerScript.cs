@@ -24,6 +24,7 @@ public class PlayerScript : MonoBehaviour
 	bool facingRight = true;
 	public Animator anim;
 	int foot;
+	int cycle;
 
 	//cheat tools
 	public bool cheatMode = false;
@@ -95,9 +96,9 @@ public class PlayerScript : MonoBehaviour
 		//ability button control
 		if (Input.GetKeyDown (KeyCode.LeftShift) && cooldown <= Time.time) 
 		{
-			anim.SetLayerWeight(1,1f);
 			anim.SetTrigger("Shooting");
 			anim.SetInteger("Foot",foot);
+			anim.SetInteger("Cycle",cycle);
 
 			if     (color == 1) ability_Red();
 			else if(color == 2) ability_Orange();
@@ -645,7 +646,16 @@ public class PlayerScript : MonoBehaviour
 		loading = false;
 	}
 
+	void LeftFoot  (){ foot = 0; }
 	void CenterFoot(){ foot = 1; }
 	void RightFoot (){ foot = 2; }
-	void LeftFoot  (){ foot = 0; }
+
+	void IdleCycle(){ cycle = 0; }
+	void LeftCycle(){ cycle = 1; }
+	void RightCycle(){ cycle = 2; }
+	void JumpCycle(){ cycle = 3; }
+
+	void WhiteOut(){
+		anim.SetLayerWeight (1, 1f);
+	}
 }
