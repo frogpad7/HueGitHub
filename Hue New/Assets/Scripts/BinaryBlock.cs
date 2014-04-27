@@ -2,9 +2,6 @@
 using System.Collections;
 
 public class BinaryBlock : MonoBehaviour {
-	
-	//float respawnTotal = 10;
-	//float respawnTimer = 0;
 
 	public bool present;
 
@@ -13,13 +10,8 @@ public class BinaryBlock : MonoBehaviour {
 
 	public GameObject other;
 
-	// Use this for initialization
-	void Start () { 
-	
-	}
-
 	//Detects player leaving block
-	void OnCollisionExit2D(Collision2D col) {
+	void OnTriggerExit2D(Collider2D col) {
 		//Check if collision with the player
 		if (col.gameObject.tag == "Player") {
 			//Check if the block is present
@@ -35,24 +27,5 @@ public class BinaryBlock : MonoBehaviour {
 				other.gameObject.GetComponent<BoxCollider2D>().enabled = true;
 			}
 		}
-	}
-
-	// Update is called once per frame
-	void Update () {
-//		//Check if in the destination position
-//		if (destination == true) {
-//			//Check if respawn timer has run out
-//			if (respawnTimer >= respawnTotal) {
-//				//Move back to initial position
-//				this.transform.position = initialPosition;
-//				destination = false;
-//			
-//				//Reset respawn timer
-//				respawnTimer = 0;
-//			} else {
-//				//Increase respawn timer
-//				respawnTimer += 1 * Time.deltaTime;
-//			}
-//		} 
 	}
 }

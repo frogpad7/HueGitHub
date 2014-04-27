@@ -528,8 +528,10 @@ public class PlayerScript : MonoBehaviour
 
 	void OnTriggerExit2D(Collider2D col)
 	{
-		onMovingPlatform = false;
-		if (col.gameObject.tag == "rightleft") col.transform.DetachChildren();
+		if (col.gameObject.tag == "rightleft" || col.gameObject.tag == "updown") {
+			onMovingPlatform = false;
+			col.transform.DetachChildren ();
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D col)
