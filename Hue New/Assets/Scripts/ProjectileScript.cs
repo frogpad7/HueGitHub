@@ -58,11 +58,11 @@ public class ProjectileScript : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if (transform.position.x > camera.transform.position.x+50f || transform.position.x < camera.transform.position.x-50f)
-		{
-			Debug.Log ("grenade out of range!");
-			Destroy (gameObject);
-		}
+		//if (transform.position.x > camera.transform.position.x+50f || transform.position.x < camera.transform.position.x-50f)
+		//{
+		//	Debug.Log ("grenade out of range!");
+		//	Destroy (gameObject);
+		//}
 		
 		//weapon lifetime is up
 		if (lifetime > Time.time && grenadeExploding) 
@@ -91,7 +91,7 @@ public class ProjectileScript : MonoBehaviour
 		{
 			Debug.Log ("grenade out of life");
 			Destroy (this.gameObject);
-			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (1, transform.position);
+			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (1, transform.position, new Quaternion());
 		}
 		else if (lifetime < Time.time && !grenadeExploding) 
 		{ 
@@ -101,19 +101,21 @@ public class ProjectileScript : MonoBehaviour
 				lifetime = Time.time + (float)0.5;
 				grenadeExploding = true;
 			} 
-			else if (gameObject.tag == "Orange")
-				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (2, transform.position);
-			else if (gameObject.tag == "Yellow")
-				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (3, transform.position);
-			else if (gameObject.tag == "Green")
-				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (4, transform.position);
-			else if (gameObject.tag == "Blue"){
-				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (5, transform.position);
-				Debug.Log ("Pop");
+			else if (gameObject.tag == "Orange"){
+				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (2, transform.position, new Quaternion());
 			}
-			else if (gameObject.tag == "Purple")
-				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (6, transform.position);
-			
+			else if (gameObject.tag == "Yellow"){
+				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (3, transform.position, transform.rotation);
+			}
+			//else if (gameObject.tag == "Green")
+			//	GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (4, transform.position);
+			//else if (gameObject.tag == "Blue"){
+			//	GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (5, transform.position);
+			//	Debug.Log ("Pop");
+			//}
+			else if (gameObject.tag == "Purple"){
+				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (6, transform.position, new Quaternion());
+			}
 			if(!grenadeExploding) Destroy (this.gameObject); 
 		} 
 	}
