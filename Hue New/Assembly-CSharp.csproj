@@ -53,6 +53,7 @@
      <Compile Include="Assets\Scripts\CrackedBlock.cs" />
      <Compile Include="Assets\Scripts\EnemyScript.cs" />
      <Compile Include="Assets\Scripts\EnemyTrigger.cs" />
+     <Compile Include="Assets\Scripts\Foreground.cs" />
      <Compile Include="Assets\Scripts\MenuButtonScript.cs" />
      <Compile Include="Assets\Scripts\MenuCameraScript.cs" />
      <Compile Include="Assets\Scripts\PauseScript.cs" />
