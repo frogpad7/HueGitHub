@@ -46,4 +46,18 @@ public class StartMoving : MonoBehaviour {
 				eScript2.speed = initSpeed;
 		}
 	}
+
+	void OnTriggerExit2D(Collider2D col)
+	{
+		//Trigger for RightAndLeft script
+		if (direction == (int)directions.RIGHTANDLEFT) {
+			if (col.gameObject.tag == "Player") 
+				eScript1.speed = 0;
+		}
+		//Trigger for UpAndDown script
+		else if (direction == (int)directions.UPANDDOWN) {
+			if (col.gameObject.tag == "Player") 
+				eScript2.speed = 0;
+		}
+	}
 }
