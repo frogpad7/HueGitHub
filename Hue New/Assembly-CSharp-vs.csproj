@@ -49,6 +49,7 @@
      <Compile Include="Assets\Scripts\AudioScript.cs" />
      <Compile Include="Assets\Scripts\AutoFade.cs" />
      <Compile Include="Assets\Scripts\BinaryBlock.cs" />
+     <Compile Include="Assets\Scripts\BinaryReset.cs" />
      <Compile Include="Assets\Scripts\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\CrackedBlock.cs" />
      <Compile Include="Assets\Scripts\EnemyScript.cs" />

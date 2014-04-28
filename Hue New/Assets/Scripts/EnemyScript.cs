@@ -34,6 +34,7 @@ public class EnemyScript : MonoBehaviour
 	PlayerScript pScript;
 
 	Animator anim;
+	bool orange;
 
 	public Sprite pFreeze;
 	public Sprite oFreeze;
@@ -79,7 +80,8 @@ public class EnemyScript : MonoBehaviour
 		else if (col.gameObject.tag == "Purple") 	{ 
 			Destroy (gameObject); 
 			Destroy(col.gameObject); 
-			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (6, transform.position, new Quaternion());
+			float rand = Random.value * 360;
+			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (6, transform.position, Quaternion.Euler(new Vector3(0,0,rand)));
 		}
 		
 	//if 		(col.gameObject.tag == "Stage") 	changeDirection();
@@ -176,6 +178,7 @@ public class EnemyScript : MonoBehaviour
 		lifetime = Time.time + 6;
 		frozen = true;
 		isPlatform = true;
+		orange = false;
 		this.rigidbody2D.isKinematic = true;
 		speed = 5;
 		anim.SetBool ("Platform", false);
@@ -187,6 +190,7 @@ public class EnemyScript : MonoBehaviour
 		lifetime = Time.time + 7;
 		frozen = true;
 		isPlatform = true;
+		orange = true;
 		this.rigidbody2D.isKinematic = true;
 		anim.SetBool ("Platform", true);
 		anim.SetBool ("Frozen", frozen);
@@ -202,12 +206,16 @@ public class EnemyScript : MonoBehaviour
 		this.rigidbody2D.isKinematic = false;
 		frozen = false;
 		anim.SetBool ("Frozen", frozen);
-		anim.SetBool ("Platform", false);
 		speed = 5;
 		if (walker) this.rigidbody2D.gravityScale = 1;
 		isPlatform = false;
-		GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (2, transform.position, new Quaternion());
-		//myRenderer.sprite = frozenPlatform;
+		if (orange)
+			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (2, transform.position, new Quaternion ());
+		else {
+			float rand = Random.value * 360;
+			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (6, transform.position, Quaternion.Euler (new Vector3(0,0,rand)));
+		}
+			//myRenderer.sprite = frozenPlatform;
 	}
 	
 	void Flip()

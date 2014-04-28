@@ -23,12 +23,10 @@ public class SplatterScript : MonoBehaviour {
 	public GameObject purple;
 
 	public GameObject hue;
-	System.Random rand;
 
 	// Use this for initialization
 	void Start () {
 		//PlayerPrefs.SetString ("Backdrop", "");
-		rand = new System.Random();
 		DontDestroyOnLoad (gameObject);
 		LoadGame ();
 	}
@@ -43,7 +41,6 @@ public class SplatterScript : MonoBehaviour {
 		//center.z = 0.0f;
 		GameObject splat;
 		if (c == 1) {
-			rot.y = rand.Next(360);
 			splat = (GameObject)Instantiate (red);	
 			splat.name = "Red";
 			splat.transform.parent = this.gameObject.transform;
@@ -72,7 +69,6 @@ public class SplatterScript : MonoBehaviour {
 			splat.transform.rotation = rot;
 		}
 		if (c == 5) {
-			rot.y = rand.Next(360);
 			splat = (GameObject)Instantiate (blue);	
 			splat.name = "Blue";
 			splat.transform.parent = this.gameObject.transform;
@@ -80,7 +76,6 @@ public class SplatterScript : MonoBehaviour {
 			splat.transform.rotation = rot;
 		}
 		if (c == 6) {
-			rot.y = rand.Next(360);
 			splat = (GameObject)Instantiate (purple);	
 			splat.name = "Purple";
 			splat.transform.parent = this.gameObject.transform;
@@ -96,8 +91,11 @@ public class SplatterScript : MonoBehaviour {
 			SaveString += 
 				Objects[i].name 
 					+ ","+ 
-					Objects[i].transform.position.x + "|" + Objects[i].transform.position.y
+					Objects[i].transform.position.x + "|" + Objects[i].transform.position.y + "|"
+					+ ","+ 
+					Objects[i].transform.rotation.eulerAngles.z
 					+ ";";
+			Debug.Log (SaveString);
 		}
 		PlayerPrefs.SetString ("Backdrop1", SaveString);
 	}
@@ -115,7 +113,8 @@ public class SplatterScript : MonoBehaviour {
 				string naz, poz1, rot1;
 				string[] poz, rot;
 				
-				//Vector3 pozycja;
+				//Vector3 p;
+				//Quaternion r;
 				
 				naz = recordSelected[0].ToString();
 				Debug.Log("Loaded: "+naz);
@@ -123,11 +122,20 @@ public class SplatterScript : MonoBehaviour {
 				poz1 = recordSelected[1].ToString();
 				Debug.Log("Loaded: "+poz1);
 				
+				rot1 = recordSelected[2].ToString();
+				Debug.Log("Loaded: "+rot1);
+
 				poz = poz1.Split('|');
+				//rot = rot1.Split('|');
 				
-				//pozycja.x = Convert.ToSingle(poz[0]);
-				//pozycja.y = Convert.ToSingle(poz[1]);
-				//pozycja.z = 0;
+				//p.x = Convert.ToSingle(poz[0]);
+				//p.y = Convert.ToSingle(poz[1]);
+				//p.z = 0;
+
+				//r.x = 0;
+				//r.y = 0;
+				//r.z = Convert.ToSingle(rot1);
+				//r.w = 1;
 
 				GameObject splat = new GameObject ();
 				if(naz == "Red")
@@ -162,6 +170,7 @@ public class SplatterScript : MonoBehaviour {
 				}
 				splat.transform.parent = this.gameObject.transform;
 				splat.transform.position = new Vector3(Convert.ToSingle(poz[0]),Convert.ToSingle(poz[1]),0);
+				splat.transform.rotation = Quaternion.Euler (new Vector3(0,0,Convert.ToSingle(rot1)));
 				}
 			}
 		}

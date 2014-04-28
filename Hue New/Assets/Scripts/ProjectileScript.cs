@@ -91,7 +91,8 @@ public class ProjectileScript : MonoBehaviour
 		{
 			Debug.Log ("grenade out of life");
 			Destroy (this.gameObject);
-			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (1, transform.position, new Quaternion());
+			float rand = Random.value * 360;
+			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (1, transform.position, Quaternion.Euler(new Vector3(0,0,rand)));
 		}
 		else if (lifetime < Time.time && !grenadeExploding) 
 		{ 
@@ -114,7 +115,8 @@ public class ProjectileScript : MonoBehaviour
 			//	Debug.Log ("Pop");
 			//}
 			else if (gameObject.tag == "Purple"){
-				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (6, transform.position, new Quaternion());
+				float rand = Random.value * 360;
+				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (6, transform.position, Quaternion.Euler(new Vector3(0,0,rand)));
 			}
 			if(!grenadeExploding) Destroy (this.gameObject); 
 		} 

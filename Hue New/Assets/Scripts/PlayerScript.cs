@@ -196,7 +196,8 @@ public class PlayerScript : MonoBehaviour
 				if (!grounded && bubbleTime >= Time.time) gameObject.rigidbody2D.gravityScale = 0;
 				else if (bubbleTime < Time.time) 
 				{
-					GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (5, transform.position, new Quaternion());
+					float rand = Random.value * 360;
+					GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (5, transform.position, Quaternion.Euler(new Vector3(0,0,rand)));
 					Destroy(bubbleShield.gameObject);
 					bubbleShield = null;
 					flying = false;
@@ -362,7 +363,7 @@ public class PlayerScript : MonoBehaviour
 			Vector3 firePos = transform.position + new Vector3 (0, 12.5f, 0);
 			//Rigidbody2D fireObj = Instantiate (dash, firePos, Quaternion.Euler (new Vector3 (0, 0, 90f))) as Rigidbody2D;
 			//fireObj.isKinematic = true;
-			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (4, firePos, Quaternion.Euler(new Vector3(0,90,0)));
+			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (4, firePos, Quaternion.Euler(new Vector3(0,0,90)));
 			transform.position += new Vector3 (0, 25, 0);
 		}
 		
@@ -382,7 +383,7 @@ public class PlayerScript : MonoBehaviour
 			}
 			
 			Vector3 firePos = transform.position + new Vector3 (0, -12.5f, 0);
-			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (4, firePos, Quaternion.Euler(new Vector3(0,270,0)));
+			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (4, firePos, Quaternion.Euler(new Vector3(0,0,270)));
 			transform.position += new Vector3 (0, -25, 0);
 		} 
 		else if (!facingRight)
@@ -402,7 +403,7 @@ public class PlayerScript : MonoBehaviour
 			}
 			
 			Vector3 firePos = transform.position + new Vector3 (-12.5f, 0, 0);
-			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (4, firePos, Quaternion.Euler(new Vector3(0,180,0)));
+			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (4, firePos, Quaternion.Euler(new Vector3(0,0,180)));
 			transform.position += new Vector3 (-25, 0, 0);
 		}
 		else if (facingRight) 
