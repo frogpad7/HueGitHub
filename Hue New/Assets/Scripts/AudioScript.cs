@@ -21,6 +21,7 @@ public class AudioScript : MonoBehaviour {
 	public AudioSource blueTrack;
 	public AudioSource purpleTrack;
 	public AudioSource walking;
+	public AudioSource sounds;
 
 	AudioSource current;
 	AudioSource wait;
@@ -34,6 +35,7 @@ public class AudioScript : MonoBehaviour {
 	void Update () {
 		//good for playing jumps, explosions, etc.
 		//AudioSource.PlayClipAtPoint (clip, transform.position);
+		//AudioSource.PlayOneShot(clip, volume);
 
 		//increase
 		if (current.volume != 1)
@@ -55,7 +57,8 @@ public class AudioScript : MonoBehaviour {
 		}
 		//now orange
 		if (color == 2) {
-			
+			wait = current;
+			current = orangeTrack;
 		}
 		//now yellow
 		if (color == 3) {
@@ -64,7 +67,8 @@ public class AudioScript : MonoBehaviour {
 		}
 		//now green
 		if (color == 4) {
-			
+			wait = current;
+			current = greenTrack;
 		}
 		//now blue
 		if (color == 5) {

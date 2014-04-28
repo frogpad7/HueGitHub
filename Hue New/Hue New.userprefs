@@ -1,14 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\SplatterScript.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\ProjectileScript.cs">
     <Files>
-      <File FileName="Assets\Scripts\SplatterScript.cs" Line="83" Column="27" />
-      <File FileName="Assets\Scripts\PlayerScript.cs" Line="572" Column="4" />
-      <File FileName="Assets\Scripts\MenuButtonScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\ProjectileScript.cs" Line="93" Column="30" />
-      <File FileName="Assets\Scripts\EnemyScript.cs" Line="81" Column="29" />
+      <File FileName="Assets\Scripts\SplatterScript.cs" Line="183" Column="1" />
+      <File FileName="Assets\Scripts\PlayerScript.cs" Line="526" Column="5" />
+      <File FileName="Assets\Scripts\MenuButtonScript.cs" Line="132" Column="2" />
+      <File FileName="Assets\Scripts\ProjectileScript.cs" Line="52" Column="7" />
+      <File FileName="Assets\Scripts\EnemyScript.cs" Line="228" Column="2" />
       <File FileName="Assets\Scripts\PauseScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\AudioScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\AudioScript.cs" Line="37" Column="43" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

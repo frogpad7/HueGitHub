@@ -18,7 +18,7 @@ public class PlayerScript : MonoBehaviour
 	bool onMovingPlatform = false;
 
 	//audio
-	public GameObject audio;
+	public AudioScript audio;
 
 	//animation
 	bool facingRight = true;
@@ -34,6 +34,8 @@ public class PlayerScript : MonoBehaviour
 	bool loading = false;
 
 	int stage;
+	float sound = 1;
+	float music = 1;
 
 	//ridgidbodies
 	public Rigidbody2D ball;
@@ -70,7 +72,7 @@ public class PlayerScript : MonoBehaviour
 
 		int level = PlayerPrefs.GetInt ("Level");
 		stage = 1 + ((level - 1) * 2);
-		Debug.Log (stage);
+		//Debug.Log (stage);
 	}
 	
 	// Update is called once per frame
@@ -127,8 +129,8 @@ public class PlayerScript : MonoBehaviour
 		anim.SetInteger ("Direction", Mathf.RoundToInt(moveY));
 		anim.SetBool    ("FacingR", facingRight);
 		
-		if (grounded && s>0) audio.GetComponent<AudioScript> ().PlayWalk ();
-		else                 audio.GetComponent<AudioScript> ().StopWalk ();
+		if (grounded && s>0 && alive) audio.PlayWalk ();
+		else                 audio.StopWalk ();
 	}
 	
 	void inputProc_devCheats()
@@ -136,7 +138,8 @@ public class PlayerScript : MonoBehaviour
 		//cheats on/off control
 		if (Input.GetKeyDown (KeyCode.Backspace))
 		{
-			AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().jump,transform.position);
+			audio.sounds.PlayOneShot(audio.jump, sound);
+			//AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().jump,transform.position);
 			if (cheatMode) cheatMode = false;
 			else cheatMode = true;
 		}
@@ -166,15 +169,16 @@ public class PlayerScript : MonoBehaviour
 		//jumping from the ground, and reset the double jump flag
 		if (grounded)
 		{
+			if(!landed)	audio.sounds.PlayOneShot(audio.land, sound);
 			if (Input.GetKeyDown(KeyCode.Space)) 
 			{
-				AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().jump,transform.position);
+				audio.sounds.PlayOneShot(audio.jump, sound);
+				//AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().jump,transform.position);
 				rigidbody2D.velocity= new Vector2(rigidbody2D.velocity.x,0f);
 				if (!bubbleShield) rigidbody2D.AddForce (new Vector2 (0, 4400f));
 				landed = false;
 			} 
 			if (!bubbleShield) flying = false;
-			if(!landed)	AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().land,transform.position);
 		}
 		else if (!grounded && (bubbleShield)) flying = true;
 		landed = grounded;
@@ -196,6 +200,7 @@ public class PlayerScript : MonoBehaviour
 				if (!grounded && bubbleTime >= Time.time) gameObject.rigidbody2D.gravityScale = 0;
 				else if (bubbleTime < Time.time) 
 				{
+					//play pop
 					float rand = Random.value * 360;
 					GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (5, transform.position, Quaternion.Euler(new Vector3(0,0,rand)));
 					Destroy(bubbleShield.gameObject);
@@ -240,7 +245,6 @@ public class PlayerScript : MonoBehaviour
 	
 	void ability_Red()
 	{
-		//AudioSource.PlayClipAtPoint (audio.GetComponent<AudioScript> ().tick, transform.position);
 		Rigidbody2D fireObj;
 		if(Input.GetKey(KeyCode.DownArrow))
 		{
@@ -270,13 +274,14 @@ public class PlayerScript : MonoBehaviour
 			
 		}
 		cooldown = 3  + Time.time;
-		//need to attach to AudioSource
-		AudioSource.PlayClipAtPoint (audio.GetComponent<AudioScript> ().tick, transform.position);
+		audio.sounds.PlayOneShot (audio.tick, sound);
+		//AudioSource.PlayClipAtPoint (audio.GetComponent<AudioScript> ().tick, transform.position);
 	}
 	
 	void ability_Orange()
 	{
-		AudioSource.PlayClipAtPoint (audio.GetComponent<AudioScript> ().gun, transform.position);
+		audio.sounds.PlayOneShot (audio.gun, sound);
+		//AudioSource.PlayClipAtPoint (audio.GetComponent<AudioScript> ().gun, transform.position);
 		if (Input.GetKey (KeyCode.DownArrow) && !grounded) 
 		{
 			Vector3 firePos = transform.position + new Vector3 (0, -6, 0);
@@ -310,7 +315,8 @@ public class PlayerScript : MonoBehaviour
 	
 	void ability_Yellow()
 	{		
-		AudioSource.PlayClipAtPoint (audio.GetComponent<AudioScript> ().paint, transform.position);
+		audio.sounds.PlayOneShot (audio.paint, sound);
+		//AudioSource.PlayClipAtPoint (audio.GetComponent<AudioScript> ().paint, transform.position);
 		if(Input.GetKey(KeyCode.DownArrow))
 		{
 			Vector3 firePos;
@@ -344,7 +350,7 @@ public class PlayerScript : MonoBehaviour
 	
 	void ability_Green()
 	{
-
+		//sound for green
 		if (onMovingPlatform) return;
 		if (Input.GetKey (KeyCode.UpArrow))
 		{
@@ -450,6 +456,7 @@ public class PlayerScript : MonoBehaviour
 	
 	void ability_Purple()
 	{
+		//sound for purple
 		if(grounded && Input.GetKey(KeyCode.DownArrow) && !groundPounding)
 		{
 			groundPoundPos = transform.position;
@@ -514,7 +521,8 @@ public class PlayerScript : MonoBehaviour
 
 	void death()
 	{
-		AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().death,transform.position);
+		audio.sounds.PlayOneShot (audio.death, sound);
+		//AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().death,transform.position);
 		alive = false;
 		anim.SetBool ("Alive", false);
 		GameObject.FindWithTag("MainCamera").GetComponent<CameraFollow>().enabled = false;
@@ -562,7 +570,7 @@ public class PlayerScript : MonoBehaviour
 		//change audio track based on the color
 		if (c != color) 
 		{
-			audio.GetComponent<AudioScript>().ChangeTrack(c);
+			audio.ChangeTrack(c);
 			if(bubbleShield)
 			{
 				Destroy(bubbleShield.gameObject);
@@ -632,6 +640,7 @@ public class PlayerScript : MonoBehaviour
 		GetComponent<SpriteRenderer> ().material.color = new Color (255,255,255);
 		color = 0;
 		anim.SetInteger ("Color", 0);
+		audio.ChangeTrack(0);
 	}
 
 	IEnumerator PlayerDying(int c)
