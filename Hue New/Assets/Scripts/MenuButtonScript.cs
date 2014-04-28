@@ -95,7 +95,7 @@ public class MenuButtonScript : MonoBehaviour {
 		} if (gameObject.name == "Controls") {
 			mcs.changeLoc(controls);
 		} if (gameObject.name == "Credits") {
-			mcs.changeLoc(credits);
+			Application.LoadLevel("Credits");
 		} if (gameObject.name == "Back") {
 			mcs.changeLoc(origin);
 		}

@@ -10,6 +10,8 @@ public class AudioScript : MonoBehaviour {
 	public AudioClip gun;
 	public AudioClip paint;
 	public AudioClip punch;
+	public AudioClip tick;
+	public AudioClip boom;
 
 	public AudioSource blankTrack;
 	public AudioSource redTrack;

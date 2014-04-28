@@ -48,6 +48,8 @@ public class ProjectileScript : MonoBehaviour
 		{
 			if(col.gameObject.tag == "Enemy")
 			{
+				//turn off ticking
+				//gameObject.GetComponent<AudioSource>().Play();
 				this.gameObject.rigidbody2D.isKinematic = true;
 				lifetime = Time.time + (float)0.5;
 				grenadeExploding = true;
@@ -90,7 +92,7 @@ public class ProjectileScript : MonoBehaviour
 		else if (lifetime < Time.time && grenadeExploding)
 		{
 			Debug.Log ("grenade out of life");
-			Destroy (this.gameObject);
+			Destroy (gameObject);
 			float rand = Random.value * 360;
 			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (1, transform.position, Quaternion.Euler(new Vector3(0,0,rand)));
 		}
@@ -99,6 +101,8 @@ public class ProjectileScript : MonoBehaviour
 			//spawn color splat
 			if (gameObject.tag == "Grenade") 
 			{
+				//turn off ticking
+				//gameObject.GetComponent<AudioSource>().PlayOneShot()
 				lifetime = Time.time + (float)0.5;
 				grenadeExploding = true;
 			} 
@@ -108,12 +112,6 @@ public class ProjectileScript : MonoBehaviour
 			else if (gameObject.tag == "Yellow"){
 				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (3, transform.position, transform.rotation);
 			}
-			//else if (gameObject.tag == "Green")
-			//	GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (4, transform.position);
-			//else if (gameObject.tag == "Blue"){
-			//	GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (5, transform.position);
-			//	Debug.Log ("Pop");
-			//}
 			else if (gameObject.tag == "Purple"){
 				float rand = Random.value * 360;
 				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (6, transform.position, Quaternion.Euler(new Vector3(0,0,rand)));

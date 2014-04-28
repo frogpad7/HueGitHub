@@ -240,6 +240,7 @@ public class PlayerScript : MonoBehaviour
 	
 	void ability_Red()
 	{
+		//AudioSource.PlayClipAtPoint (audio.GetComponent<AudioScript> ().tick, transform.position);
 		Rigidbody2D fireObj;
 		if(Input.GetKey(KeyCode.DownArrow))
 		{
@@ -269,7 +270,8 @@ public class PlayerScript : MonoBehaviour
 			
 		}
 		cooldown = 3  + Time.time;
-		fireObj.GetComponent<AudioSource> ().Play ();
+		//need to attach to AudioSource
+		AudioSource.PlayClipAtPoint (audio.GetComponent<AudioScript> ().tick, transform.position);
 	}
 	
 	void ability_Orange()
