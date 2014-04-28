@@ -538,7 +538,7 @@ public class PlayerScript : MonoBehaviour
 	{
 		if (col.gameObject.tag == "rightleft" || col.gameObject.tag == "updown") {
 			onMovingPlatform = false;
-			col.transform.DetachChildren ();
+			this.transform.parent = null;
 		}
 	}
 
