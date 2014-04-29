@@ -41,6 +41,8 @@ public class ProjectileScript : MonoBehaviour
 			if (gameObject.tag == "Purple" || gameObject.tag == "Orange" ) Destroy(gameObject);
 		}
 
+		else if (gameObject.tag == "Yellow" && col.gameObject.tag == "Enemy") { Destroy(col.gameObject); lifetime = Time.time + 1; }
+
 		//else if (gameObject.tag == "Orange") this.rigidbody2D.isKinematic = true;
 		else if (gameObject.tag == "Purple" && (col.gameObject.tag == "Stage" || col.gameObject.tag == "Floor")) Destroy(gameObject);
 	
