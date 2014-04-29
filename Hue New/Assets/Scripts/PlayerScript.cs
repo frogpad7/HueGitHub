@@ -360,7 +360,7 @@ public class PlayerScript : MonoBehaviour
 		if (onMovingPlatform) return;
 		if (Input.GetKey (KeyCode.UpArrow))
 		{
-			Collider2D[] warpDash = Physics2D.OverlapCircleAll (transform.position, 30f);
+			Collider2D[] warpDash = Physics2D.OverlapCircleAll (transform.position, 35f);
 			
 			for (int i=0; i<warpDash.GetLength(0); i++) 
 			{
@@ -368,7 +368,7 @@ public class PlayerScript : MonoBehaviour
 				{
 					if (warpDash[i].gameObject.rigidbody2D.gameObject.tag == "Enemy") 
 					{
-						if (Mathf.Abs(transform.position.x - warpDash[i].gameObject.transform.position.x)<= 2)
+						if (Mathf.Abs(transform.position.x - warpDash[i].gameObject.transform.position.x)<= 5)
 							if (transform.position.y < warpDash[i].gameObject.transform.position.y) Destroy (warpDash[i].gameObject);
 					}
 				}
@@ -383,14 +383,14 @@ public class PlayerScript : MonoBehaviour
 		
 		else if (Input.GetKey (KeyCode.DownArrow) && !grounded) 
 		{
-			Collider2D[] warpDash = Physics2D.OverlapCircleAll (transform.position, 30f);
+			Collider2D[] warpDash = Physics2D.OverlapCircleAll (transform.position, 35f);
 			for (int i=0; i<warpDash.GetLength(0); i++) 
 			{
 				if (warpDash[i].gameObject.rigidbody2D != null) 
 				{
 					if (warpDash[i].gameObject.rigidbody2D.gameObject.tag == "Enemy") 
 					{
-						if (Mathf.Abs(transform.position.x - warpDash[i].gameObject.transform.position.x)<= 2)
+						if (Mathf.Abs(transform.position.x - warpDash[i].gameObject.transform.position.x)<= 5)
 							if (transform.position.y > warpDash[i].gameObject.transform.position.y) Destroy (warpDash[i].gameObject);
 					}
 				}
@@ -402,7 +402,7 @@ public class PlayerScript : MonoBehaviour
 		} 
 		else if (!facingRight)
 		{
-			Collider2D[] warpDash = Physics2D.OverlapCircleAll (transform.position, 30f);
+			Collider2D[] warpDash = Physics2D.OverlapCircleAll (transform.position, 35f);
 			
 			for (int i=0; i<warpDash.GetLength(0); i++) 
 			{
@@ -410,7 +410,7 @@ public class PlayerScript : MonoBehaviour
 				{
 					if (warpDash[i].gameObject.rigidbody2D.gameObject.tag == "Enemy") 
 					{
-						if (Mathf.Abs(transform.position.y - warpDash[i].gameObject.transform.position.y)<= 2)
+						if (Mathf.Abs(transform.position.y - warpDash[i].gameObject.transform.position.y)<= 5)
 							if (transform.position.x > warpDash[i].gameObject.transform.position.x) Destroy (warpDash[i].gameObject);
 					}
 				}
@@ -422,7 +422,7 @@ public class PlayerScript : MonoBehaviour
 		}
 		else if (facingRight) 
 		{
-			Collider2D[] warpDash = Physics2D.OverlapCircleAll (transform.position, 30f);
+			Collider2D[] warpDash = Physics2D.OverlapCircleAll (transform.position, 35f);
 			
 			for (int i=0; i<warpDash.GetLength(0); i++) 
 			{
@@ -430,7 +430,7 @@ public class PlayerScript : MonoBehaviour
 				{
 					if (warpDash[i].gameObject.rigidbody2D.gameObject.tag == "Enemy") 
 					{
-						if (Mathf.Abs(transform.position.y - warpDash[i].gameObject.transform.position.y)<= 2)
+						if (Mathf.Abs(transform.position.y - warpDash[i].gameObject.transform.position.y)<= 5)
 							if (transform.position.x < warpDash[i].gameObject.transform.position.x) Destroy (warpDash[i].gameObject);
 					}
 				}
