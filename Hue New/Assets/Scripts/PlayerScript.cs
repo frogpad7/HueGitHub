@@ -585,8 +585,7 @@ public class PlayerScript : MonoBehaviour
 			audio.ChangeTrack(c);
 			if(bubbleShield)
 			{
-				Destroy(bubbleShield.gameObject);
-				bubbleShield = null;
+				bubbleTime = 0;
 			}
 		}
 		color = c;
