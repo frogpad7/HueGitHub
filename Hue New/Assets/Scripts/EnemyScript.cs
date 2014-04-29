@@ -74,7 +74,7 @@ public class EnemyScript : MonoBehaviour
 	
 	void OnCollisionEnter2D(Collision2D col)
 	{
-		if (frozen && col.gameObject.tag != "Player") Destroy(col.gameObject);
+		if (frozen && col.gameObject.tag == "Orange") Destroy(col.gameObject);
 		
 		else if (col.gameObject.tag == "Yellow") 	changeDirection();
 		else if (col.gameObject.tag == "Orange") 	freezeEnemy(col);
