@@ -54,4 +54,8 @@ public class CrackedBlock : MonoBehaviour {
 		else if (respawnCountdown == true)
 			respawnTimer += 1 * Time.deltaTime;
 	}
+
+	void Crumble(){
+
+	}
 }
