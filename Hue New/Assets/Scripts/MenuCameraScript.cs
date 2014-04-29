@@ -9,7 +9,7 @@ public class MenuCameraScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		startTime = Time.time;
-		travel = new Vector3 (0, 0, -10);
+		travel = new Vector3 (0, 100, -10);
 	}
 	
 	// Update is called once per frame

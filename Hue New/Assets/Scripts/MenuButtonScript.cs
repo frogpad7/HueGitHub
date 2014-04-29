@@ -5,16 +5,17 @@ public class MenuButtonScript : MonoBehaviour {
 
 	public MenuCameraScript mcs;
 	public GameObject pause;
-	Vector3 load = new Vector3 (30, 0, -10);
-	Vector3 options = new Vector3 (0, 15, -10);
-	Vector3 controls = new Vector3 (-30, 0, -10);
-	Vector3 credits = new Vector3 (0, -15, -10);
-	Vector3 origin = new Vector3 (0, 0, -10);
+	Vector3 load = new Vector3 (30, 100, -10);
+	Vector3 options = new Vector3 (0, 115, -10);
+	Vector3 controls = new Vector3 (-30, 100, -10);
+	Vector3 origin = new Vector3 (0, 100, -10);
 	
 	public GameObject hue;
 	public GameObject backdrop;
 
 	int level;
+	float sVol;
+	float mVol;
 
 	// Use this for initialization
 	void Start () {
@@ -129,4 +130,9 @@ public class MenuButtonScript : MonoBehaviour {
 			pause.GetComponent<PauseScript>().saving = false;
 		}
 	}	
+
+	//void OnGUI(){
+	//	sVol = GUI.HorizontalSlider(new Rect(25, 25, 100, 30), sVol, 0.0F, 1.0F);
+	//	mVol = GUI.HorizontalSlider(new Rect(25, 50, 100, 30), mVol, 0.0F, 10.0F);
+	//}
 }

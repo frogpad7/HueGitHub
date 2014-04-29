@@ -194,7 +194,7 @@ public class EnemyScript : MonoBehaviour
 		this.rigidbody2D.isKinematic = true;
 		anim.SetBool ("Platform", true);
 		anim.SetBool ("Frozen", frozen);
-		speed = 5;
+		//speed = 5;
 
 		//myRenderer.sprite = oFreeze;
 		Destroy(col.gameObject);
@@ -206,7 +206,7 @@ public class EnemyScript : MonoBehaviour
 		this.rigidbody2D.isKinematic = false;
 		frozen = false;
 		anim.SetBool ("Frozen", frozen);
-		speed = 5;
+		//speed = 5;
 		if (walker) this.rigidbody2D.gravityScale = 1;
 		isPlatform = false;
 		if (orange)
