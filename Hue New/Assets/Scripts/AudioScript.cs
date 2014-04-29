@@ -7,11 +7,16 @@ public class AudioScript : MonoBehaviour {
 	public AudioClip death;
 	public AudioClip jump;
 	public AudioClip land;
-	public AudioClip gun;
-	public AudioClip paint;
-	public AudioClip punch;
+
 	public AudioClip tick;
 	public AudioClip boom;
+	public AudioClip gun;
+	public AudioClip hit;
+	public AudioClip paint;
+	public AudioClip dash;
+	public AudioClip pop;
+	public AudioClip punch;
+
 
 	public AudioSource blankTrack;
 	public AudioSource redTrack;

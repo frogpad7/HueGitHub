@@ -33,6 +33,7 @@ public class EnemyScript : MonoBehaviour
 	SpriteRenderer myRenderer;
 	PlayerScript pScript;
 
+	public AudioSource noise; 
 	Animator anim;
 	bool orange;
 
@@ -104,7 +105,7 @@ public class EnemyScript : MonoBehaviour
 
 	void enemy_AI()
 	{
-		Shoot ();
+		//Shoot ();
 		if (follow && !frozen)
 		{
 			Vector3 dir = Vector3.Normalize (GameObject.FindWithTag ("Player").transform.position - this.transform.position) * .1f;
@@ -180,7 +181,8 @@ public class EnemyScript : MonoBehaviour
 		isPlatform = true;
 		orange = false;
 		this.rigidbody2D.isKinematic = true;
-		speed = 5;
+		//speed = 5;
+		noise.mute = true;
 		anim.SetBool ("Platform", false);
 		anim.SetBool ("Frozen", frozen);
 	}
@@ -192,6 +194,7 @@ public class EnemyScript : MonoBehaviour
 		isPlatform = true;
 		orange = true;
 		this.rigidbody2D.isKinematic = true;
+		noise.mute = true;
 		anim.SetBool ("Platform", true);
 		anim.SetBool ("Frozen", frozen);
 		//speed = 5;
@@ -206,6 +209,7 @@ public class EnemyScript : MonoBehaviour
 		this.rigidbody2D.isKinematic = false;
 		frozen = false;
 		anim.SetBool ("Frozen", frozen);
+		noise.mute = false;
 		//speed = 5;
 		if (walker) this.rigidbody2D.gravityScale = 1;
 		isPlatform = false;

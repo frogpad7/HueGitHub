@@ -1,9 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\ProjectileScript.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PlayerScript.cs">
     <Files>
       <File FileName="Assets\Scripts\SplatterScript.cs" Line="183" Column="1" />
-      <File FileName="Assets\Scripts\PlayerScript.cs" Line="181" Column="38" />
+      <File FileName="Assets\Scripts\PlayerScript.cs" Line="95" Column="60" />
       <File FileName="Assets\Scripts\MenuButtonScript.cs" Line="11" Column="37" />
       <File FileName="Assets\Scripts\ProjectileScript.cs" Line="52" Column="7" />
       <File FileName="Assets\Scripts\EnemyScript.cs" Line="228" Column="2" />
