@@ -676,7 +676,8 @@ public class PlayerScript : MonoBehaviour
 	IEnumerator EndGame()
 	{
 		GameObject.FindWithTag("MainCamera").GetComponent<CameraFollow>().enabled = false;
-		GameObject.FindWithTag("MainCamera").GetComponent<Camera>().orthographicSize = 100;
+		GameObject.FindWithTag("MainCamera").GetComponent<Camera>().orthographicSize = 500;
+		Destroy(GameObject.FindWithTag("L5Structure"));
 		this.GetComponent<PlayerScript>().enabled = false;
 		yield return new WaitForSeconds(5);
 		AutoFade.LoadLevel ("Credits", 7, 3, Color.white);

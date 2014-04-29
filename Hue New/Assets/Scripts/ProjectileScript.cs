@@ -14,7 +14,7 @@ public class ProjectileScript : MonoBehaviour
 		grenadeExploding = false;
 		camera = GameObject.FindGameObjectWithTag("MainCamera").transform;
 		
-		if 		(gameObject.tag == "Grenade")	lifetime = Time.time + 3;
+		if 		(gameObject.tag == "Grenade")	lifetime = Time.time + 1.3f;
 		else if (gameObject.tag == "Orange") 	lifetime = Time.time + 10;
 		else if (gameObject.tag == "Yellow") 	lifetime = Time.time + 6;
 		else if (gameObject.tag == "Green") 	lifetime = Time.time + 2;
