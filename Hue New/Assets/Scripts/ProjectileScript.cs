@@ -25,6 +25,7 @@ public class ProjectileScript : MonoBehaviour
 	
 	void OnCollisionEnter2D(Collision2D col)
 	{
+		if (gameObject.tag == "Orange") GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (2, transform.position, new Quaternion ());
 		if (gameObject.tag == "Projectile")
 		{
 			if (col.gameObject.tag == "Projectile") { Destroy(col.gameObject); Destroy(col.gameObject); }
