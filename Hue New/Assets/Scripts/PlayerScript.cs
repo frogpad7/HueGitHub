@@ -141,14 +141,14 @@ public class PlayerScript : MonoBehaviour
 	
 	void inputProc_devCheats()
 	{
-		return;
+
 		//cheats on/off control
 		if (Input.GetKeyDown (KeyCode.Backspace))
 		{
 			audio.sounds.PlayOneShot(audio.jump, sound);
 			//AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().jump,transform.position);
-			//if (cheatMode) cheatMode = false;
-			//else cheatMode = true;
+			if (cheatMode) cheatMode = false;
+			else cheatMode = true;
 		}
 
 		//if cheats are off, we're done here.
@@ -358,7 +358,7 @@ public class PlayerScript : MonoBehaviour
 	void ability_Green()
 	{
 		//sound for green
-		if (onMovingPlatform) return;
+		if (onMovingPlatform) this.transform.parent = null;
 		if (Input.GetKey (KeyCode.UpArrow))
 		{
 			Collider2D[] warpDash = Physics2D.OverlapCircleAll (transform.position, 35f);
@@ -382,7 +382,7 @@ public class PlayerScript : MonoBehaviour
 			transform.position += new Vector3 (0, 25, 0);
 		}
 		
-		else if (Input.GetKey (KeyCode.DownArrow) && !grounded) 
+		else if (Input.GetKey (KeyCode.DownArrow)) 
 		{
 			Collider2D[] warpDash = Physics2D.OverlapCircleAll (transform.position, 35f);
 			for (int i=0; i<warpDash.GetLength(0); i++) 
@@ -563,11 +563,14 @@ public class PlayerScript : MonoBehaviour
 			atDoor = false;
 	}
 
+	GameObject platParent;
+
 	void OnTriggerEnter2D(Collider2D col)
 	{
 		if (col.gameObject.tag == "rightleft" || col.gameObject.tag == "updown") 
 		{
 			onMovingPlatform = true;
+			platParent = col.gameObject;
 			this.transform.parent = col.transform;
 		}
 		//changes color when passing through the color object
