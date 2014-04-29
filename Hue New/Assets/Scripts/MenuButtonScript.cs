@@ -6,7 +6,7 @@ public class MenuButtonScript : MonoBehaviour {
 	public MenuCameraScript mcs;
 	public GameObject pause;
 	Vector3 load = new Vector3 (30, 100, -10);
-	Vector3 options = new Vector3 (0, 115, -10);
+	Vector3 options = new Vector3 (0, 120, -10);
 	Vector3 controls = new Vector3 (-30, 100, -10);
 	Vector3 origin = new Vector3 (0, 100, -10);
 	
@@ -14,8 +14,8 @@ public class MenuButtonScript : MonoBehaviour {
 	public GameObject backdrop;
 
 	int level;
-	float sVol;
-	float mVol;
+	float sVol = 1;
+	float mVol = 1;
 
 	// Use this for initialization
 	void Start () {
@@ -71,6 +71,30 @@ public class MenuButtonScript : MonoBehaviour {
 	}
 
 	void OnMouseUp(){
+		if (gameObject.name == "MinusM") {
+			if(mVol > 0)
+				mVol -= 0.01f;
+			GameObject.FindWithTag("Music").transform.localScale = new Vector3(mVol, 0.75f, 1);
+			//change menu music
+		}
+		if (gameObject.name == "MinusS") {
+			if(sVol > 0)
+				sVol -= 0.01f;
+			GameObject.FindWithTag("Sound").transform.localScale = new Vector3(sVol, 0.75f, 1);
+			//play ping sound
+		}
+		if (gameObject.name == "PlusM") {
+			if(mVol < 1)
+				mVol += 0.01f;
+			GameObject.FindWithTag("Music").transform.localScale = new Vector3(mVol, 0.75f, 1);
+			//change menu music
+		}
+		if (gameObject.name == "PlusS") {
+			if(sVol < 1)
+				sVol += 0.01f;
+			GameObject.FindWithTag("Sound").transform.localScale = new Vector3(sVol, 0.75f, 1);
+			//play ping sound
+		}
 		if (gameObject.name == "New") {
 			PlayerPrefs.SetString("Backdrop","");
 			PlayerPrefs.SetInt ("Level",1);

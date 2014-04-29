@@ -15,7 +15,7 @@ public class MenuCameraScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		float distCovered = (Time.time - startTime); 
-		transform.position = Vector3.Lerp(transform.position, travel, distCovered/250);
+		transform.position = Vector3.Lerp(transform.position, travel, distCovered/150);
 	}
 
 	public void changeLoc(Vector3 l){

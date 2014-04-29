@@ -555,7 +555,9 @@ public class PlayerScript : MonoBehaviour
 			this.transform.parent = null;
 		}
 
-		if (col.gameObject.name == "Finish" && !loading) 
+		if (col.gameObject.tag == "ChamberEnd")
+			EndGame ();
+		else if (col.gameObject.name == "Finish" && !loading) 
 			atDoor = false;
 	}
 
@@ -669,6 +671,14 @@ public class PlayerScript : MonoBehaviour
 		transform.position = new Vector3(0,0,0);
 		loading = false;
 		atDoor = false;
+	}
+
+	IEnumerator EndGame()
+	{
+		GameObject.FindWithTag("MainCamera").GetComponent<CameraFollow>().enabled = false;
+		this.GetComponent<PlayerScript>().enabled = false;
+		yield return new WaitForSeconds(3);
+		AutoFade.LoadLevel ("Credits", 7, 3, Color.white);
 	}
 
 	void LeftFoot  (){ foot = 0; }
