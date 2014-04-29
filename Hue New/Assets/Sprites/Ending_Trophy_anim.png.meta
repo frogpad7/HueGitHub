@@ -1,0 +1,112 @@
+fileFormatVersion: 2
+guid: c7c398f7c3debad47962120b6cd3b654
+TextureImporter:
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings:
+  - buildTarget: iPhone
+    maxTextureSize: 1024
+    textureFormat: -2
+    compressionQuality: 50
+  spriteSheet:
+    sprites:
+    - name: Ending_Trophy_anim_0
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 0
+        width: 922
+        height: 980
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: Ending_Trophy_anim_1
+      rect:
+        serializedVersion: 2
+        x: 1340
+        y: 0
+        width: 929
+        height: 980
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: Ending_Trophy_anim_2
+      rect:
+        serializedVersion: 2
+        x: 2480
+        y: 0
+        width: 922
+        height: 980
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: Ending_Trophy_anim_3
+      rect:
+        serializedVersion: 2
+        x: 3613
+        y: 0
+        width: 922
+        height: 972
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: Ending_Trophy_anim_4
+      rect:
+        serializedVersion: 2
+        x: 4723
+        y: 0
+        width: 922
+        height: 972
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: Ending_Trophy_anim_5
+      rect:
+        serializedVersion: 2
+        x: 5871
+        y: 0
+        width: 922
+        height: 972
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: Ending_Trophy_anim_6
+      rect:
+        serializedVersion: 2
+        x: 7012
+        y: 0
+        width: 922
+        height: 972
+      alignment: 0
+      pivot: {x: .5, y: .5}
+  spritePackingTag: 
+  userData: 
