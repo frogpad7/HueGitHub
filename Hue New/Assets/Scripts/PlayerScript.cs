@@ -147,8 +147,8 @@ public class PlayerScript : MonoBehaviour
 		{
 			audio.sounds.PlayOneShot(audio.jump, sound);
 			//AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().jump,transform.position);
-			if (cheatMode) cheatMode = false;
-			else cheatMode = true;
+			//if (cheatMode) cheatMode = false;
+			//else cheatMode = true;
 		}
 
 		//if cheats are off, we're done here.
