@@ -14,25 +14,38 @@ public class MenuButtonScript : MonoBehaviour {
 	public GameObject backdrop;
 
 	int level;
-	float sVol = 1;
-	float mVol = 1;
+
+	bool minusM, minusS, plusM, plusS;
 
 	// Use this for initialization
 	void Start () {
 		//if (gameObject.name == "Continue") {
 			renderer.material.color = Color.black;
 		//}
-		if(PlayerPrefs.HasKey("Level1"))
-			level = PlayerPrefs.GetInt ("Level1");
-		else
-			level = 1;
-		if (this.name == "Level")
+		if (this.name == "Level") {
+			if (PlayerPrefs.HasKey ("Level1"))
+				level = PlayerPrefs.GetInt ("Level1");
+			else
+				level = 1;
 			GetComponent<TextMesh> ().text = "Level " + level;
+		}
+		minusM = minusS = plusM = plusS = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
+		if (minusM) {
+			GameObject.FindWithTag("Music").GetComponent<OptionBarScript>().DecSize();
+		}
+		if (minusS) {
+			GameObject.FindWithTag("Sound").GetComponent<OptionBarScript>().DecSize();
+		}
+		if (plusM) {
+			GameObject.FindWithTag("Music").GetComponent<OptionBarScript>().IncSize();
+		}
+		if (plusS) {
+			GameObject.FindWithTag("Sound").GetComponent<OptionBarScript>().IncSize();
+		}
 	}
 
 	void OnMouseEnter(){
@@ -68,33 +81,16 @@ public class MenuButtonScript : MonoBehaviour {
 			//renderer.material.color = Color.black;
 		//else
 			renderer.material.color = Color.black;
+		if (gameObject.tag == "Volume") {
+			minusM = false;
+			minusS = false;
+			plusM = false;
+			plusS = false;
+			//play sound
+		}
 	}
 
 	void OnMouseUp(){
-		if (gameObject.name == "MinusM") {
-			if(mVol > 0)
-				mVol -= 0.01f;
-			GameObject.FindWithTag("Music").transform.localScale = new Vector3(mVol, 0.75f, 1);
-			//change menu music
-		}
-		if (gameObject.name == "MinusS") {
-			if(sVol > 0)
-				sVol -= 0.01f;
-			GameObject.FindWithTag("Sound").transform.localScale = new Vector3(sVol, 0.75f, 1);
-			//play ping sound
-		}
-		if (gameObject.name == "PlusM") {
-			if(mVol < 1)
-				mVol += 0.01f;
-			GameObject.FindWithTag("Music").transform.localScale = new Vector3(mVol, 0.75f, 1);
-			//change menu music
-		}
-		if (gameObject.name == "PlusS") {
-			if(sVol < 1)
-				sVol += 0.01f;
-			GameObject.FindWithTag("Sound").transform.localScale = new Vector3(sVol, 0.75f, 1);
-			//play ping sound
-		}
 		if (gameObject.name == "New") {
 			PlayerPrefs.SetString("Backdrop","");
 			PlayerPrefs.SetInt ("Level",1);
@@ -150,13 +146,30 @@ public class MenuButtonScript : MonoBehaviour {
 			Time.timeScale = 1;
 		}
 		if (gameObject.name == "No") {
-			pause.GetComponent<PauseScript>().Confirm();
-			pause.GetComponent<PauseScript>().saving = false;
+						pause.GetComponent<PauseScript> ().Confirm ();
+						pause.GetComponent<PauseScript> ().saving = false;
+		} 
+		if(gameObject.tag == "Volume") {
+			minusM = false;
+			minusS = false;
+			plusM = false;
+			plusS = false;
+			//play sound
 		}
 	}	
 
-	//void OnGUI(){
-	//	sVol = GUI.HorizontalSlider(new Rect(25, 25, 100, 30), sVol, 0.0F, 1.0F);
-	//	mVol = GUI.HorizontalSlider(new Rect(25, 50, 100, 30), mVol, 0.0F, 10.0F);
-	//}
+	void OnMouseDown(){
+		if (gameObject.name == "MinusM") {
+			minusM = true;
+		}
+		if (gameObject.name == "MinusS") {
+			minusS = true;
+		}
+		if (gameObject.name == "PlusM") {
+			plusM = true;
+		}
+		if (gameObject.name == "PlusS") {
+			plusS = true;
+		}
+	}
 }

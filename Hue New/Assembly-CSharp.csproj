@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\Foreground.cs" />
      <Compile Include="Assets\Scripts\MenuButtonScript.cs" />
      <Compile Include="Assets\Scripts\MenuCameraScript.cs" />
+     <Compile Include="Assets\Scripts\OptionBarScript.cs" />
      <Compile Include="Assets\Scripts\PauseScript.cs" />
      <Compile Include="Assets\Scripts\PlayerScript.cs" />
      <Compile Include="Assets\Scripts\ProjectileScript.cs" />
