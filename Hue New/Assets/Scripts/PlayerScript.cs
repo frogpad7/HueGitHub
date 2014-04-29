@@ -32,6 +32,7 @@ public class PlayerScript : MonoBehaviour
 	//looks to play land sound
 	bool landed = true;
 	bool loading = false;
+	bool atDoor = false;
 
 	int stage;
 	float sound = 1;
@@ -90,6 +91,11 @@ public class PlayerScript : MonoBehaviour
 		//flip the player sprite
 		if (move > 0 && !facingRight) 		Flip ();
 		else if (move < 0 && facingRight)	Flip ();
+
+		if (atDoor == true && Input.GetKey (KeyCode.UpArrow)) {
+			StartCoroutine ("SceneChange");
+			loading = true;		
+		}
 	}
 	
 	void inputProc_ability()
@@ -548,6 +554,9 @@ public class PlayerScript : MonoBehaviour
 			onMovingPlatform = false;
 			this.transform.parent = null;
 		}
+
+		if (col.gameObject.name == "Finish" && !loading) 
+			atDoor = false;
 	}
 
 	void OnTriggerEnter2D(Collider2D col)
@@ -579,10 +588,8 @@ public class PlayerScript : MonoBehaviour
 		}
 		color = c;
 
-		if (col.gameObject.name == "Finish" && !loading) {
-			StartCoroutine ("SceneChange");
-			loading = true;		
-		}
+		if (col.gameObject.name == "Finish" && !loading) 
+			atDoor = true;
 
 		if (col.gameObject.tag == "Foreground") {
 			//Turn block red

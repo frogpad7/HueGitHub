@@ -13,8 +13,9 @@ public class CrackedBlock : MonoBehaviour {
 
 	//Detects for player collision to enter the delete countdown
 	void OnCollisionEnter2D(Collision2D col) {
-		if (col.gameObject.tag == "Player")
+		if (col.gameObject.tag == "Player") {
 			deleteCountdown = true;
+		}
 	}
 	
 	// Update is called once per frame
@@ -43,6 +44,7 @@ public class CrackedBlock : MonoBehaviour {
 
 			//Exit respawn countdown
 			respawnCountdown = false;
+
 		}
 
 		//Increase delete timer
