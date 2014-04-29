@@ -181,7 +181,7 @@ public class PlayerScript : MonoBehaviour
 				audio.sounds.PlayOneShot(audio.jump, sound);
 				//AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().jump,transform.position);
 				rigidbody2D.velocity= new Vector2(rigidbody2D.velocity.x,0f);
-				if (!bubbleShield) rigidbody2D.AddForce (new Vector2 (0, 4400f));
+				if (!bubbleShield) rigidbody2D.AddForce (new Vector2 (0, 4550f));
 				landed = false;
 			} 
 			if (!bubbleShield) flying = false;
