@@ -34,7 +34,7 @@ public class ProjectileScript : MonoBehaviour
 			else if (col.gameObject.tag == "Projectile"  || col.gameObject.tag == "Purple") { Destroy(col.gameObject); Destroy(gameObject); } 
 			else if (col.gameObject.tag != "Player") Destroy(gameObject);
 		}
-
+		else if (gameObject.tag == "Orange" && col.gameObject.tag != "Enemy") Destroy(gameObject);
 		//player shot himself in the face condition
 		else if (col.gameObject.tag == "Player")
 		{
