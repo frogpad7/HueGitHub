@@ -544,6 +544,7 @@ public class PlayerScript : MonoBehaviour
 			if      (flying &(col.gameObject.tag == "Projectile" || col.gameObject.tag == "Enemy")) { Destroy(col.gameObject); bubbleTime = 0; }
 			else if (col.gameObject.tag == "Projectile")                                            { Destroy(col.gameObject); death(); }
 			else if (col.gameObject.tag == "Enemy" && col.gameObject.rigidbody2D.isKinematic == false && alive) death();
+			else if (col.gameObject.tag == "Spikes" && alive) death();
 		}
 		else if (flying && col.gameObject.tag == "Enemy") Destroy(col.gameObject);
 	}
