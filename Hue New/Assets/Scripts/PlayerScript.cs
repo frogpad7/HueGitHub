@@ -141,6 +141,7 @@ public class PlayerScript : MonoBehaviour
 	
 	void inputProc_devCheats()
 	{
+		return;
 		//cheats on/off control
 		if (Input.GetKeyDown (KeyCode.Backspace))
 		{
