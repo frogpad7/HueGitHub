@@ -92,7 +92,7 @@ public class PlayerScript : MonoBehaviour
 		if (move > 0 && !facingRight) 		Flip ();
 		else if (move < 0 && facingRight)	Flip ();
 
-		if (atDoor == true && Input.GetKey (KeyCode.UpArrow)) {
+		if (atDoor == true && Input.GetKey (KeyCode.UpArrow) && !loading) {
 			StartCoroutine ("SceneChange");
 			loading = true;		
 		}
@@ -668,6 +668,7 @@ public class PlayerScript : MonoBehaviour
 		maxSpeed = 30;
 		transform.position = new Vector3(0,0,0);
 		loading = false;
+		atDoor = false;
 	}
 
 	void LeftFoot  (){ foot = 0; }
