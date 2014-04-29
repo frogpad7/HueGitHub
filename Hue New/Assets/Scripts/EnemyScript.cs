@@ -208,7 +208,7 @@ public class EnemyScript : MonoBehaviour
 		Debug.Log("Thawing Enemy");
 		this.rigidbody2D.isKinematic = false;
 		frozen = false;
-		anim.SetBool ("Frozen", frozen);
+		if (walker) anim.SetBool ("Frozen", frozen);
 		noise.mute = false;
 		//speed = 5;
 		if (walker) this.rigidbody2D.gravityScale = 1;
