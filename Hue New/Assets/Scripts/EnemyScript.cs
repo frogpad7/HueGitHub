@@ -33,7 +33,7 @@ public class EnemyScript : MonoBehaviour
 	SpriteRenderer myRenderer;
 	PlayerScript pScript;
 
-	public AudioSource noise; 
+	//public AudioSource noise; 
 	Animator anim;
 	bool orange;
 
@@ -181,10 +181,14 @@ public class EnemyScript : MonoBehaviour
 		isPlatform = true;
 		orange = false;
 		this.rigidbody2D.isKinematic = true;
+		this.GetComponent<BoxCollider2D>().enabled = true;
+		this.GetComponent<CircleCollider2D>().enabled = false;
 		//speed = 5;
-		noise.mute = true;
-		anim.SetBool ("Platform", false);
-		anim.SetBool ("Frozen", frozen);
+		//noise.mute = true;
+		//anim.SetBool ("Platform", false);
+		//this.GetComponent<Animator>().SetBool("Platform", true);
+		this.GetComponent<Animator>().SetBool("Frozen", true);
+		//anim.SetBool ("Frozen", true);
 	}
 	
 	void freezeEnemy(Collision2D col)
@@ -194,7 +198,9 @@ public class EnemyScript : MonoBehaviour
 		isPlatform = true;
 		orange = true;
 		this.rigidbody2D.isKinematic = true;
-		noise.mute = true;
+		this.GetComponent<BoxCollider2D>().enabled = true;
+		this.GetComponent<CircleCollider2D>().enabled = false;
+		//noise.mute = true;
 		anim.SetBool ("Platform", true);
 		anim.SetBool ("Frozen", frozen);
 		//speed = 5;
@@ -206,10 +212,12 @@ public class EnemyScript : MonoBehaviour
 	void thaw()
 	{
 		Debug.Log("Thawing Enemy");
+		this.GetComponent<BoxCollider2D>().enabled = false;
+		this.GetComponent<CircleCollider2D>().enabled = true;
 		this.rigidbody2D.isKinematic = false;
 		frozen = false;
 		if (walker) anim.SetBool ("Frozen", frozen);
-		noise.mute = false;
+		//noise.mute = false;
 		//speed = 5;
 		if (walker) this.rigidbody2D.gravityScale = 1;
 		isPlatform = false;
