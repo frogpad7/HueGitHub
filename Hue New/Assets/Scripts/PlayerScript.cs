@@ -327,27 +327,27 @@ public class PlayerScript : MonoBehaviour
 		if(Input.GetKey(KeyCode.DownArrow))
 		{
 			Vector3 firePos;
-			firePos = transform.position + new Vector3(0,-2,0);
+			firePos = transform.position + new Vector3(0,-3,0);
 			Rigidbody2D fireObj = Instantiate(paintWall, firePos, Quaternion.Euler(new Vector3(0,0,90f))) as Rigidbody2D;
 			cooldown = Time.time + 3;
 		}
 		else if(Input.GetKey(KeyCode.UpArrow))
 		{
-			Vector3 firePos = transform.position + new Vector3(0,5,0);
+			Vector3 firePos = transform.position + new Vector3(0,10,0);
 			Rigidbody2D fireObj = Instantiate(paintWall, firePos, Quaternion.Euler(new Vector3(0,0,0))) as Rigidbody2D;
 			fireObj.isKinematic = true;
 			cooldown = Time.time + 6;
 		}
 		else if(facingRight)
 		{
-			Vector3 firePos = transform.position + new Vector3(5,1,0);
+			Vector3 firePos = transform.position + new Vector3(10,1,0);
 			Rigidbody2D fireObj = Instantiate(paintWall, firePos, Quaternion.Euler(new Vector3(0,0,0))) as Rigidbody2D;
 			fireObj.isKinematic = true;
 			cooldown = Time.time + 6;
 		}	
 		else
 		{
-			Vector3 firePos = transform.position + new Vector3(-5,1,0);
+			Vector3 firePos = transform.position + new Vector3(-10,1,0);
 			Rigidbody2D fireObj = Instantiate (paintWall, firePos, Quaternion.Euler (new Vector3(0,0,0))) as Rigidbody2D;
 			fireObj.isKinematic = true;
 			cooldown = Time.time + 6;
