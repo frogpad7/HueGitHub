@@ -280,7 +280,7 @@ public class PlayerScript : MonoBehaviour
 			fireObj.velocity = new Vector2(-50,60);
 			
 		}
-		cooldown = 3  + Time.time;
+		cooldown = 6  + Time.time;
 		audio.sounds.PlayOneShot (audio.tick, sound);
 		//AudioSource.PlayClipAtPoint (audio.GetComponent<AudioScript> ().tick, transform.position);
 	}
