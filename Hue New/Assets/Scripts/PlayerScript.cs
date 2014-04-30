@@ -263,21 +263,21 @@ public class PlayerScript : MonoBehaviour
 		}
 		else if(Input.GetKey(KeyCode.UpArrow))
 		{
-			Vector3 firePos = transform.position + new Vector3(0,2,0);
+			Vector3 firePos = transform.position + new Vector3(0,4,0);
 			fireObj = Instantiate(grenade, firePos, Quaternion.Euler(new Vector3(0,0,90f))) as Rigidbody2D;
-			fireObj.velocity = new Vector2(0,80);
+			fireObj.velocity = new Vector2(0,160);
 		}
 		else if(facingRight)
 		{ 
 			Vector3 firePos = transform.position + new Vector3(2,0,0);
 			fireObj = Instantiate(grenade, firePos, Quaternion.Euler(new Vector3(0,0,0))) as Rigidbody2D;
-			fireObj.velocity = new Vector2(40,40);
+			fireObj.velocity = new Vector2(50,60);
 		}	
 		else
 		{
 			Vector3 firePos = transform.position + new Vector3(-2,0,0);
 			fireObj = Instantiate (grenade, firePos, Quaternion.Euler (new Vector3(0,0,0))) as Rigidbody2D;
-			fireObj.velocity = new Vector2(-40,40);
+			fireObj.velocity = new Vector2(-50,60);
 			
 		}
 		cooldown = 3  + Time.time;

@@ -7,6 +7,7 @@ public class ProjectileScript : MonoBehaviour
 	private Transform camera;
 	private float lifetime = 0;
 	private bool grenadeExploding;
+	private bool grenadeSplat = true;
 	
 	// Use this for initialization
 	void Start() 
@@ -47,8 +48,8 @@ public class ProjectileScript : MonoBehaviour
 		//else if (gameObject.tag == "Orange") this.rigidbody2D.isKinematic = true;
 		else if (gameObject.tag == "Purple" && (col.gameObject.tag == "Stage" || col.gameObject.tag == "Floor")) Destroy(gameObject);
 	
-		//make grenades go boom
-		else if (gameObject.tag == "Grenade")
+		//make grenades go boom on contact
+		/*else if (gameObject.tag == "Grenade")
 		{
 			if(col.gameObject.tag == "Enemy")
 			{
@@ -58,7 +59,7 @@ public class ProjectileScript : MonoBehaviour
 				lifetime = Time.time + (float)0.5;
 				grenadeExploding = true;
 			}
-		}
+		}*/
 	}
 	
 	// Update is called once per frame
@@ -73,6 +74,12 @@ public class ProjectileScript : MonoBehaviour
 		//weapon lifetime is up
 		if (lifetime > Time.time && grenadeExploding) 
 		{
+			if (grenadeSplat)
+			{
+				float rand = Random.value * 360;
+				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (1, transform.position, Quaternion.Euler(new Vector3(0,0,rand)));
+				grenadeSplat = false;
+			}
 			Collider2D[] boom = Physics2D.OverlapCircleAll (gameObject.transform.position, 20f);
 			int l = boom.GetLength (0);
 			
@@ -96,9 +103,9 @@ public class ProjectileScript : MonoBehaviour
 		else if (lifetime < Time.time && grenadeExploding)
 		{
 			Debug.Log ("grenade out of life");
+			grenadeSplat = true;
 			Destroy (gameObject);
-			float rand = Random.value * 360;
-			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (1, transform.position, Quaternion.Euler(new Vector3(0,0,rand)));
+			
 		}
 		else if (lifetime < Time.time && !grenadeExploding) 
 		{ 
