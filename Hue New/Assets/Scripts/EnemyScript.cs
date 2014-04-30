@@ -150,12 +150,12 @@ public class EnemyScript : MonoBehaviour
 				Rigidbody2D fireObj = (Rigidbody2D)Instantiate (bullet, firePos, Quaternion.Euler (new Vector3 (0, 5, 0)));
 				fireObj.velocity = new Vector2 (-15, 0);
 			}
-			cooldown = Time.time + 2;
+			cooldown = Time.time + 4;
 		}
 		else if (downShooter && cooldown <= Time.time)
 		{
 			Vector3 firePos = this.transform.position + new Vector3 (0, -5, 0);
-			Rigidbody2D fireObj = (Rigidbody2D)Instantiate (bullet, firePos, Quaternion.Euler (new Vector3 (0, -5, 0)));
+			Rigidbody2D fireObj = (Rigidbody2D)Instantiate (bullet, firePos, Quaternion.Euler (new Vector3 (0, 5, 0)));
 			fireObj.velocity = new Vector2 (0, -15);
 		}
 	}

@@ -271,13 +271,13 @@ public class PlayerScript : MonoBehaviour
 		{ 
 			Vector3 firePos = transform.position + new Vector3(2,0,0);
 			fireObj = Instantiate(grenade, firePos, Quaternion.Euler(new Vector3(0,0,0))) as Rigidbody2D;
-			fireObj.velocity = new Vector2(50,60);
+			fireObj.velocity = new Vector2(45,60);
 		}	
 		else
 		{
 			Vector3 firePos = transform.position + new Vector3(-2,0,0);
 			fireObj = Instantiate (grenade, firePos, Quaternion.Euler (new Vector3(0,0,0))) as Rigidbody2D;
-			fireObj.velocity = new Vector2(-50,60);
+			fireObj.velocity = new Vector2(-45,60);
 			
 		}
 		cooldown = 6  + Time.time;

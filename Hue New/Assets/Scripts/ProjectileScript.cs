@@ -76,11 +76,12 @@ public class ProjectileScript : MonoBehaviour
 		{
 			if (grenadeSplat)
 			{
+				this.GetComponent<SpriteRenderer>().enabled = false;
 				float rand = Random.value * 360;
 				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (1, transform.position, Quaternion.Euler(new Vector3(0,0,rand)));
 				grenadeSplat = false;
 			}
-			Collider2D[] boom = Physics2D.OverlapCircleAll (gameObject.transform.position, 20f);
+			Collider2D[] boom = Physics2D.OverlapCircleAll (gameObject.transform.position, 18f);
 			int l = boom.GetLength (0);
 			
 			for (int i=0; i<l; i++) 
@@ -93,7 +94,7 @@ public class ProjectileScript : MonoBehaviour
 					{
 						if (!GameObject.FindWithTag("Player").GetComponent<PlayerScript>().grounded) hit.rigidbody2D.AddForce ((hit.transform.position - gameObject.transform.position) * 20f);
 					}
-					else if (hit.rigidbody2D.gameObject.tag == "Enemy")
+					else if (hit.rigidbody2D.gameObject.tag == "Enemy" )
 					{
 						Destroy(hit.rigidbody2D.gameObject);
 					}
@@ -114,7 +115,7 @@ public class ProjectileScript : MonoBehaviour
 			{
 				//turn off ticking
 				//gameObject.GetComponent<AudioSource>().PlayOneShot()
-				lifetime = Time.time + (float)0.5;
+				lifetime = Time.time + (float)1.0;
 				grenadeExploding = true;
 			} 
 			else if (gameObject.tag == "Orange"){
