@@ -91,7 +91,7 @@ public class ProjectileScript : MonoBehaviour
 				{
 					if (hit.rigidbody2D.gameObject.tag == "Player")
 					{
-						hit.rigidbody2D.AddForce ((hit.transform.position - gameObject.transform.position) * 20f);
+						if (!GameObject.FindWithTag("Player").GetComponent<PlayerScript>().grounded) hit.rigidbody2D.AddForce ((hit.transform.position - gameObject.transform.position) * 20f);
 					}
 					else if (hit.rigidbody2D.gameObject.tag == "Enemy")
 					{
