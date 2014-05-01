@@ -78,8 +78,9 @@ public class EnemyScript : MonoBehaviour
 		
 		else if (col.gameObject.tag == "Yellow") 	changeDirection();
 		else if (col.gameObject.tag == "Orange") 	freezeEnemy(col);
-		else if (col.gameObject.tag == "Purple") 	{ 
-			Destroy (gameObject); 
+		else if (col.gameObject.tag == "Purple") 	
+		{ 
+			//Destroy (gameObject); 
 			Destroy(col.gameObject); 
 			float rand = Random.value * 360;
 			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (6, transform.position, Quaternion.Euler(new Vector3(0,0,rand)));
