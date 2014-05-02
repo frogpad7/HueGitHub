@@ -183,13 +183,16 @@ public class EnemyScript : MonoBehaviour
 		orange = false;
 		this.rigidbody2D.isKinematic = true;
 		this.GetComponent<BoxCollider2D>().enabled = true;
+
 		this.GetComponent<CircleCollider2D>().enabled = false;
+		GetComponent<BoxCollider2D>().isTrigger = false;
 		//speed = 5;
 		//noise.mute = true;
 		//anim.SetBool ("Platform", false);
 		//this.GetComponent<Animator>().SetBool("Platform", true);
 		this.GetComponent<Animator>().SetBool("Frozen", true);
 		//anim.SetBool ("Frozen", true);
+		GetComponent<BoxCollider2D>().isTrigger = false;
 	}
 	
 	void freezeEnemy(Collision2D col)
@@ -200,6 +203,7 @@ public class EnemyScript : MonoBehaviour
 		orange = true;
 		this.rigidbody2D.isKinematic = true;
 		this.GetComponent<BoxCollider2D>().enabled = true;
+		this.GetComponent<BoxCollider2D>().isTrigger = false;
 		this.GetComponent<CircleCollider2D>().enabled = false;
 		//noise.mute = true;
 		anim.SetBool ("Platform", true);
@@ -207,6 +211,7 @@ public class EnemyScript : MonoBehaviour
 		//speed = 5;
 
 		//myRenderer.sprite = oFreeze;
+		GetComponent<BoxCollider2D>().isTrigger = false;
 		Destroy(col.gameObject);
 	}
 
@@ -215,6 +220,7 @@ public class EnemyScript : MonoBehaviour
 		Debug.Log("Thawing Enemy");
 		this.GetComponent<BoxCollider2D>().enabled = false;
 		this.GetComponent<CircleCollider2D>().enabled = true;
+		GetComponent<BoxCollider2D>().isTrigger = false;
 		this.rigidbody2D.isKinematic = false;
 		frozen = false;
 		if (walker) anim.SetBool ("Frozen", frozen);

@@ -27,7 +27,14 @@ public class ProjectileScript : MonoBehaviour
 	void OnCollisionEnter2D(Collision2D col)
 	{
 		if (gameObject.tag == "Orange") GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (2, transform.position, new Quaternion ());
-		if (gameObject.tag == "Projectile")
+
+		if (gameObject.tag == "Orange" && col.gameObject.tag == "Untagged")
+		{
+			Debug.Log ("BOUNCE");
+			if (gameObject.rigidbody2D.velocity.x > 0) gameObject.rigidbody2D.velocity = new Vector2(-4000f, 0);
+			else if (gameObject.rigidbody2D.velocity.x < 0) gameObject.rigidbody2D.velocity = new Vector2(4000f, 0);
+		}
+		else if (gameObject.tag == "Projectile")
 		{
 			if (col.gameObject.tag == "Projectile") { Destroy(col.gameObject); Destroy(col.gameObject); }
 			else if (col.gameObject.tag == "Enemy") { Destroy(col.gameObject); Destroy(col.gameObject); }

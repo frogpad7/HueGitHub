@@ -301,23 +301,23 @@ public class PlayerScript : MonoBehaviour
 			Vector3 firePos = transform.position + new Vector3 (0, 6, 0);
 			Rigidbody2D fireObj = Instantiate (freeze, firePos, Quaternion.Euler (new Vector3 (0, 0, 0))) as Rigidbody2D;
 			fireObj.velocity = new Vector2 (0, 60);
-			rigidbody2D.AddForce (new Vector2 (0, -2000f));
+			rigidbody2D.AddForce (new Vector2 (0, -4000f));
 		}
 		else if (facingRight)
 		{
 			Vector3 firePos = transform.position + new Vector3 (6, 0, 0);
 			Rigidbody2D fireObj = Instantiate (freeze, firePos, Quaternion.Euler (new Vector3 (0, 0, 0))) as Rigidbody2D;
 			fireObj.velocity = new Vector2 (60, 0);
-			rigidbody2D.AddForce (new Vector2 (-2000f, 0));
+			rigidbody2D.AddForce (new Vector2 (-4000f, 0));
 		}
 		else 
 		{
 			Vector3 firePos = transform.position + new Vector3 (-6, 0, 0);
 			Rigidbody2D fireObj = Instantiate (freeze, firePos, Quaternion.Euler (new Vector3 (0, 0, 0))) as Rigidbody2D;
 			fireObj.velocity = new Vector2 (-60, 0);
-			rigidbody2D.AddForce (new Vector2 (2000f, 0));
+			rigidbody2D.AddForce (new Vector2 (4000f, 0));
 		}
-		cooldown = 1 + Time.time;
+		cooldown = 1.5f + Time.time;
 	}
 	
 	void ability_Yellow()
