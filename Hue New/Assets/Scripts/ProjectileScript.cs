@@ -26,14 +26,7 @@ public class ProjectileScript : MonoBehaviour
 	
 	void OnCollisionEnter2D(Collision2D col)
 	{
-		if (gameObject.tag == "Orange") GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (2, transform.position, new Quaternion ());
-
-		if (gameObject.tag == "Orange" && col.gameObject.tag == "Untagged")
-		{
-			Debug.Log ("BOUNCE");
-			if (gameObject.rigidbody2D.velocity.x > 0) gameObject.rigidbody2D.velocity = new Vector2(-4000f, 0);
-			else if (gameObject.rigidbody2D.velocity.x < 0) gameObject.rigidbody2D.velocity = new Vector2(4000f, 0);
-		}
+		if (gameObject.tag == "Orange" && col.gameObject.tag != "Enemy") { Destroy(gameObject); GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (2, transform.position, new Quaternion ()); }
 		else if (gameObject.tag == "Projectile")
 		{
 			if (col.gameObject.tag == "Projectile") { Destroy(col.gameObject); Destroy(col.gameObject); }
@@ -43,7 +36,7 @@ public class ProjectileScript : MonoBehaviour
 			else if (col.gameObject.tag == "Projectile"  || col.gameObject.tag == "Purple") { Destroy(col.gameObject); Destroy(gameObject); } 
 			else if (col.gameObject.tag != "Player") Destroy(gameObject);
 		}
-		else if (gameObject.tag == "Orange" && col.gameObject.tag != "Enemy") Destroy(gameObject);
+
 		//player shot himself in the face condition
 		else if (col.gameObject.tag == "Player")
 		{
@@ -55,18 +48,6 @@ public class ProjectileScript : MonoBehaviour
 		//else if (gameObject.tag == "Orange") this.rigidbody2D.isKinematic = true;
 		else if (gameObject.tag == "Purple" && (col.gameObject.tag == "Stage" || col.gameObject.tag == "Floor")) Destroy(gameObject);
 	
-		//make grenades go boom on contact
-		/*else if (gameObject.tag == "Grenade")
-		{
-			if(col.gameObject.tag == "Enemy")
-			{
-				//turn off ticking
-				//gameObject.GetComponent<AudioSource>().Play();
-				this.gameObject.rigidbody2D.isKinematic = true;
-				lifetime = Time.time + (float)0.5;
-				grenadeExploding = true;
-			}
-		}*/
 	}
 	
 	// Update is called once per frame
