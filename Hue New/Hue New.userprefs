@@ -1,12 +1,13 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\ProjectileScript.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PlayerScript.cs">
     <Files>
-      <File FileName="Assets\Scripts\PlayerScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\EnemyScript.cs" Line="223" Column="51" />
-      <File FileName="Assets\Scripts\PlayerScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\ProjectileScript.cs" Line="30" Column="1" />
+      <File FileName="Assets\Scripts\PlayerScript.cs" Line="703" Column="1" />
+      <File FileName="Assets\Scripts\PlayerScript.cs" Line="205" Column="97" />
+      <File FileName="Assets\Scripts\EnemyScript.cs" Line="174" Column="37" />
+      <File FileName="Assets\Scripts\ProjectileScript.cs" Line="29" Column="1" />
       <File FileName="Assets\Scripts\RightAndLeft.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\AudioScript.cs" Line="99" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -202,7 +202,7 @@ public class PlayerScript : MonoBehaviour
 			{
 				//bubble flight control
 				if (cheatMode) rigidbody2D.velocity = new Vector2((move * (float)2.5) * maxSpeed, (moveY * (float)2.5) * maxSpeed);
-				else rigidbody2D.velocity = new Vector2((move * (float)0.75) * maxSpeed, (moveY * (float)0.5) * maxSpeed);
+				else rigidbody2D.velocity = new Vector2((move * (float)0.8) * maxSpeed, (moveY * (float)0.55) * maxSpeed);
 
 				if (!grounded && bubbleTime >= Time.time) gameObject.rigidbody2D.gravityScale = 0;
 				else if (bubbleTime < Time.time) 
@@ -457,7 +457,7 @@ public class PlayerScript : MonoBehaviour
 
 			if (cheatMode) bubbleTime = Time.time + 60;
 			else           bubbleTime = Time.time + 4;
-			cooldown = Time.time + 9;
+			cooldown = Time.time + 8;
 		}
 	}
 	
@@ -542,8 +542,8 @@ public class PlayerScript : MonoBehaviour
 	{
 		if (!cheatMode)
 		{
-			if      (flying &(col.gameObject.tag == "Projectile" || col.gameObject.tag == "Enemy")) { Destroy(col.gameObject); bubbleTime = 0; }
-			else if (col.gameObject.tag == "Projectile")                                            { Destroy(col.gameObject); death(); }
+			if      (flying  && (col.gameObject.tag == "Projectile" || col.gameObject.tag == "Enemy")) { Destroy(col.gameObject); bubbleTime = 0; }
+			else if (col.gameObject.tag == "Projectile") { Destroy(col.gameObject); death(); }
 			else if (col.gameObject.tag == "Enemy" && col.gameObject.rigidbody2D.isKinematic == false && alive) death();
 			else if (col.gameObject.tag == "Spikes" && alive) death();
 		}
