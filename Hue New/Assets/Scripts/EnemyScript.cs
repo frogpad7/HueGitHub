@@ -54,7 +54,7 @@ public class EnemyScript : MonoBehaviour
 
 		initSpeed = speed;
 
-		if(gameObject.tag == "Enemy") anim = GetComponent<Animator> ();
+		anim = GetComponent<Animator> ();
 		initialPosition = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
 		direction = dir;
 		myRenderer = this.gameObject.GetComponent<SpriteRenderer>();
@@ -188,10 +188,10 @@ public class EnemyScript : MonoBehaviour
 		GetComponent<BoxCollider2D>().isTrigger = false;
 		//speed = 5;
 		//noise.mute = true;
-		//anim.SetBool ("Platform", false);
+		anim.SetBool ("Platform", false);
 		//this.GetComponent<Animator>().SetBool("Platform", true);
-		this.GetComponent<Animator>().SetBool("Frozen", true);
-		//anim.SetBool ("Frozen", true);
+		//this.GetComponent<Animator>().SetBool("Frozen", true);
+		anim.SetBool ("Frozen", true);
 		GetComponent<BoxCollider2D>().isTrigger = false;
 	}
 	
@@ -222,8 +222,9 @@ public class EnemyScript : MonoBehaviour
 		this.GetComponent<CircleCollider2D>().enabled = true;
 		GetComponent<BoxCollider2D>().isTrigger = false;
 		this.rigidbody2D.isKinematic = false;
+		//enemy thaws no matter what kind (if this is not the case, don't call this method from above)
 		frozen = false;
-		if (walker) anim.SetBool ("Frozen", frozen);
+		anim.SetBool ("Frozen", frozen);
 		//noise.mute = false;
 		//speed = 5;
 		if (walker) this.rigidbody2D.gravityScale = 1;
