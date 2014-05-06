@@ -11,6 +11,7 @@ public class EnemyTrigger : MonoBehaviour
 	{
 		parentEnemy = this.transform.parent.gameObject;
 		eScript = parentEnemy.GetComponent<EnemyScript>();
+		eScript.moving = false;
 		Debug.Log ("parent:" + parentEnemy.gameObject.tag);
 	}
 
@@ -19,7 +20,7 @@ public class EnemyTrigger : MonoBehaviour
 		if (col.gameObject.tag == "Player") 
 		{
 			Debug.Log ("exit enemy trigger");
-			eScript.speed = 0.0f;
+			eScript.moving = false;
 		}
 	}
 	
@@ -28,7 +29,7 @@ public class EnemyTrigger : MonoBehaviour
 		if (col.gameObject.tag == "Player") 
 		{
 			Debug.Log ("enter enemy trigger");
-			eScript.speed = eScript.initSpeed;
+			eScript.moving = true;
 		}
 	}
 	// Update is called once per frame
