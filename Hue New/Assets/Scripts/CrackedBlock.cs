@@ -3,24 +3,25 @@ using System.Collections;
 
 public class CrackedBlock : MonoBehaviour {
 
-	float deleteTotal = 1;
-	float deleteTimer = 0;
-	float respawnTotal = 10;
-	float respawnTimer = 0;
+//	float deleteTotal = 1;
+//	float deleteTimer = 0;
+//	float respawnTotal = 10;
+//	float respawnTimer = 0;
 
-	bool deleteCountdown = false;
-	bool respawnCountdown = false;
+//	bool deleteCountdown = false;
+//	bool respawnCountdown = false;
 
 	//Detects for player collision to enter the delete countdown
 	void OnCollisionEnter2D(Collision2D col) {
 		if (col.gameObject.tag == "Player") {
-			deleteCountdown = true;
+			this.gameObject.GetComponent<Animator> ().enabled = true;
+//			deleteCountdown = true;
 		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		//Detects if the delete timer has run out
+/*		//Detects if the delete timer has run out
 		if (deleteTimer >= deleteTotal) {
 			//Deletes cracked block
 			this.renderer.enabled = false;
@@ -53,9 +54,11 @@ public class CrackedBlock : MonoBehaviour {
 		//Increase respawn timer
 		else if (respawnCountdown == true)
 			respawnTimer += 1 * Time.deltaTime;
-	}
+*/	}
 
 	void Crumble(){
-
+		this.renderer.enabled = false;
+		this.collider2D.enabled = false;
+		this.gameObject.GetComponent<Animator> ().enabled = false;
 	}
 }

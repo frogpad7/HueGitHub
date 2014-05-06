@@ -60,7 +60,7 @@ public class EnemyScript : MonoBehaviour
 		direction = dir;
 		myRenderer = this.gameObject.GetComponent<SpriteRenderer>();
 
-		if (follow)		speed = 0;
+		//if (follow)		speed = 0;
 		if (!faceL)     Flip ();
 		if (walker) 	rigidbody2D.gravityScale=1; 
 		else			rigidbody2D.gravityScale=0;
