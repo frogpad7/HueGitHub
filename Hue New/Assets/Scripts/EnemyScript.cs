@@ -36,7 +36,7 @@ public class EnemyScript : MonoBehaviour
 
 	//public AudioSource noise; 
 	Animator anim;
-	bool orange;
+	bool Eorange;
 
 	public Sprite pFreeze;
 	public Sprite oFreeze;
@@ -179,10 +179,9 @@ public class EnemyScript : MonoBehaviour
 		lifetime = Time.time + 6;
 		frozen = true;
 		isPlatform = true;
-		orange = false;
 		this.rigidbody2D.isKinematic = true;
 		this.GetComponent<BoxCollider2D>().enabled = true;
-
+		Eorange = false;
 		this.GetComponent<CircleCollider2D>().enabled = false;
 		GetComponent<BoxCollider2D>().isTrigger = false;
 		//speed = 5;
@@ -199,16 +198,20 @@ public class EnemyScript : MonoBehaviour
 		lifetime = Time.time + 7;
 		frozen = true;
 		isPlatform = true;
-		orange = true;
 		this.rigidbody2D.isKinematic = true;
 		this.GetComponent<BoxCollider2D>().enabled = true;
 		this.GetComponent<BoxCollider2D>().isTrigger = false;
 		this.GetComponent<CircleCollider2D>().enabled = false;
 		//noise.mute = true;
-		if(col.gameObject.name == "Glove")
-			Debug.Log ("Punch Out!!!");
-		anim.SetBool ("Platform", true);
-		anim.SetBool ("Frozen", frozen);
+		if (col.gameObject.name == "Glove(Clone)") {
+			anim.SetBool ("Platform", false);
+			Eorange = false;
+		} 
+		else {
+			anim.SetBool ("Platform", true);
+			Eorange = true;
+		}
+			anim.SetBool ("Frozen", frozen);
 		//speed = 5;
 
 		//myRenderer.sprite = oFreeze;
@@ -230,12 +233,8 @@ public class EnemyScript : MonoBehaviour
 		//speed = 5;
 		if (walker) this.rigidbody2D.gravityScale = 1;
 		isPlatform = false;
-		if (orange)
+		if (Eorange)
 			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (2, transform.position, new Quaternion ());
-		else {
-			float rand = Random.value * 360;
-			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (6, transform.position, Quaternion.Euler (new Vector3(0,0,rand)));
-		}
 			//myRenderer.sprite = frozenPlatform;
 	}
 	
