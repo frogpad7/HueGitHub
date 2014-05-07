@@ -49,16 +49,7 @@ public class ProjectileScript : MonoBehaviour
 		else if (gameObject.tag == "Purple" && (col.gameObject.tag == "Stage" || col.gameObject.tag == "Floor")) Destroy(gameObject);
 	
 	}
-
-	void OnTriggerEnter2D(Collider2D col)
-	{
-				//animate death
-		if (col.gameObject.tag == "Enemy"){
-			Destroy (col.gameObject);
-			Destroy(gameObject);
-		}
-	}
-
+	
 	// Update is called once per frame
 	void Update () 
 	{
