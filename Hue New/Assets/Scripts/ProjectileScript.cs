@@ -29,8 +29,8 @@ public class ProjectileScript : MonoBehaviour
 		if (gameObject.tag == "Orange" && col.gameObject.tag != "Enemy") { Destroy(gameObject); GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (2, transform.position, new Quaternion ()); }
 		else if (gameObject.tag == "Projectile")
 		{
-			if (col.gameObject.tag == "Projectile") { Destroy(col.gameObject); Destroy(col.gameObject); }
-			else if (col.gameObject.tag == "Enemy") { Destroy(col.gameObject); Destroy(col.gameObject); }
+			if (col.gameObject.tag == "Projectile") { Destroy(col.gameObject); }
+			else if (col.gameObject.tag == "Enemy") { Destroy(col.gameObject); }
 			else if (col.gameObject.tag == "Orange") Destroy(col.gameObject);
 			else if (col.gameObject.tag == "Stage" || col.gameObject.tag == "Floor" || col.gameObject.tag == "Yellow") Destroy(gameObject);
 			else if (col.gameObject.tag == "Projectile"  || col.gameObject.tag == "Purple") { Destroy(col.gameObject); Destroy(gameObject); } 
@@ -84,6 +84,7 @@ public class ProjectileScript : MonoBehaviour
 					}
 					else if (hit.rigidbody2D.gameObject.tag == "Enemy" )
 					{
+						//animate death
 						Destroy(hit.rigidbody2D.gameObject);
 					}
 				}

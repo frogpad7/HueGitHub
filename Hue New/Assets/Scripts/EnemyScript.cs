@@ -80,7 +80,7 @@ public class EnemyScript : MonoBehaviour
 		else if (col.gameObject.tag == "Orange") 	freezeEnemy(col);
 		else if (col.gameObject.tag == "Purple") 	
 		{ 
-			//Destroy (gameObject); 
+			freezeEnemy(col); 
 			Destroy(col.gameObject); 
 			float rand = Random.value * 360;
 			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (6, transform.position, Quaternion.Euler(new Vector3(0,0,rand)));
@@ -206,6 +206,8 @@ public class EnemyScript : MonoBehaviour
 		this.GetComponent<BoxCollider2D>().isTrigger = false;
 		this.GetComponent<CircleCollider2D>().enabled = false;
 		//noise.mute = true;
+		if(col.gameObject.name == "Glove")
+			Debug.Log ("Punch Out!!!");
 		anim.SetBool ("Platform", true);
 		anim.SetBool ("Frozen", frozen);
 		//speed = 5;
