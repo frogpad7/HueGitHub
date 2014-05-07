@@ -26,6 +26,7 @@ public class EnemyScript : MonoBehaviour
 	//public bool jumper = false;
 	public int dir;
 	public bool faceL = true;
+	public bool moving = true;
 	
 	//freeze & groundPound related
 	public Rigidbody2D bullet;
@@ -59,7 +60,7 @@ public class EnemyScript : MonoBehaviour
 		direction = dir;
 		myRenderer = this.gameObject.GetComponent<SpriteRenderer>();
 
-		if (follow)		speed = 0;
+		//if (follow)		speed = 0;
 		if (!faceL)     Flip ();
 		if (walker) 	rigidbody2D.gravityScale=1; 
 		else			rigidbody2D.gravityScale=0;
@@ -107,31 +108,29 @@ public class EnemyScript : MonoBehaviour
 	void enemy_AI()
 	{
 		//Shoot ();
-		if (follow && !frozen)
-		{
-			Vector3 dir = Vector3.Normalize (GameObject.FindWithTag ("Player").transform.position - this.transform.position) * .1f;
-			if(dir.x<0 && facingRight || dir.x>0 && !facingRight) Flip ();
-			transform.position += dir * (Time.deltaTime * 10 * speed);
-		}
-		else if (direction == (int)directions.LEFT) 
-		{
-			this.transform.position = new Vector3(transform.position.x-speed * Time.deltaTime, transform.position.y, transform.position.z);
-			if (transform.position.x < initialPosition.x - moveRange) changeDirection();
-		}
-		else if (direction == (int)directions.RIGHT) 
-		{
-			this.transform.position = new Vector3(transform.position.x+speed * Time.deltaTime, transform.position.y, transform.position.z);
-			if (transform.position.x > initialPosition.x + moveRange) changeDirection();
-		}
-		else if (direction == (int)directions.UP) 
-		{
-			this.transform.position = new Vector3(transform.position.x, transform.position.y+ speed * Time.deltaTime, transform.position.z);
-			if (transform.position.y > initialPosition.y + moveRange) changeDirection();
-		}
-		else if (direction == (int)directions.DOWN)
-		{
-			this.transform.position = new Vector3(transform.position.x, transform.position.y - speed * Time.deltaTime, transform.position.z);
-			if (transform.position.y < initialPosition.y - moveRange) changeDirection();
+		if (moving) {
+			if (follow && !frozen) {
+				Vector3 dir = Vector3.Normalize (GameObject.FindWithTag ("Player").transform.position - this.transform.position) * .1f;
+				if (dir.x < 0 && facingRight || dir.x > 0 && !facingRight)
+					Flip ();
+				transform.position += dir * (Time.deltaTime * 10 * speed);
+			} else if (direction == (int)directions.LEFT) {
+				this.transform.position = new Vector3 (transform.position.x - speed * Time.deltaTime, transform.position.y, transform.position.z);
+				if (transform.position.x < initialPosition.x - moveRange)
+					changeDirection ();
+			} else if (direction == (int)directions.RIGHT) {
+				this.transform.position = new Vector3 (transform.position.x + speed * Time.deltaTime, transform.position.y, transform.position.z);
+				if (transform.position.x > initialPosition.x + moveRange)
+					changeDirection ();
+			} else if (direction == (int)directions.UP) {
+				this.transform.position = new Vector3 (transform.position.x, transform.position.y + speed * Time.deltaTime, transform.position.z);
+				if (transform.position.y > initialPosition.y + moveRange)
+					changeDirection ();
+			} else if (direction == (int)directions.DOWN) {
+				this.transform.position = new Vector3 (transform.position.x, transform.position.y - speed * Time.deltaTime, transform.position.z);
+				if (transform.position.y < initialPosition.y - moveRange)
+					changeDirection ();
+			}
 		}
 	}
 

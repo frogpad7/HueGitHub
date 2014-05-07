@@ -64,7 +64,8 @@ public class ProjectileScript : MonoBehaviour
 		{
 			if (grenadeSplat)
 			{
-				this.GetComponent<SpriteRenderer>().enabled = false;
+				//this.GetComponent<SpriteRenderer>().enabled = false;
+				this.gameObject.GetComponent<Animator> ().enabled = true;
 				float rand = Random.value * 360;
 				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (1, transform.position, Quaternion.Euler(new Vector3(0,0,rand)));
 				grenadeSplat = false;
@@ -120,5 +121,8 @@ public class ProjectileScript : MonoBehaviour
 			if(!grenadeExploding) Destroy (this.gameObject); 
 		} 
 	}
-	
+
+	void EndAnim() {
+		this.gameObject.GetComponent<Animator> ().enabled = false;
+	}
 }
