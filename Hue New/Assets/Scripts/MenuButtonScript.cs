@@ -20,7 +20,7 @@ public class MenuButtonScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//if (gameObject.name == "Continue") {
-			renderer.material.color = Color.black;
+			//renderer.material.color = Color.black;
 		//}
 		if (this.name == "Level") {
 			if (PlayerPrefs.HasKey ("Level1"))
@@ -52,7 +52,7 @@ public class MenuButtonScript : MonoBehaviour {
 		if (gameObject.name != "Pause") 
 		{
 			if (gameObject.name == "New")			
-				renderer.material.color = Color.red;
+				gameObject.renderer.enabled = true;
 			else if (gameObject.name == "Load")			
 				renderer.material.color = Color.gray;
 			else if (gameObject.name == "Options")			
@@ -80,7 +80,29 @@ public class MenuButtonScript : MonoBehaviour {
 		//if(gameObject.name == "Continue")
 			//renderer.material.color = Color.black;
 		//else
-			renderer.material.color = Color.black;
+		if (gameObject.name != "Pause") 
+		{
+			if (gameObject.name == "New")			
+				gameObject.renderer.enabled = false;
+			else if (gameObject.name == "Load")			
+				renderer.material.color = Color.gray;
+			else if (gameObject.name == "Options")			
+				renderer.material.color = Color.yellow;
+			else if (gameObject.name == "Controls")			
+				renderer.material.color = Color.green;
+			else if (gameObject.name == "Credits")			
+				renderer.material.color = Color.blue;
+			else if (gameObject.name == "Quit")			
+				renderer.material.color = Color.magenta;
+			else if (gameObject.name == "Back")			
+				renderer.material.color = Color.black;
+			else if (gameObject.name == "Level")			
+				renderer.material.color = Color.black;
+			else if(gameObject.name == "Continue")
+				renderer.material.color = Color.cyan;
+			else
+				renderer.material.color = Color.cyan;
+		}
 		if (gameObject.tag == "Volume") {
 			minusM = false;
 			minusS = false;
