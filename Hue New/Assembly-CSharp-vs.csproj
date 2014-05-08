@@ -52,6 +52,7 @@
      <Compile Include="Assets\Scripts\BinaryReset.cs" />
      <Compile Include="Assets\Scripts\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\CrackedBlock.cs" />
+     <Compile Include="Assets\Scripts\CreditsCamScript.cs" />
      <Compile Include="Assets\Scripts\EnemyScript.cs" />
      <Compile Include="Assets\Scripts\EnemyTrigger.cs" />
      <Compile Include="Assets\Scripts\Foreground.cs" />
