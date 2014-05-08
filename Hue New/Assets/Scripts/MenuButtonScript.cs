@@ -19,9 +19,9 @@ public class MenuButtonScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		//if (gameObject.name == "Continue") {
+		if (gameObject.name != "Back") {
 			renderer.material.color = Color.black;
-		//}
+		}
 		if (this.name == "Level") {
 			if (PlayerPrefs.HasKey ("Level1"))
 				level = PlayerPrefs.GetInt ("Level1");
@@ -49,10 +49,19 @@ public class MenuButtonScript : MonoBehaviour {
 	}
 
 	void OnMouseEnter(){
+		if (gameObject.tag == "Volume") {
+			renderer.material.color = Color.cyan;
+			minusM = false;
+			minusS = false;
+			plusM = false;
+			plusS = false;
+			//play sound
+			return;
+		}
 		if (gameObject.name != "Pause") 
 		{
-			if (gameObject.name == "Back")			
-				renderer.material.color = Color.black;
+			if(gameObject.name == "Back")
+				return;
 			else if (gameObject.name == "Level")			
 				renderer.material.color = Color.black;
 			else if(gameObject.name == "Continue")
@@ -68,10 +77,19 @@ public class MenuButtonScript : MonoBehaviour {
 		//if(gameObject.name == "Continue")
 			//renderer.material.color = Color.black;
 		//else
+		if (gameObject.tag == "Volume") {
+			renderer.material.color = Color.black;
+			minusM = false;
+			minusS = false;
+			plusM = false;
+			plusS = false;
+			//play sound
+			return;
+		}
 		if (gameObject.name != "Pause") 
 		{
-			if (gameObject.name == "Back")			
-				renderer.material.color = Color.black;
+			if(gameObject.name == "Back")
+				return;
 			else if (gameObject.name == "Level")			
 				renderer.material.color = Color.black;
 			else if(gameObject.name == "Continue")
@@ -79,13 +97,7 @@ public class MenuButtonScript : MonoBehaviour {
 			else
 				gameObject.renderer.enabled = false;
 		}
-		if (gameObject.tag == "Volume") {
-			minusM = false;
-			minusS = false;
-			plusM = false;
-			plusS = false;
-			//play sound
-		}
+
 	}
 
 	void OnMouseUp(){
