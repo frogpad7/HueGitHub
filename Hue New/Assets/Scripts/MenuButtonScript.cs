@@ -12,6 +12,7 @@ public class MenuButtonScript : MonoBehaviour {
 	
 	public GameObject hue;
 	public GameObject backdrop;
+	public int number;
 
 	int level;
 
@@ -19,7 +20,7 @@ public class MenuButtonScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if (gameObject.name != "Back") {
+		if (gameObject.name != "Back" && gameObject.name != "Level") {
 			renderer.material.color = Color.black;
 		}
 		if (this.name == "Level") {
@@ -27,7 +28,10 @@ public class MenuButtonScript : MonoBehaviour {
 				level = PlayerPrefs.GetInt ("Level1");
 			else
 				level = 1;
-			GetComponent<TextMesh> ().text = "Level " + level;
+			if(level<number){
+				gameObject.renderer.enabled = false;
+				gameObject.collider2D.enabled = false;
+			}
 		}
 		minusM = minusS = plusM = plusS = false;
 	}
@@ -63,7 +67,7 @@ public class MenuButtonScript : MonoBehaviour {
 			if(gameObject.name == "Back")
 				return;
 			else if (gameObject.name == "Level")			
-				renderer.material.color = Color.black;
+				return;
 			else if(gameObject.name == "Continue")
 				renderer.material.color = Color.cyan;
 			else
@@ -91,7 +95,7 @@ public class MenuButtonScript : MonoBehaviour {
 			if(gameObject.name == "Back")
 				return;
 			else if (gameObject.name == "Level")			
-				renderer.material.color = Color.black;
+				return;
 			else if(gameObject.name == "Continue")
 				renderer.material.color = Color.cyan;
 			else
@@ -111,8 +115,8 @@ public class MenuButtonScript : MonoBehaviour {
 		}
 		if (gameObject.name == "Level") {
 			PlayerPrefs.SetString ("Backdrop",PlayerPrefs.GetString("Backdrop1"));
-			PlayerPrefs.SetInt ("Level",level);
-			Application.LoadLevel (1 + ((level - 1) * 2));
+			PlayerPrefs.SetInt ("Level",number);
+			Application.LoadLevel (1 + ((number - 1) * 2));
 			GameObject b = (GameObject)Instantiate(backdrop);
 			b.GetComponent<SplatterScript>().CreateHue();
 			Screen.showCursor = false;
