@@ -5,9 +5,9 @@ public class MenuButtonScript : MonoBehaviour {
 
 	public MenuCameraScript mcs;
 	public GameObject pause;
-	Vector3 load = new Vector3 (30, 100, -10);
+	Vector3 load = new Vector3 (40, 100, -10);
 	Vector3 options = new Vector3 (0, 120, -10);
-	Vector3 controls = new Vector3 (-30, 100, -10);
+	Vector3 controls = new Vector3 (-40, 100, -10);
 	Vector3 origin = new Vector3 (0, 100, -10);
 	
 	public GameObject hue;
