@@ -376,7 +376,7 @@ public class PlayerScript : MonoBehaviour
 					if (warpDash[i].gameObject.rigidbody2D.gameObject.tag == "Enemy") 
 					{
 						if (Mathf.Abs(transform.position.x - warpDash[i].gameObject.transform.position.x)<= 5)
-							if (transform.position.y < warpDash[i].gameObject.transform.position.y) warpDash[i].gameObject.GetComponent<EnemyScript>().anim.SetBool("Alive", false);
+							if (transform.position.y < warpDash[i].gameObject.transform.position.y) warpDash[i].gameObject.GetComponent<EnemyScript>().anim.SetTrigger("Died");
 					}
 				}
 			}
@@ -398,7 +398,7 @@ public class PlayerScript : MonoBehaviour
 					if (warpDash[i].gameObject.rigidbody2D.gameObject.tag == "Enemy") 
 					{
 						if (Mathf.Abs(transform.position.x - warpDash[i].gameObject.transform.position.x)<= 5)
-							if (transform.position.y > warpDash[i].gameObject.transform.position.y) warpDash[i].gameObject.GetComponent<EnemyScript>().anim.SetBool("Alive", false);
+							if (transform.position.y > warpDash[i].gameObject.transform.position.y) warpDash[i].gameObject.GetComponent<EnemyScript>().anim.SetTrigger("Died");
 					}
 				}
 			}
@@ -418,7 +418,7 @@ public class PlayerScript : MonoBehaviour
 					if (warpDash[i].gameObject.rigidbody2D.gameObject.tag == "Enemy") 
 					{
 						if (Mathf.Abs(transform.position.y - warpDash[i].gameObject.transform.position.y)<= 5)
-							if (transform.position.x > warpDash[i].gameObject.transform.position.x) warpDash[i].gameObject.GetComponent<EnemyScript>().anim.SetBool("Alive", false);
+							if (transform.position.x > warpDash[i].gameObject.transform.position.x) warpDash[i].gameObject.GetComponent<EnemyScript>().anim.SetTrigger("Died");
 					}
 				}
 			}
@@ -438,7 +438,7 @@ public class PlayerScript : MonoBehaviour
 					if (warpDash[i].gameObject.rigidbody2D.gameObject.tag == "Enemy") 
 					{
 						if (Mathf.Abs(transform.position.y - warpDash[i].gameObject.transform.position.y)<= 5)
-							if (transform.position.x < warpDash[i].gameObject.transform.position.x) warpDash[i].gameObject.GetComponent<EnemyScript>().anim.SetBool("Alive", false);
+							if (transform.position.x < warpDash[i].gameObject.transform.position.x) warpDash[i].gameObject.GetComponent<EnemyScript>().anim.SetTrigger("Died");
 					}
 				}
 			}

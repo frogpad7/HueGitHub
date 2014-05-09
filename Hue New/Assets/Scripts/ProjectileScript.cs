@@ -45,7 +45,7 @@ public class ProjectileScript : MonoBehaviour
 
 		else if (gameObject.tag == "Yellow" && col.gameObject.tag == "Enemy") { 
 			col.gameObject.collider2D.enabled = false;
-			col.gameObject.GetComponent<EnemyScript>().anim.SetBool("Alive",false); 
+			col.gameObject.GetComponent<EnemyScript>().anim.SetTrigger("Died");
 			lifetime = Time.time + 1; 
 		}
 
@@ -91,7 +91,8 @@ public class ProjectileScript : MonoBehaviour
 					{
 						//animate death
 						hit.collider2D.enabled = false;
-						hit.gameObject.GetComponent<EnemyScript>().anim.SetBool ("Alive", false);
+						hit.gameObject.GetComponent<EnemyScript>().speed = 0;
+						hit.gameObject.GetComponent<EnemyScript>().anim.SetTrigger("Died");
 					}
 				}
 			}

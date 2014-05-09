@@ -249,6 +249,7 @@ public class EnemyScript : MonoBehaviour
 
 	void Die()
 	{
+		Debug.Log ("DDDDIIIIIIEEEE!!!!!");
 		Destroy (this.gameObject);
 	}
 }
