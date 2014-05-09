@@ -30,7 +30,6 @@ public class ProjectileScript : MonoBehaviour
 		else if (gameObject.tag == "Projectile")
 		{
 			if (col.gameObject.tag == "Projectile") { Destroy(col.gameObject); }
-			else if (col.gameObject.tag == "Enemy") { Destroy(col.gameObject); }
 			else if (col.gameObject.tag == "Orange") Destroy(col.gameObject);
 			else if (col.gameObject.tag == "Stage" || col.gameObject.tag == "Floor" || col.gameObject.tag == "Yellow") Destroy(gameObject);
 			else if (col.gameObject.tag == "Purple") { Destroy(col.gameObject); Destroy(gameObject); } 

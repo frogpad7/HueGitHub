@@ -138,12 +138,14 @@ public class EnemyScript : MonoBehaviour
 
 	void downShoot()
 	{
-		if (cooldown <= Time.time)
+		if (cooldown < Time.time)
 		{
 			Vector3 firePos = this.transform.position + new Vector3 (0, -6, 0);
 			Rigidbody2D fireObj = (Rigidbody2D)Instantiate (bullet, firePos, Quaternion.Euler (new Vector3 (0, 0, -90)));
-			fireObj.velocity = new Vector2 (0, 15);
+			fireObj.velocity = new Vector2 (0, -15);
+			cooldown = Time.time + 4;
 		}
+
 	}
 
 	void Shoot()
