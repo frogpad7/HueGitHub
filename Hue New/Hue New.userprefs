@@ -1,16 +1,16 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\CreditsCamScript.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PauseScript.cs">
     <Files>
-      <File FileName="Assets\Scripts\MenuCameraScript.cs" Line="6" Column="2" />
+      <File FileName="Assets\Scripts\MenuCameraScript.cs" Line="3" Column="1" />
       <File FileName="Assets\Scripts\EnemyScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\PlayerScript.cs" Line="212" Column="60" />
+      <File FileName="Assets\Scripts\PlayerScript.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\ProjectileScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\AudioScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\MenuButtonScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\AudioScript.cs" Line="116" Column="2" />
+      <File FileName="Assets\Scripts\MenuButtonScript.cs" Line="169" Column="54" />
       <File FileName="Assets\Scripts\BinaryBlock.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\CreditsCamScript.cs" Line="20" Column="4" />
-      <File FileName="Assets\Scripts\PauseScript.cs" Line="20" Column="4" />
+      <File FileName="Assets\Scripts\PauseScript.cs" Line="89" Column="24" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

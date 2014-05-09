@@ -528,6 +528,7 @@ public class PlayerScript : MonoBehaviour
 
 	void death()
 	{
+		GameObject.FindWithTag ("Pause").GetComponent<PauseScript>().enabled = false;
 		audio.sounds.PlayOneShot (audio.death, sound);
 		//AudioSource.PlayClipAtPoint(audio.GetComponent<AudioScript>().death,transform.position);
 		alive = false;
