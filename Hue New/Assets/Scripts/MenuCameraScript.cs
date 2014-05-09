@@ -10,6 +10,9 @@ public class MenuCameraScript : MonoBehaviour {
 	void Start () {
 		startTime = Time.time;
 		travel = new Vector3 (0, 100, -10);
+		if(PlayerPrefs.HasKey("Music"))
+			GetComponent<AudioSource> ().volume = PlayerPrefs.GetFloat ("Music");
+		GetComponent<AudioSource> ().Play ();
 	}
 	
 	// Update is called once per frame
