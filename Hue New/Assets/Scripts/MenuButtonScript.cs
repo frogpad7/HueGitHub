@@ -69,7 +69,15 @@ public class MenuButtonScript : MonoBehaviour {
 			else if (gameObject.name == "Level")			
 				return;
 			else if(gameObject.name == "Continue")
-				renderer.material.color = Color.cyan;
+				return;
+			else if(gameObject.name == "Menu")
+				return;
+			else if(gameObject.name == "Save")
+				return;
+			else if(gameObject.name == "No")
+				return;
+			else if(gameObject.name == "Yes")
+				return;
 			else
 				gameObject.renderer.enabled = true;
 		}
@@ -97,7 +105,15 @@ public class MenuButtonScript : MonoBehaviour {
 			else if (gameObject.name == "Level")			
 				return;
 			else if(gameObject.name == "Continue")
-				renderer.material.color = Color.cyan;
+				return;
+			else if(gameObject.name == "Menu")
+				return;
+			else if(gameObject.name == "Save")
+				return;
+			else if(gameObject.name == "No")
+				return;
+			else if(gameObject.name == "Yes")
+				return;
 			else
 				gameObject.renderer.enabled = false;
 		}
@@ -137,15 +153,12 @@ public class MenuButtonScript : MonoBehaviour {
 		if (gameObject.name == "Continue") {
 			pause.GetComponent<PauseScript>().Unpause();
 		}
-		if (gameObject.name == "Menu") {
-			pause.GetComponent<PauseScript>().Confirm();
-		}
 		if (gameObject.name == "Save") {
-			pause.GetComponent<PauseScript>().Confirm();
 			pause.GetComponent<PauseScript>().saving = true;
+			pause.GetComponent<PauseScript>().Confirm();
 		}
 		if (gameObject.name == "Yes") {
-			Debug.Log (pause.GetComponent<PauseScript>().saving);
+			//Debug.Log (pause.GetComponent<PauseScript>().saving);
 			if(pause.GetComponent<PauseScript>().saving){
 				GameObject.FindWithTag("Backdrop").GetComponent<SplatterScript>().SaveGame();
 				level = PlayerPrefs.GetInt("Level");
@@ -153,15 +166,24 @@ public class MenuButtonScript : MonoBehaviour {
 					level--;
 				}
 				PlayerPrefs.SetInt("Level1",1 + ((level - 1) / 2));
+				pause.GetComponent<PauseScript>().saving = false;
+				//Debug.Log ("trying to quit");
+				pause.GetComponent<PauseScript>().Leaving();
 			}
-			Destroy (GameObject.FindWithTag("Player"));
-			Destroy (GameObject.FindWithTag("Backdrop"));
-			Application.LoadLevel("MainMenu");
-			Time.timeScale = 1;
+			else{
+				Destroy (GameObject.FindWithTag("Player"));
+				Destroy (GameObject.FindWithTag("Backdrop"));
+				Application.LoadLevel("MainMenu");
+				Time.timeScale = 1;
+			}
 		}
 		if (gameObject.name == "No") {
-						pause.GetComponent<PauseScript> ().Confirm ();
-						pause.GetComponent<PauseScript> ().saving = false;
+			if(pause.GetComponent<PauseScript> ().saving){
+				pause.GetComponent<PauseScript>().saving = false;
+				pause.GetComponent<PauseScript> ().Leaving ();
+			}
+			else
+				pause.GetComponent<PauseScript> ().Reset();
 		} 
 		if(gameObject.tag == "Volume") {
 			minusM = false;

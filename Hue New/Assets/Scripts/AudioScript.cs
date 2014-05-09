@@ -30,12 +30,16 @@ public class AudioScript : MonoBehaviour {
 
 	AudioSource current;
 	AudioSource wait;
+
+	float test;
 	// Use this for initialization
 	void Start () {
 		current = blankTrack;
 		current.volume = 0.0f;
 		wait = redTrack;
+		test = PlayerPrefs.GetFloat("Music");
 		Debug.Log("MVOL: " + PlayerPrefs.GetFloat("Music")); 
+
 	}
 	
 	// Update is called once per frame
@@ -45,7 +49,6 @@ public class AudioScript : MonoBehaviour {
 		//AudioSource.PlayOneShot(clip, volume);
 
 		//increase
-		float test = PlayerPrefs.GetFloat("Music");
 		if (current.volume < test)
 			current.volume += 0.01f;
 

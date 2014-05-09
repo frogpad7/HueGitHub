@@ -6,6 +6,8 @@ public class PauseScript : MonoBehaviour {
 	private bool paused = false;
 	public bool saving = false;
 	public GameObject menu;
+	public GameObject save;
+	public GameObject quit;
 
 	// Use this for initialization
 	void Start () {
@@ -38,7 +40,7 @@ public class PauseScript : MonoBehaviour {
 				p.Pause();
 		}
 		Screen.showCursor = true;
-		MeshRenderer[] mr = menu.GetComponentsInChildren<MeshRenderer> ();
+		SpriteRenderer[] mr = menu.GetComponentsInChildren<SpriteRenderer> ();
 		BoxCollider2D[] bc = menu.GetComponentsInChildren<BoxCollider2D> ();
 		for (int i = 0; i < mr.Length; i++)
 			mr [i].enabled = true;
@@ -57,21 +59,52 @@ public class PauseScript : MonoBehaviour {
 				p.Play();
 		}
 		Screen.showCursor = false;
-		MeshRenderer[] mr = menu.GetComponentsInChildren<MeshRenderer> ();
+		SpriteRenderer[] sr = menu.GetComponentsInChildren<SpriteRenderer> ();
 		BoxCollider2D[] bc = menu.GetComponentsInChildren<BoxCollider2D> ();
-		for (int i = 0; i < mr.Length; i++)
-			mr [i].enabled = false;
+		for (int i = 0; i < sr.Length; i++)
+			sr [i].enabled = false;
 		for (int j = 0; j < bc.Length; j++)
 			bc [j].enabled = false;
 		paused = !paused;
 	}	
 
 	public void Confirm(){
-		MeshRenderer[] mr = GetComponentsInChildren<MeshRenderer> ();
+		SpriteRenderer[] sr = GetComponentsInChildren<SpriteRenderer> ();
 		BoxCollider2D[] bc = GetComponentsInChildren<BoxCollider2D> ();
-		for (int i = 0; i < mr.Length; i++)
-			mr [i].enabled = !mr[i].enabled;
-		for (int j = 0; j < bc.Length; j++)
-			bc [j].enabled = !bc [j].enabled;
+		foreach (SpriteRenderer tx in sr) {
+			if(tx.transform.parent.name == "Menu")
+				tx.enabled = false;
+			else
+				tx.enabled = true;
+		}
+		foreach (BoxCollider2D bx in bc) {
+			if(bx.transform.parent.name == "Menu")
+				bx.enabled = false;
+			else
+				bx.enabled = true;
+		}
+		quit.renderer.enabled = false;
+	}
+
+	public void Leaving(){
+		save.GetComponent<SpriteRenderer> ().enabled = false;
+		quit.GetComponent<SpriteRenderer> ().enabled = true;
+	}
+
+	public void Reset(){
+		SpriteRenderer[] sr = GetComponentsInChildren<SpriteRenderer> ();
+		BoxCollider2D[] bc = GetComponentsInChildren<BoxCollider2D> ();
+		foreach (SpriteRenderer tx in sr) {
+			if(tx.transform.parent.name == "Menu")
+				tx.enabled = true;
+			else
+				tx.enabled = false;
+		}
+		foreach (BoxCollider2D bx in bc) {
+			if(bx.transform.parent.name == "Menu")
+				bx.enabled = true;
+			else
+				bx.enabled = false;
+		}
 	}
 }
