@@ -136,6 +136,7 @@ public class EnemyScript : MonoBehaviour
 
 	void Shoot()
 	{
+		GetComponentInChildren<AudioSource> ().Play ();
 		if (shooter && cooldown <= Time.time)
 		{
 			if (facingRight)

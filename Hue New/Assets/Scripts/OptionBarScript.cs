@@ -3,6 +3,8 @@ using System.Collections;
 
 public class OptionBarScript : MonoBehaviour {
 
+	public AudioSource menuMus;
+
 	float mVol;
 	float sVol;
 
@@ -28,6 +30,7 @@ public class OptionBarScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//change music volume
+		menuMus.volume = mVol;
 	}
 
 	public void IncSize(){

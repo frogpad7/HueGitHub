@@ -464,6 +464,7 @@ public class PlayerScript : MonoBehaviour
 	void ability_Purple()
 	{
 		//sound for purple
+		audio.sounds.PlayOneShot (audio.punch, sound);
 		if(grounded && Input.GetKey(KeyCode.DownArrow) && !groundPounding)
 		{
 			groundPoundPos = transform.position;

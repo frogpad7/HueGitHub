@@ -167,7 +167,6 @@ public class MenuButtonScript : MonoBehaviour {
 				}
 				PlayerPrefs.SetInt("Level1",1 + ((level - 1) / 2));
 				pause.GetComponent<PauseScript>().saving = false;
-				//Debug.Log ("trying to quit");
 				pause.GetComponent<PauseScript>().Leaving();
 			}
 			else{
