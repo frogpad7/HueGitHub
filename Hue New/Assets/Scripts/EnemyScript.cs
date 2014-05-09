@@ -49,8 +49,6 @@ public class EnemyScript : MonoBehaviour
 		if (downShooter) 
 		{
 			shooter = false;
-			Debug.Log("ERR : An ENEMY cannot be both a down-shooter and a shooter!");
-			Debug.Log("WARN: ENEMY defaulted to regular shooter!");
 		}
 
 		initSpeed = speed;
@@ -111,6 +109,7 @@ public class EnemyScript : MonoBehaviour
 	void enemy_AI()
 	{
 		//Shoot ();
+		if (downShooter) downShoot();
 		if (moving) {
 			if (follow && !frozen) {
 				Vector3 dir = Vector3.Normalize (GameObject.FindWithTag ("Player").transform.position - this.transform.position) * .1f;
@@ -134,6 +133,16 @@ public class EnemyScript : MonoBehaviour
 				if (transform.position.y < initialPosition.y - moveRange)
 					changeDirection ();
 			}
+		}
+	}
+
+	void downShoot()
+	{
+		if (cooldown <= Time.time)
+		{
+			Vector3 firePos = this.transform.position + new Vector3 (0, -6, 0);
+			Rigidbody2D fireObj = (Rigidbody2D)Instantiate (bullet, firePos, Quaternion.Euler (new Vector3 (0, 0, -90)));
+			fireObj.velocity = new Vector2 (0, 15);
 		}
 	}
 

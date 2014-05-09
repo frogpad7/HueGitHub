@@ -693,6 +693,7 @@ public class PlayerScript : MonoBehaviour
 		this.GetComponent<PlayerScript>().enabled = false;
 		yield return new WaitForSeconds(5);
 		AutoFade.LoadLevel ("Credits", 7, 3, Color.white);
+		Destroy (this.gameObject);
 	}
 
 	void LeftFoot  (){ foot = 0; }
