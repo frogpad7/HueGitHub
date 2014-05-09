@@ -40,7 +40,6 @@ public class AudioScript : MonoBehaviour {
 		wait = redTrack;
 		test = PlayerPrefs.GetFloat("Music");
 		Debug.Log("MVOL: " + PlayerPrefs.GetFloat("Music")); 
-
 	}
 	
 	// Update is called once per frame
@@ -62,6 +61,11 @@ public class AudioScript : MonoBehaviour {
 	}
 
 	public void ChangeTrack(int color){
+		//now red
+		if (color == 0) {
+			wait = current;
+			current = blankTrack;
+		}
 		//now red
 		if (color == 1) {
 			wait = current;

@@ -635,7 +635,6 @@ public class PlayerScript : MonoBehaviour
 	IEnumerator PlayerRestart()
 	{
 		//animate death
-
 		int i = 0;
 		while (i<256) {
 			//Debug.Log (i);
