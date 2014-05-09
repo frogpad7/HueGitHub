@@ -208,6 +208,7 @@ public class PlayerScript : MonoBehaviour
 				else if (bubbleTime < Time.time) 
 				{
 					//play pop
+					audio.sounds.PlayOneShot (audio.pop, sound);
 					float rand = Random.value * 360;
 					GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (5, transform.position, Quaternion.Euler(new Vector3(0,0,rand)));
 					Destroy(bubbleShield.gameObject);
@@ -358,6 +359,7 @@ public class PlayerScript : MonoBehaviour
 	void ability_Green()
 	{
 		//sound for green
+		audio.sounds.PlayOneShot (audio.dash, sound);
 		if (onMovingPlatform) this.transform.parent = null;
 		if (Input.GetKey (KeyCode.UpArrow))
 		{
