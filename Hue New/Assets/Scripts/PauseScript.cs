@@ -5,6 +5,7 @@ public class PauseScript : MonoBehaviour {
 	
 	private bool paused = false;
 	public bool saving = false;
+
 	public GameObject menu;
 	public GameObject save;
 	public GameObject quit;
@@ -33,7 +34,13 @@ public class PauseScript : MonoBehaviour {
 		//Debug.Log ("p a u s e");
 		Time.timeScale = 0;
 		//GameObject.FindWithTag ("Audio").GetComponent<AudioSource> ().Pause ();
-		GameObject[] pause = GameObject.FindGameObjectsWithTag ("Audio");
+		GameObject[] pause = GameObject.FindGameObjectsWithTag ("Music");
+		foreach (GameObject go in pause) {
+			AudioSource[] play = go.GetComponents<AudioSource> ();
+			foreach(AudioSource p in play)
+				p.Pause();
+		}
+		pause = GameObject.FindGameObjectsWithTag ("Sound");
 		foreach (GameObject go in pause) {
 			AudioSource[] play = go.GetComponents<AudioSource> ();
 			foreach(AudioSource p in play)
@@ -52,7 +59,13 @@ public class PauseScript : MonoBehaviour {
 	public void Unpause(){
 		Time.timeScale = 1;
 		//GameObject.FindWithTag ("Audio").GetComponent<AudioScript> ().ResumeTrack ();
-		GameObject[] resume = GameObject.FindGameObjectsWithTag ("Audio");
+		GameObject[] resume = GameObject.FindGameObjectsWithTag ("Music");
+		foreach (GameObject go in resume) {
+			AudioSource[] play = go.GetComponents<AudioSource> ();
+			foreach(AudioSource p in play)
+				p.Play();
+		}
+		resume = GameObject.FindGameObjectsWithTag ("Sound");
 		foreach (GameObject go in resume) {
 			AudioSource[] play = go.GetComponents<AudioSource> ();
 			foreach(AudioSource p in play)

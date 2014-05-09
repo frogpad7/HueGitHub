@@ -36,7 +36,7 @@ public class PlayerScript : MonoBehaviour
 
 	int stage;
 	float sound = 1;
-	float music = 1;
+	//float music = 1;
 
 	//ridgidbodies
 	public Rigidbody2D ball;
@@ -73,6 +73,10 @@ public class PlayerScript : MonoBehaviour
 
 		int level = PlayerPrefs.GetInt ("Level");
 		stage = 1 + ((level - 1) * 2);
+		if(PlayerPrefs.HasKey("Sound"))
+			sound = PlayerPrefs.GetFloat ("Sound");
+
+		audio.walking.volume = sound;
 		//Debug.Log (stage);
 	}
 	
@@ -372,7 +376,7 @@ public class PlayerScript : MonoBehaviour
 					if (warpDash[i].gameObject.rigidbody2D.gameObject.tag == "Enemy") 
 					{
 						if (Mathf.Abs(transform.position.x - warpDash[i].gameObject.transform.position.x)<= 5)
-							if (transform.position.y < warpDash[i].gameObject.transform.position.y) Destroy (warpDash[i].gameObject);
+							if (transform.position.y < warpDash[i].gameObject.transform.position.y) warpDash[i].gameObject.GetComponent<EnemyScript>().anim.SetBool("Alive", false);
 					}
 				}
 			}
@@ -394,7 +398,7 @@ public class PlayerScript : MonoBehaviour
 					if (warpDash[i].gameObject.rigidbody2D.gameObject.tag == "Enemy") 
 					{
 						if (Mathf.Abs(transform.position.x - warpDash[i].gameObject.transform.position.x)<= 5)
-							if (transform.position.y > warpDash[i].gameObject.transform.position.y) Destroy (warpDash[i].gameObject);
+							if (transform.position.y > warpDash[i].gameObject.transform.position.y) warpDash[i].gameObject.GetComponent<EnemyScript>().anim.SetBool("Alive", false);
 					}
 				}
 			}
@@ -414,7 +418,7 @@ public class PlayerScript : MonoBehaviour
 					if (warpDash[i].gameObject.rigidbody2D.gameObject.tag == "Enemy") 
 					{
 						if (Mathf.Abs(transform.position.y - warpDash[i].gameObject.transform.position.y)<= 5)
-							if (transform.position.x > warpDash[i].gameObject.transform.position.x) Destroy (warpDash[i].gameObject);
+							if (transform.position.x > warpDash[i].gameObject.transform.position.x) warpDash[i].gameObject.GetComponent<EnemyScript>().anim.SetBool("Alive", false);
 					}
 				}
 			}
@@ -434,7 +438,7 @@ public class PlayerScript : MonoBehaviour
 					if (warpDash[i].gameObject.rigidbody2D.gameObject.tag == "Enemy") 
 					{
 						if (Mathf.Abs(transform.position.y - warpDash[i].gameObject.transform.position.y)<= 5)
-							if (transform.position.x < warpDash[i].gameObject.transform.position.x) Destroy (warpDash[i].gameObject);
+							if (transform.position.x < warpDash[i].gameObject.transform.position.x) warpDash[i].gameObject.GetComponent<EnemyScript>().anim.SetBool("Alive", false);
 					}
 				}
 			}

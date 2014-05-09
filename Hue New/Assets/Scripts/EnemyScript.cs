@@ -31,11 +31,10 @@ public class EnemyScript : MonoBehaviour
 	//freeze & groundPound related
 	public Rigidbody2D bullet;
 	public Sprite frozenPlatform;
-	SpriteRenderer myRenderer;
 	PlayerScript pScript;
 
 	//public AudioSource noise; 
-	Animator anim;
+	public Animator anim;
 	bool Eorange;
 
 	public Sprite pFreeze;
@@ -58,7 +57,9 @@ public class EnemyScript : MonoBehaviour
 		anim = GetComponent<Animator> ();
 		initialPosition = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
 		direction = dir;
-		myRenderer = this.gameObject.GetComponent<SpriteRenderer>();
+
+		if(PlayerPrefs.HasKey("Sound"))
+			GetComponentInChildren<AudioSource>().volume = PlayerPrefs.GetFloat("Sound");
 
 		//if (follow)		speed = 0;
 		if (!faceL)     Flip ();
@@ -215,7 +216,6 @@ public class EnemyScript : MonoBehaviour
 			anim.SetBool ("Frozen", frozen);
 		//speed = 5;
 
-		//myRenderer.sprite = oFreeze;
 		GetComponent<BoxCollider2D>().isTrigger = false;
 		Destroy(col.gameObject);
 	}
@@ -236,7 +236,7 @@ public class EnemyScript : MonoBehaviour
 		isPlatform = false;
 		if (Eorange)
 			GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (2, transform.position, new Quaternion ());
-			//myRenderer.sprite = frozenPlatform;
+			
 	}
 	
 	void Flip()
@@ -245,5 +245,10 @@ public class EnemyScript : MonoBehaviour
 		Vector3 playScale = transform.localScale;
 		playScale.x *= -1;
 		transform.localScale = playScale;
+	}
+
+	void Die()
+	{
+		Destroy (this.gameObject);
 	}
 }

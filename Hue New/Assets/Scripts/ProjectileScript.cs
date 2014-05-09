@@ -33,7 +33,7 @@ public class ProjectileScript : MonoBehaviour
 			else if (col.gameObject.tag == "Enemy") { Destroy(col.gameObject); }
 			else if (col.gameObject.tag == "Orange") Destroy(col.gameObject);
 			else if (col.gameObject.tag == "Stage" || col.gameObject.tag == "Floor" || col.gameObject.tag == "Yellow") Destroy(gameObject);
-			else if (col.gameObject.tag == "Projectile"  || col.gameObject.tag == "Purple") { Destroy(col.gameObject); Destroy(gameObject); } 
+			else if (col.gameObject.tag == "Purple") { Destroy(col.gameObject); Destroy(gameObject); } 
 			else if (col.gameObject.tag != "Player") Destroy(gameObject);
 		}
 
@@ -43,9 +43,12 @@ public class ProjectileScript : MonoBehaviour
 			if (gameObject.tag == "Purple" || gameObject.tag == "Orange" ) Destroy(gameObject);
 		}
 
-		else if (gameObject.tag == "Yellow" && col.gameObject.tag == "Enemy") { Destroy(col.gameObject); lifetime = Time.time + 1; }
+		else if (gameObject.tag == "Yellow" && col.gameObject.tag == "Enemy") { 
+			col.gameObject.collider2D.enabled = false;
+			col.gameObject.GetComponent<EnemyScript>().anim.SetBool("Alive",false); 
+			lifetime = Time.time + 1; 
+		}
 
-		//else if (gameObject.tag == "Orange") this.rigidbody2D.isKinematic = true;
 		else if (gameObject.tag == "Purple" && (col.gameObject.tag == "Stage" || col.gameObject.tag == "Floor")) Destroy(gameObject);
 	
 	}
@@ -87,7 +90,8 @@ public class ProjectileScript : MonoBehaviour
 					else if (hit.rigidbody2D.gameObject.tag == "Enemy" )
 					{
 						//animate death
-						Destroy(hit.rigidbody2D.gameObject);
+						hit.collider2D.enabled = false;
+						hit.gameObject.GetComponent<EnemyScript>().anim.SetBool ("Alive", false);
 					}
 				}
 			}
@@ -97,7 +101,6 @@ public class ProjectileScript : MonoBehaviour
 			Debug.Log ("grenade out of life");
 			grenadeSplat = true;
 			Destroy (gameObject);
-			
 		}
 		else if (lifetime < Time.time && !grenadeExploding) 
 		{ 
