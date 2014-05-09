@@ -64,7 +64,8 @@ public class ProjectileScript : MonoBehaviour
 		{
 			if (grenadeSplat)
 			{
-				//this.GetComponent<SpriteRenderer>().enabled = false;
+				this.gameObject.GetComponent<PolygonCollider2D> ().enabled = false;
+				this.gameObject.GetComponent<Rigidbody2D> ().isKinematic = true;
 				this.gameObject.GetComponent<Animator> ().enabled = true;
 				float rand = Random.value * 360;
 				GameObject.FindWithTag ("Backdrop").GetComponent<SplatterScript> ().Splat (1, transform.position, Quaternion.Euler(new Vector3(0,0,rand)));
