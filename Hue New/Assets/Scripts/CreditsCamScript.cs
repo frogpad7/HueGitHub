@@ -12,6 +12,10 @@ public class CreditsCamScript : MonoBehaviour {
 		startTime = Time.time;
 		travel = new Vector3 (0, 0, -10);
 		text = 1;
+
+		if(PlayerPrefs.HasKey("Music"))
+		   GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat ("Music");
+		GetComponent<AudioSource> ().Play ();
 	}
 	
 	// Update is called once per frame

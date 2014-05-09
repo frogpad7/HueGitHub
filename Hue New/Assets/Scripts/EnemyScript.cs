@@ -35,6 +35,7 @@ public class EnemyScript : MonoBehaviour
 
 	//public AudioSource noise; 
 	public Animator anim;
+	float sound = 1;
 	bool Eorange;
 
 	public Sprite pFreeze;
@@ -59,7 +60,8 @@ public class EnemyScript : MonoBehaviour
 		direction = dir;
 
 		if(PlayerPrefs.HasKey("Sound"))
-			GetComponentInChildren<AudioSource>().volume = PlayerPrefs.GetFloat("Sound");
+			sound = PlayerPrefs.GetFloat("Sound");
+		GetComponentInChildren<AudioSource> ().volume = sound;
 
 		//if (follow)		speed = 0;
 		if (!faceL)     Flip ();
@@ -249,7 +251,9 @@ public class EnemyScript : MonoBehaviour
 
 	void Die()
 	{
-		Debug.Log ("DDDDIIIIIIEEEE!!!!!");
+		AudioScript audio = GameObject.FindWithTag("Player").GetComponentInChildren<AudioScript>();
+		audio.sounds.PlayOneShot (audio.kill, sound);
+		//Debug.Log ("DDDDIIIIIIEEEE!!!!!");
 		Destroy (this.gameObject);
 	}
 }

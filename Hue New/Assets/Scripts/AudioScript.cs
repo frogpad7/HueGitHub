@@ -5,6 +5,7 @@ public class AudioScript : MonoBehaviour {
 
 
 	public AudioClip death;
+	public AudioClip kill;
 	public AudioClip jump;
 	public AudioClip land;
 
