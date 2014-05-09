@@ -488,7 +488,7 @@ public class PlayerScript : MonoBehaviour
 				}
 			}
 			groundPoundTime = Time.time + 1;
-			cooldown = Time.time + 7;
+			cooldown = Time.time + 4;
 			groundPounding = true;
 			
 		}
