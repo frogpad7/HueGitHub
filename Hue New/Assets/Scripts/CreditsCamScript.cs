@@ -41,8 +41,10 @@ public class CreditsCamScript : MonoBehaviour {
 			travel = new Vector3 (50, 0, -10);
 		if (text == 7)
 			travel = new Vector3 (60, 0, -10);
-		if (text == 9)
+		if (text == 9) {
 			AutoFade.LoadLevel ("MainMenu", 5, 3, Color.white);
+			Screen.showCursor = true;
+		}
 		float distCovered = (Time.time - startTime); 
 		transform.position = Vector3.Lerp(transform.position, travel, distCovered/150);
 	}

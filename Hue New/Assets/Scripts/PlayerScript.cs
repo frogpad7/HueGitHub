@@ -635,7 +635,6 @@ public class PlayerScript : MonoBehaviour
 	IEnumerator PlayerRestart()
 	{
 		//animate death
-
 		int i = 0;
 		while (i<256) {
 			//Debug.Log (i);
@@ -693,6 +692,7 @@ public class PlayerScript : MonoBehaviour
 		this.GetComponent<PlayerScript>().enabled = false;
 		yield return new WaitForSeconds(5);
 		AutoFade.LoadLevel ("Credits", 7, 3, Color.white);
+		Destroy (this.gameObject);
 	}
 
 	void LeftFoot  (){ foot = 0; }
